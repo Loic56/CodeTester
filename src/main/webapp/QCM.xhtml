@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+
+    <h:head>
+        <title>TheCodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+
+    <h:body>
+
+
+        <div id="container">
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+            <div id="content">
+
+                <h:form id="form" style="border:1px solid transparent;">
+
+                    <p:panel header="QCM" style="height:auto;" > 
+                        <br/>
+                        <br/>
+                        <h:outputText value="Question n°:#{qcm.count}" />   <br/>
+                        <h:outputText value="Rubrique: #{qcm.rubrique}" />   <br/>
+                        <h:outputText value="Question_id:#{qcm.questionid}" />   <br/>
+                        <h:outputText value="#{qcm.enonce}" />   <br/>
+                        <h:outputText id="txt_count" value="Temps restant: #{qcm.time} min " style="float:right;margin-right:50px;color:#ed9f53;"/>  
+                        <p:poll interval="1"   
+                                listener="#{qcm.Decrement}" update="txt_count" />  
+                        <br/>
+                        <hr/>
+                        <br/>
+                        <h:outputText value="Propositions:" />  
+
+                        <p:selectOneRadio id="listPropositions" value="#{qcm.maValeur}" layout="grid" columns="1">  
+                            <f:selectItems id="theProposition" value="#{qcm.mesElements}" var="theElement"  itemValue="#{theElement.propositionid}" itemLabel=" #{theElement.propositionlibelle} "/>  
+                        </p:selectOneRadio>  
+
+
+                        <br/>
+                        <hr/>
+                        <br/>
+                        <p:commandButton value="Suivant" action="#{qcm.Suivant}" icon="ui-icon-check" style="margin:0;margin-left:20px;" /> 
+                    </p:panel>  
+                </h:form>  
+            </div>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+        </div> <!-- container -->
+    </h:body>
+</ui:composition> 

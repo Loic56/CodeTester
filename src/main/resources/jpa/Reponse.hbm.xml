@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+    <class name="jpa.Reponse" table="reponse">
+             
+        <id column="REPONSEID" name="reponseid">
+            <generator class="increment"/>
+        </id>
+    
+        <property name="reponsetexte" type="string">
+            <column length="255" name="REPONSETEXTE" not-null="true"/>
+        </property>
+    
+        <property name="reponseduree" type="int">
+            <column name="REPONSEDUREE" not-null="false"/>
+        </property>
+    
+        <property name="reponsemessage" type="string">
+            <column length="255" name="REPONSEMESSAGE" not-null="false"/>
+        </property>
+    
+        <many-to-one class="jpa.Passage" name="passageid">
+            <column name="PASSAGEID" not-null="false"/>
+        </many-to-one>
+    
+    
+    <!--        @OneToMany     -->
+        <set fetch="select" inverse="true" lazy="true" name="questionCollection" table="question">
+            <key>
+                <column name="REPONSEID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Question"/>
+        </set>
+        
+  
+    
+    
+    </class>
+</hibernate-mapping>

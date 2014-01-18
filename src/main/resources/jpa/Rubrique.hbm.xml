@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+  <class name="jpa.Rubrique" table="rubrique">
+      
+      
+    <!--        <composite-id name="rubriquePK" class="jpa.RubriquePK">
+                 <key-property name="testid"/>
+                 <key-property name="rubriqueid"/>
+             </composite-id>
+        -->
+        
+        
+    <id column="RUBRIQUEID" name="rubriqueid">
+      <generator class="native"/>
+    </id>
+    
+    <property name="rubriquenom" type="string">
+      <column length="255" name="RUBRIQUENOM" not-null="true"/>
+    </property>
+    
+    <many-to-one class="jpa.Test" name="testid">
+      <column name="TESTID" not-null="true"/>
+    </many-to-one>
+    
+
+    <!--        @OneToMany     -->
+    <set fetch="select" inverse="true" lazy="true" name="questionCollection" table="question">
+      <key>
+        <column name="RUBRIQUEID" not-null="true"/>
+      </key>
+      <one-to-many class="jpa.Question"/>
+    </set>
+    
+    
+  </class>
+</hibernate-mapping>

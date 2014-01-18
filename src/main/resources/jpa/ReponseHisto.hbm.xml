@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+    <class name="jpa.ReponseHisto" table="reponse_histo">
+
+        
+        <id column="REPONSEHISTOID" name="reponsehistoid">
+            <generator class="increment"/>
+        </id>
+    
+    
+        <property name="reponsevaleur" type="text">
+            <column name="REPONSEVALEUR" not-null="true"/>
+        </property>
+    
+    
+        <property name="reponsedebut" type="int">
+            <column name="REPONSEDEBUT" not-null="true"/>
+        </property>
+    
+    
+        <property name="reponsefin" type="int">
+            <column name="REPONSEFIN" not-null="true"/>
+        </property>
+    
+    
+        <many-to-one class="jpa.Passage"
+                 column="PASSAGEID" 
+                 name="passageid"/>
+    
+    
+        <many-to-one class="jpa.Question" name="questionid">
+            <column name="QUESTIONID" not-null="true"/>
+        </many-to-one>
+    
+    
+    </class>
+</hibernate-mapping>

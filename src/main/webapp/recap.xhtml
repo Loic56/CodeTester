@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+    <h:head>
+        <title>CodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+
+        <div id="container">
+
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+            <div id="content">
+                <p:panel header="Récapitulatif"  style="height:auto;"> 
+                    <h:form style="border:1px solid transparent;">
+
+                        <br/>
+                        <h:outputText value="#{recap.theTest.testmatiere} - #{recap.theTest.theme}" style="font-size:20px;"/> 
+                        <br/> <br/>
+                        
+                        <p:panelGrid id="tab_recap" columns="4" style="width:920px;">  
+                            <h:outputText value="En cliquant sur une des cases en fin de ligne, vous revenez à la question concernée" style="color:#f5ba80;"/> 
+                            <p:commandButton value="Fin de test" action="#{recap.FinishHim}" id="withIcon"   
+                                             icon="ui-icon-disk" style="float:right;"/> 
+                        </p:panelGrid>
+
+                        <br/><br/><br/>
+                        <h:dataTable value="#{recap.listReponse}" var="list"
+                                     styleClass="order-table"
+                                     headerClass="order-table-header"
+                                     rowClasses="order-table-odd-row,order-table-even-row"
+                                     style="width:850px;margin-left:auto;margin-right:auto;">
+                            <h:column>
+                                <f:facet name="header">Id</f:facet>
+                                    #{list.reponseid} 
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Enoncé</f:facet>
+                                    #{list.propositionid.questionid.questiontext}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Etat</f:facet>
+                                    #{list.reponsetexte}
+                            </h:column>
+
+                            <h:column>
+                                <f:facet name="header">Retour</f:facet>
+                                <h:link outcome="theCodeTester" >
+                                    <h:graphicImage library="images" name="img_accueil/back3.png"  style="height:35px;" />
+                                </h:link>
+                            </h:column>
+                        </h:dataTable>
+
+<br/><br/>
+
+                    </h:form>
+                </p:panel>  
+            </div>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+
+        </div> <!-- container -->
+    </h:body>
+</html>     

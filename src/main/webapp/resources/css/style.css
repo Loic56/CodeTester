@@ -1,0 +1,220 @@
+body{
+    background-color:grey;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#container{
+    width:1000px;
+    height:auto;
+    padding:20px;
+    margin-left:auto;
+    margin-right:auto;
+    box-shadow: 6px 0 4px -4px #222 , -6px 0 4px -4px #222;
+    background-color:#e6e4e4;
+}
+
+#content{
+    font-family: 'Times New Roman',Times,serif;
+    margin-top:11px;
+    margin-bottom:2px;
+    font-size: 14px;
+    font-weight: bold;
+    width:auto;
+    height:auto;
+    padding:20px;
+    border:2px solid white; 
+    background-color:#e6e4e4;
+    border-bottom:none;
+    box-shadow: 0 0 10px 2px grey;
+    border-radius:  10px 10px 0 0 ;
+    display:block;
+}
+
+#header{
+    font-family: 'Times New Roman',Times,serif;
+    margin-top:11px;
+    font-family: Arial;
+    font-size: 24px;
+    text-shadow: 2px 2px 3px rgba(120,120,120, 1);
+    font-weight: bold;
+    text-align:center;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width:auto;
+    height:auto;
+    color:white;
+    border:1px solid grey;
+    border-radius:10px;
+    box-shadow: 0 0 10px 2px grey;
+    background-image:url(images/logo/header_2.png);
+    ;
+}
+
+#footer{
+    font-family: 'Times New Roman',Times,serif;
+    font-size: 14px;
+    font-weight: bold;
+    text-align:center;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width:auto;
+    height:auto;
+    border:1px solid silver;
+    background-color:white;
+    border-top:none; 
+    border-radius: 0 0 10px 10px  ;
+    box-shadow: 2px 2px 3px grey , -2px 2px 3px grey;
+} 
+/* #c2c2c2 #888*/
+
+
+
+.error{
+    width:auto;
+    font-family: 'Times New Roman',Times,serif;
+    color: red;
+    font-size: 20px;
+    font-weight: bold;
+    text-align:center;
+    width:auto;
+    margin-left:30px;
+    padding:10px;
+    margin-right:30px;
+    border: 1px solid #d31a1a;
+    background-color: #eee0e0;
+    border-radius: 10px 10px 10px 10px  ;
+
+}
+
+
+
+.info{
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    font-weight: bold
+}
+
+
+
+
+
+.css_image_btn1{
+    background-image: url(resources/images/admin.png)
+
+}
+
+#index_tab{
+    margin-top: 50px;
+    margin-bottom:50px;
+    margin-right:auto;
+    margin-left:auto;
+    width:700px
+}
+
+#index_tab td, #index_tab tr{
+    padding:20px;
+    border-style: none !important
+}
+
+
+#index_tab td{
+    max-width: 100px;
+    text-align:center;
+
+}
+
+.ui-panelgrid td, .ui-panelgrid tr
+{
+    border-style: none !important
+}
+/*  .ui-menu.ui-menu-parent.ui-menu-child{
+     width: 120 % !important; // or anything you want
+
+  }*/
+
+#slideMenu-child{
+    height: 300px !important;
+}
+
+
+/* tableau  choix des tests */
+.order-table{   
+    border-collapse:collapse;
+    width:auto;
+}
+
+.order-table-header{
+    text-align:center;
+    background:none repeat scroll 0 0 #cdcedd;
+    border-bottom:1px solid #BBBBBB;
+    padding:16px;
+}
+
+.order-table-odd-row{
+    text-align:center;
+    background:none repeat scroll 0 0 #FFFFFFF;
+    border-top:1px solid #BBBBBB;
+}
+
+.order-table-even-row{
+    text-align:center;
+    background:none repeat scroll 0 0 #e8e9fe; 
+    /*#F9F9F9*/
+    border-top:1px solid #BBBBBB;
+}
+
+
+
+#container_editor{
+    margin-top:10px;
+    width:auto;
+    height:450px;
+    padding:15px;
+    margin-left:auto;
+    margin-right:auto;
+    background-color:silver;
+    border-radius: 20px;
+    border:1px solid grey;
+    box-shadow: 0px 0px 15px black;
+    position:relative;
+    z-index:1;
+}
+
+
+#editor { 
+    width :95.5%;
+    height :400px;
+    margin : auto;
+    position: absolute;
+    border:6px solid grey; 
+    border-style: inset;
+    border-radius: 15px;
+    /*    #60544b*/
+}
+
+
+
+#frame{
+    margin-top:20px;
+    width:auto;
+    height:240px;
+    background-color:silver;
+    border-radius: 20px;
+    border:1px solid grey;
+    box-shadow: 0px 0px 15px black;
+    padding : 15px;
+    position:relative;
+    z-index:1;
+}
+
+
+#iframe{
+    background-color:white;
+    border-style: inset;
+    border:5px solid black;
+    width:99%;
+    height:75%;
+}

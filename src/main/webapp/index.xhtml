@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+
+    <h:head>
+        <title>CodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+
+        <div id="container" > 
+
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+
+            <div id="content">
+                <p:panel header="Index"  style="height:auto;"> 
+                    <br />
+                    <p:panelGrid id="index_tab" columns="4" style="width:700px;">  
+
+                        <h:link outcome="admin" >
+                            <h:graphicImage library="images" name="img_accueil/admin.png" />
+                        </h:link>
+                        <h:link outcome="log" >
+                            <h:graphicImage library="images" name="img_accueil/consult_result.png" />
+                        </h:link>
+                        <h:link outcome="log" >
+                            <h:graphicImage library="images" name="img_accueil/tstagence.png"  />
+                        </h:link>
+                        <h:link outcome="log_candidat" > 
+                            <h:graphicImage library="images" name="img_accueil/candid.png" />
+                        </h:link>
+
+                        <h:link outcome="admin" value="Accès administration" />
+                        <h:link outcome="log" value="Consulter les résultats"/>
+                        <h:link outcome="log" value="faire passer une évaluation en agence"/>
+                        <h:link outcome="log_candidat" value="Accès candidat"/>
+
+                    </p:panelGrid>  
+
+                    page1: <h:link value="Créer/éditer candidat" outcome="candidat" /><br />
+                    page2: <h:link value="Choisir un test" outcome="test" /> <br />
+                    page3: <h:link value="Infos sur la réservation" outcome="info_reservation" /> <br />
+                    page4: <h:link value="Accueil candidat" outcome="helloCandidat" /> <br />
+                    page5: <h:link value="Le testeur de code (Fake)" outcome="FakeCodeTester" /> <br />
+                    page6: <h:link value="La fin" outcome="theEnd" /> <br />
+                    <hr />
+                </p:panel> 
+
+
+            </div>  
+
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+
+        </div>
+
+    </h:body>
+</html>
+

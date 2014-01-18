@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+    <h:head>
+        <title>CodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+
+        <div id="container">
+
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+            <h:form >
+                <div id="content">
+                    <p:panel header="Information de la réservation"  style="height:500px;"> 
+
+<!--                        <h:outputText value="#{theCandidat.candidatNom}" />
+                                              <h:outputText value="#{sessionScope.theCandidat.candidatPrenom}" />-->
+
+
+
+                        <p:fieldset legend="Liste des tests" style="width:500px;padding:20px;border:1px solid silver;float:left;margin-top:20px;">  
+                            <h:dataTable value="#{infoResa.theTests}" var="list" styleClass="order-table"
+                                         headerClass="order-table-header"
+                                         rowClasses="order-table-odd-row,order-table-even-row">
+                                <h:column>
+                                    <f:facet name="header">Catégorie du test</f:facet>
+                                        #{list.testmatiere}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Libellé du test</f:facet>
+                                        #{list.theme}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Durée (min)</f:facet>
+                                        #{list.testduree}
+                                </h:column>
+                                <h:column>
+                                    <f:facet name="header">Nb questions</f:facet>
+                                        #{list.testNbquestionRub}
+                                </h:column>
+                            </h:dataTable>
+                        </p:fieldset> 
+
+
+
+                        <p:fieldset legend="Liste des candidats" style="width:200px;padding:20px;border:1px solid silver;float:right;margin-top:20px;">  
+                            <h:dataTable value="#{infoResa.listCandidat}" var="theCandidat"  styleClass="order-table"
+                                         headerClass="order-table-header"
+                                         rowClasses="order-table-odd-row,order-table-even-row" style="width:300px;">
+                                <h:column>
+                                    <f:facet name="header">Nom</f:facet>
+                                    <h:outputText value="#{sessionScope.theCandidat.candidatNom}" />
+                                </h:column>
+
+                                <h:column>
+                                    <f:facet name="header">Prénom</f:facet>
+                                    <h:outputText value="#{sessionScope.theCandidat.candidatPrenom}" />
+                                </h:column>
+                            </h:dataTable>
+                        </p:fieldset> 
+
+                        <p style="margin-top:300px;"><a >La durée total de l'ensemble des tests est de : </a> <h:outputText value="#{infoResa.dureeTotale}" /><a>min</a></p>
+                        <hr />
+
+                        <div style="margin-top:30px;">
+                            <p:commandButton value="Annuler" action="#{infoResa.Annuler}" icon="ui-icon-check" style="margin:0"/>  
+                            <p:commandButton value="Retour" action="#{infoResa.Retour}" icon="ui-icon-check" style="margin:0;margin-left:20px;" />  
+                            <p:commandButton value="Suivant" action="#{infoResa.Suivant}" icon="ui-icon-check" style="margin:0;margin-left:20px;" />  
+                        </div>
+                    </p:panel>  
+                </div>  
+            </h:form>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+        </div>
+
+    </h:body>
+</html>

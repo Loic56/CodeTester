@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+    <h:head>
+        <title>CodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+
+        <div id="container">
+
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+            <div id="content">
+                <p:panel header="Bienvenue"  style="height:600px;"> 
+                    <h:form style="border:1px solid transparent;">
+                        <p:fieldset legend="Merci de lire les consignes avant de commencer" style="width:400px;padding:20px;border:1px solid silver;float:left;margin-top:20px;">  
+                            <ul>
+                                <ul style="padding: 0;"><li>Le temps restant est indiqué sous forme de graphique en haut de l'écran. Lorsque la barre est totalement rouge, le test est terminé automatiquement et les résultats sont affichés.</li></ul>
+                                <ul style="padding: 0;"><li>Pour visualiser entièrement certaines questions, vous pouvez avoir besoin d'utiliser le curseur vertical sur la droite de l'écran</li></ul>
+                                <ul style="padding: 0;"><li>La navigation doit se faire avec les boutons "Précédent" et "Suivant" en haut de l'écran.</li></ul>                                
+                                <ul style="padding: 0;"><li>Un bouton "Récapitulatif" vous permet à tout moment de voir l'ensemble des questions et celles auxquelles vous avez répondu.</li></ul>
+                                <ul style="padding: 0;"><li>Vous pouvez, si vous le souhaitez, mettre fin à votre test en cliquant sur le bouton "Fin de Test", après le "Récapitulatif", le test se terminera et les résultats seront affichés.</li></ul>
+                                <ul style="padding: 0;"><li>Pour commencer, cliquer sur le bouton "Début de test".</li></ul>
+                            </ul>
+                        </p:fieldset> 
+                        
+                        
+
+                        <p:fieldset legend="Le test" style="text-align:center;width:400px;padding:20px;border:1px solid silver;float:right;margin-top:20px;">  
+                            <h:outputText value="#{testInfo.test.testmatiere} - #{testInfo.test.theme}" />
+                            <p>La durée de ce test est <h:outputText value="#{testInfo.test.testduree}"/> min </p>
+                            <p><h:outputText value="#{testInfo.test.testNbquestionRub}"/> questions </p>
+                            <h:dataTable value="#{testInfo.list_rub}" var="list" styleClass="order-table"
+                                         headerClass="order-table-header"
+                                         rowClasses="order-table-odd-row,order-table-even-row" style="width:400px;">
+                                <h:column>
+                                    <f:facet name="header">Rubrique(s)</f:facet>
+                                    <h:outputText value="#{list.rubriquenom}" />
+                                </h:column>
+
+                            </h:dataTable>
+                            <br />
+                            <hr />
+                            <br />
+                            <p:commandButton value="Début du test" action="#{testInfo.DebuterTest}" icon="ui-icon-check" style="margin:0"/>  
+                        </p:fieldset> 
+
+                    </h:form>
+                </p:panel>  
+            </div>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+
+        </div> <!-- container -->
+    </h:body>
+</html>     

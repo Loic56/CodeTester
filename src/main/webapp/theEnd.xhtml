@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui" >
+
+    <h:head>
+        <title>CodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+
+        <div id="container" > 
+
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+
+            <div id="content">
+                <h:form>
+                    <p:panel header="Résultats"  style="width:920px;height:400px;"> 
+                        <br />
+                        <h:outputText value="Ce test est maintenant fini, retournez à l'index pour passer les tests suivants" style="font-size:16px;color:#f0b66a;"/> 
+                        <hr />
+                        
+                        <p:panelGrid  columns="2" style="width:auto;margin:50px;padding-left:50px;padding-right:50px; ">  
+                            <p:panelGrid columns="1" >  
+                                <h:outputText value="#{theEnd.theTest.testmatiere} - #{theEnd.theTest.theme}" style="font-size:20px;color:#ef634d;"/> 
+                                <hr/>
+                                <h:outputText value="#{theEnd.theCandidat.candidatPrenom} #{theEnd.theCandidat.candidatNom}" style="font-size:15px;"/> 
+                                <h:outputText value="Date : #{theEnd.theDate}" style="font-size:15px;"/> 
+                                <h:outputText value="Nombre de rubriques :  " style="font-size:15px;"/> 
+                            </p:panelGrid>  
+                            
+                            <p:panelGrid columns="1" style="color:#f5bb67;margin-left:50px;text-align:center;">  
+                                <h:outputText value="Note : #{theEnd.note} / #{theEnd.nbQuest}" style="font-size:20px;"/> 
+                            </p:panelGrid>  
+                            
+                        </p:panelGrid>  
+                        
+
+                        <p:commandButton value="Revenir à l'index" action="#{theEnd.retourAccueil}"   
+                                         style="float:left;margin-left:70px;"/> 
+
+
+                    </p:panel> 
+
+
+                </h:form>
+            </div>  
+
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+
+        </div>
+
+    </h:body>
+</html>
+

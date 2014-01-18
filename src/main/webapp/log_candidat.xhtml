@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+    <h:head>
+        <title>CodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+
+        <div id="container">
+
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+            <div id="content">
+                <h:form>
+                    <p:panel id="panel" header="Identification du candidat"  style="height:auto;"> 
+<!--                        <h:outputText value="nom: #{sessionScope.thecandidat.candidatNom}" /> 
+                        <h:outputText value="prenom: #{sessionScope.thecandidat.candidatPrenom}" /> 
+                        <h:outputText value="date: #{sessionScope.thecandidat.candidatDateNaissance}" /> -->
+
+                        <div style="text-align:left;margin-top:30px; margin-left:20px">
+                            <h:panelGrid columns="2">  
+                                <h:link outcome="index" >
+                                    <h:graphicImage library="images" name="img_accueil/fleche_retour2.png" style="height:35px;"/>
+                                </h:link>
+                                <h:link outcome="index" value="retour vers l'accueil" style="margin-left:10px;"/>
+                            </h:panelGrid>  
+                        </div>
+
+                        <br />
+                        <c:if test="#{logCandidat.error eq 1}">
+                            <div style="width:auto;height:20px;text-align:center;border:1px solid black;background-color:red;color:white;">Le candidat n'a pas été trouvé / Erreur de saisie </div>
+                        </c:if>
+
+
+
+                        <br />
+                        <p:messages id="msgs"/>  
+                        <fieldset style="width:400px;border:1px solid silver;margin-left:50px;padding:10px;">
+
+                            <h:panelGrid columns="3" style="margin-right:auto;margin-left:auto;">  
+
+
+                                <h:outputLabel for="nom" value="Nom " />  
+                                <p:inputText id="nom" value="#{logCandidat.nom}" required="true" label="nom">
+                                    <f:validateLength minimum="2" />  
+                                </p:inputText> 
+                                <p:message for="nom" display="icon"/>  
+
+
+                                <h:outputLabel for="prenom" value="Prénom " /> 
+                                <p:inputText id="prenom" value="#{logCandidat.prenom}" required="true" label="prenom">
+                                    <f:validateLength minimum="2" />  
+                                    <p:ajax update="msgPrenom" event="keyup" /> 
+                                </p:inputText> 
+
+                                <p:message for="prenom" id="msgPrenom" display="icon"/>  
+
+
+                                <h:outputLabel for="date" value="Date de naissance " /> 
+                                <p:calendar value="#{logCandidat.date}" required="true"
+                                            id="calendar" pattern="dd-MM-yyyy" mode="popup" showOn="button">
+                                </p:calendar>
+                                <p:message for="prenom" id="msgDate" display="icon"/>  
+
+
+                            </h:panelGrid>  
+                            <p:commandButton value="Connexion" action="#{logCandidat.Connexion}" id="withIcon"   
+                                             icon="ui-icon-disk" update="panel" style="margin-left:187px;margin-top:5px;"/> 
+
+
+                        </fieldset>  
+
+                        <br />
+                        <br />
+
+                    </p:panel>
+                </h:form>
+            </div>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+
+        </div>
+    </h:body>
+</html>
