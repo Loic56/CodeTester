@@ -34,28 +34,28 @@ and open the template in the editor.
 
                     <p:panel header="QCM" style="height:auto;" > 
                         <br/>
-                        <br/>
-                        <h:outputText value="Question n°:#{qcm.count}" />   <br/>
-                        <h:outputText value="Rubrique: #{qcm.rubrique}" />   <br/>
-                        <h:outputText value="Question_id:#{qcm.questionid}" />   <br/>
-                        <h:outputText value="#{qcm.enonce}" />   <br/>
                         <h:outputText id="txt_count" value="Temps restant: #{qcm.time} min " style="float:right;margin-right:50px;color:#ed9f53;"/>  
                         <p:poll interval="1"   
                                 listener="#{qcm.Decrement}" update="txt_count" />  
                         <br/>
+                        <br/>
+                        <h:outputText value="Question n°:#{qcm.count} - Question_id:#{qcm.questionid}" />   <br/>
+                        <br/>
+                        <h:outputText value="#{qcm.enonce}" />   
                         <hr/>
+                        <br/>
                         <br/>
                         <h:outputText value="Propositions:" />  
 
-                        <p:selectOneRadio id="listPropositions" value="#{qcm.maValeur}" layout="grid" columns="1">  
+                        <p:selectOneRadio id="listPropositions" value="#{qcm.maValeur}" layout="grid" columns="1" style="margin-left:50px;">  
                             <f:selectItems id="theProposition" value="#{qcm.mesElements}" var="theElement"  itemValue="#{theElement.propositionid}" itemLabel=" #{theElement.propositionlibelle} "/>  
                         </p:selectOneRadio>  
 
 
                         <br/>
-                        <hr/>
+
                         <br/>
-                        <p:commandButton value="Suivant" action="#{qcm.Suivant}" icon="ui-icon-check" style="margin:0;margin-left:20px;" /> 
+                        <p:commandButton value="Suivant" action="#{qcm.Suivant}" icon="ui-icon-check" style="margin:0;margin-left:auto;margin-right:auto;" /> 
                     </p:panel>  
                 </h:form>  
             </div>
