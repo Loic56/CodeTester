@@ -1,0 +1,182 @@
+
+
+INSERT INTO `admin` (`ADMINID`, `ADMINLOGIN`, `ADMINPASSWORD`) VALUES
+(1, 'dev', 'test'),
+(2, 'admin', 'asadmin');
+
+--
+-- Contenu de la table `candidat`
+--
+
+INSERT INTO `candidat` (`CANDIDATID`, `CANDIDAT_CIVILITE`, `CANDIDAT_NOM`, `CANDIDAT_PRENOM`, `CANDIDAT_MAIL`, `CANDIDAT_DATE_NAISSANCE`) VALUES
+(1, 'Mr', 'Faber', 'Samuel', 'grosLard@hotmail.fr', '1985-01-01'),
+(2, 'Mr', 'Crusson', 'Romain', 'nazbrock.grave@hotmail.fr', '1983-03-10'),
+(3, 'Mr', 'Crusson', 'loïc', 'beaugosse.laclasse@hotmail.fr', '1980-10-21'),
+(4, 'Mr', 'Halgand', 'Hervé', 'duped.freeMan@hotmail.fr', '1983-06-07');
+
+--
+-- Contenu de la table `categorie`
+--
+
+INSERT INTO `categorie` (`CATEGORIEID`, `CATEGORIELIBELLE`) VALUES
+(1, 'PHP'),
+(2, 'JAVA'),
+(3, 'SQL');
+
+--
+-- Contenu de la table `proposition`
+--
+
+INSERT INTO `proposition` (`PROPOSITIONID`, `QUESTIONID`, `PROPOSITIONLIBELLE`, `PROPOSITIONVRAI`) VALUES
+(1, 1, 'Proposition 1', 1),
+(2, 2, 'Proposition 2', 1),
+(3, 3, 'Proposition 3', 1),
+(4, 4, 'Proposition 4', 1),
+(5, 5, 'Proposition 5', 1),
+(6, 6, 'Proposition 6', 1),
+(7, 7, 'Proposition 7', 1),
+(8, 8, 'Proposition 8', 1),
+(9, 9, 'Proposition 9', 1),
+(10, 10, 'Proposition 10', 1),
+(11, 11, 'Proposition 11', 1),
+(34, 12, 'Est automatique', 1),
+(35, 12, 'Se fait par l''instruction DIM', 0),
+(36, 12, 'Se fait par l''instruction REDIM', 0),
+(37, 12, 'Est défini de manière définitive à la déclaration du tableau', 0),
+(38, 13, '	\r\nle signe +', 0),
+(39, 13, 'le signe =', 0),
+(40, 13, 'le signe &', 0),
+(41, 13, 'le point .', 1),
+(42, 14, '(...)', 0),
+(43, 14, '[...]', 1),
+(44, 14, '{...}', 0),
+(45, 14, '"..."', 0),
+(46, 15, 'chmod()', 0),
+(47, 15, 'rmdir()', 0),
+(48, 15, 'mkdir()', 1),
+(49, 15, 'lstat()', 0),
+(50, 16, 'bloquer les messages d''erreurs', 1),
+(51, 16, 'introduire une adresse internet', 0),
+(52, 16, 'ajouter un nombre complexe à un nombre réel', 0),
+(53, 16, 'renvoyer la référence à une valeur plutôt que la valeur elle-même', 0),
+(54, 17, '<? ... ?>', 0),
+(55, 17, '<% ... %>', 0),
+(56, 17, '<?php ... ?>', 1),
+(57, 17, '<?php ... php?>', 0),
+(58, 18, 'Le fait de renvoyer une valeur passée en paramètre', 0),
+(59, 18, 'Le fait pour une fonction de pouvoir être appelée par une autre fonction', 0),
+(60, 18, 'Le fait pour une fonction de pouvoir s''appeler elle-même', 1),
+(65, 19, 'retourne la classe appelé explicitement dans le code PHP et non au sein de la classe', 0),
+(66, 19, 'retourne la classe de l''objet passé en paramètres', 0),
+(67, 19, 'retourne un tableau de toutes les interfaces implémentées par la classe et par tous ses parents', 0),
+(68, 19, 'retourne un tableau de la classe parent et de tous ses parents', 1),
+(69, 20, 'new', 1),
+(70, 20, 'method', 0),
+(71, 20, 'extends', 1),
+(72, 20, 'constant', 0),
+(73, 21, 'Une méthode', 0),
+(74, 21, 'Une instance de classe', 1),
+(75, 21, 'Une fonction dans une classe', 0),
+(76, 22, 'foo', 0),
+(77, 22, 'Array([foo] => foo)', 1),
+(78, 22, 'bar', 0),
+(79, 22, 'Array([bar] => bar)', 0),
+(80, 23, 'Un objet', 1),
+(81, 23, 'Une nouvelle fonction', 0),
+(82, 23, 'Une instance de la classe myClass()', 1),
+(83, 24, 'Une fonction avec des déclarations', 0),
+(84, 24, 'Une fonction dans une classe', 1),
+(85, 24, 'Un ensemble de déclarations dans une classe', 0),
+(86, 26, '$meuble[''type'']', 0),
+(87, 26, '$meuble->type', 1),
+(88, 26, '$this.type', 0),
+(89, 26, '$this->type', 0),
+(90, 27, 'Dans une table on peut accéder indépendamment à chaque enregistrement', 1),
+(91, 27, 'Dans une table, les données sont rangées par ordre alphabétique', 0),
+(92, 27, 'Une table fait toujours partie d''une base de données', 1),
+(93, 28, 'Une table contient systématiquement un identifiant incrémenté de manière automatique', 0),
+(94, 28, 'Une table tient moins de place qu''un fichier texte', 0),
+(95, 28, 'Une table est toujours organisée en lignes et en colonnes', 1),
+(96, 29, 'tous les noms et toutes les valeurs des deux tables en regroupant sur les données de "table_valeur"', 0),
+(97, 29, 'seulement les noms et valeurs qui sont identiques dans les deux tables', 1),
+(98, 29, 'une liste résultant du produit entre les noms et les valeurs des deux tables', 0),
+(99, 29, 'seulement les noms et valeurs qui sont différents dans les deux tables', 0),
+(100, 30, '$myResult = mysql_query(requête sql)', 1),
+(101, 30, '$myResult = mysql(requête sql)', 0),
+(102, 30, '$myResult = mysql_fetch(requête sql)', 0),
+(103, 31, 'Trier les données en sortie', 1),
+(104, 31, 'Rechercher certains enregistrements parmi d''autres dans une table ou un ensemble de tables', 0),
+(105, 31, 'Regrouper des enregistrement en sortie', 0),
+(106, 32, 'Trier les données en sortie', 0),
+(107, 32, 'Rechercher certains enregistrements parmi d''autres dans une table ou un ensemble de tables', 0),
+(108, 32, 'Regrouper des enregistrement en sortie', 1),
+(109, 33, 'on peut imprimer directement le contenu des champs sélectionnés', 0),
+(110, 33, 'on utilise en général une autre fonction ''mysql_fetch_array()''', 1),
+(111, 33, 'on utilise en général une autre fonction ''mysql_list_fields()''', 0);
+
+--
+-- Contenu de la table `question`
+--
+
+INSERT INTO `question` (`QUESTIONID`, `RUBRIQUEID`, `QUESTIONTEXT`) VALUES
+(1, 1, 'Codez l''algorithme.'),
+(2, 1, 'Codez l''algorithme.'),
+(3, 1, 'A l''aide d''une boucle foreach, affichez le contenu du tableau.'),
+(4, 1, 'Codez l''algorithme.'),
+(5, 1, 'Codez l''algorithme.'),
+(6, 2, 'Affichez toutes les valeurs du tableau avec la boucle foreach (K + V).'),
+(7, 2, 'Codez l''algorithme.'),
+(8, 2, 'Soit le tableau fruits : codez le reste de l’algorithme.'),
+(9, 2, 'Boucle imbriquées, affichez la table de multiplication du chiffre 12.Codez l''algorithme ci-dessous.'),
+(10, 2, 'Codez l''algorithme.'),
+(11, 2, 'Boucles foreach imbriquées. Soit le tableau array. A l’aide des boucles foreach affichez le résultat ci-dessous.'),
+(12, 10, 'En PHP le dimensionnement d''un tableau :'),
+(13, 10, 'L''opérateur de concaténation est :'),
+(14, 10, 'Les pointeurs d''un tableau sont insérés entre ?'),
+(15, 10, 'Quelle fonction permet de créer un répertoire ?'),
+(16, 10, 'A quoi sert l''opérateur @ en php ?'),
+(17, 10, 'Un fichier PHP doit commencer et se terminer par une des instructions suivantes, laquelle ?'),
+(18, 10, 'Qu''est-ce que la récursivité ?'),
+(19, 10, 'A quoi sert la fonction get_class() ?'),
+(20, 10, 'Parmi les mots suivants, lesquels permettent de déclarer des classes en PHP (deux réponses possibles) ?'),
+(21, 10, 'Qu''est-ce qu''un objet en PHP ?'),
+(22, 9, '<?php\r\nclass foo { } \r\nclass bar extends foo {} \r\nprint_r(class_parents(new bar)); \r\n?>\r\nQue renvoie print_r ?'),
+(23, 10, 'Après le code :$myVar = new myClass(); qu''est $myVar (2 réponses) ?'),
+(24, 10, 'Qu''est-ce qu''une méthode ?'),
+(25, 10, 'Soit une instance de classe $meuble, comment puis-je accéder à la propriété "type" à l''intérieur de ma classe ?'),
+(26, 10, 'Soit une instance de classe $meuble, comment puis-je accéder à la propriété "type" à l''intérieur de ma classe ?'),
+(27, 10, 'Quelle(s) affirmation(s) concernant les bases de données MySQL est/sont vraie(s) ?'),
+(28, 10, 'Quelle(s) affirmation(s) concernant les bases de données MySQL est/sont vraie(s) ?'),
+(29, 10, 'Que retourne la requête "SELECT nom, valeur FROM table_nom, table_valeur" ?'),
+(30, 10, 'Quelle instruction PHP permet d''adresser une requête SQL au serveur mySQL ?'),
+(31, 10, 'A quoi sert la clause ''WHERE'' en SQL ?'),
+(32, 10, 'A quoi sert la clause ''ORDER BY'' en SQL ?'),
+(33, 10, 'Comment voir les données renvoyées par la fonction ''mysql_query(select * from EMPLOYES)'' ?');
+
+--
+-- Contenu de la table `rubrique`
+--
+
+INSERT INTO `rubrique` (`RUBRIQUEID`, `TESTID`, `RUBRIQUENOM`) VALUES
+(1, 1, 'Boucles PHP - Niveau 1'),
+(2, 1, 'Boucles PHP - Niveau 2'),
+(3, 2, 'Tableaux PHP - Niveau 1'),
+(4, 2, 'Tableaux PHP - Niveau 2'),
+(5, 2, 'Tableaux PHP - Niveau 3'),
+(6, 3, 'Algorithmie PHP - Niveau 1'),
+(7, 3, 'Algorithmie PHP - Niveau 2'),
+(8, 3, 'Algorithmie PHP - Niveau 4'),
+(9, 3, 'Algorithmie PHP - Niveau 4'),
+(10, 6, 'QCM - PHP et MySQL');
+
+--
+-- Contenu de la table `test`
+--
+
+INSERT INTO `test` (`TESTID`, `CATEGORIEID`, `TESTMATIERE`, `TESTDUREE`, `TEST_NBQUESTION_RUB`, `TESTNATURE`, `TESTFORMAT`, `TEST_START`, `TEST_DESCRIPTION`, `THEME`, `NIVEAU`) VALUES
+(1, 1, 'Développement PHP', 20, 10, 'THEM', 'PHP', 'Instructions début', 'Les boucles permettent d''effectuer un certain nombre de fois les mêmes opérations, par exemple afficher une suite de nombres que l''on incrémentera à chaque tour de boucle. \nVous allez pouvoir répéter autant d''instructions que vous souhaitez et vous arrêter lorsque vous l''aurez décidé.\nCe test vérifiera les compétences du candidat sur ces notions élémentaires.\n', 'Boucles en PHP', 1),
+(2, 1, 'Développement PHP', 20, 20, 'THEM', 'PHP', 'Instructions de début', 'Les boucles permettent d''effectuer un certain nombre de fois les mêmes opérations, par exemple afficher une suite de nombres que l''on incrémentera à chaque tour de boucle. Vous allez pouvoir répéter autant d''instructions que vous souhaitez et vous arrêter lorsque vous l''aurez décidé.\n\nCe test permet de vérifier les connaissances ces élementaires du candidat.\n', 'Tableaux PHP', 2),
+(3, 1, 'Développement PHP', 30, 20, 'THEM', 'PHP', 'Instructions de début', 'Wiki (MediaWiki, WikiNi, DokuWiki...)\nforum (phpBB, IPB, punBB...)\nSystèmes de gestion de blog (Dotclear, WordPress...)\nSystèmes de gestion de contenu (appelés aussi CMS) (Spip, ExpressionEngine, Drupal, Xoops, Joomla...)\nAdministration de bases de données (phpMyAdmin, phpPgAdmin, Adminer, Eskuel...)\nFrameworks (Zend Framework, CodeIgniter, CakePHP, Symfony, etc.)\nLogiciel ECM (Dynacase Platform)\nLogiciel BPM (Dynacase Platform)\nE-commerce (Magento, osCommerce, PrestaShop, etc.)', 'Algorithmes PHP', 3),
+(4, 1, 'Développement PHP', 30, 20, 'GEN', 'PHP', 'Instructions de début', 'PHP est à la base un langage interprété, ce qui est au détriment de la vitesse d''exécution du code. Sa forte popularité associée à son utilisation sur des sites Web à très fort trafic (Yahoo, Facebook69) ont amené un certain nombre de personnes à chercher à améliorer ses performances pour pouvoir servir un plus grand nombre d''utilisateurs de ces sites Web sans nécessiter l''achat de nouveaux serveurs.\n\nLa réécriture du cœur de PHP ayant abouti au Zend Engine pour PHP 4 puis le Zend Engine 2 pour PHP 5 sont des optimisations. Le Zend Engine compile en interne le code PHP en bytecode exécuté par une machine virtuelle. Les projets open source APC et eAccelerator fonctionnent en tant que cache pour accélérer encore un peu la génération des pages Web.', 'Test général - Niveau 1', 2),
+(5, 1, 'Développement PHP', 30, 20, 'GEN', 'PHP', 'Instructions de début', 'Le code PHP doit être inséré entre des balises <?php et ?>.\n\nIl existe des notations raccourcies : <? et ?>, voire la notation ASP <% et %>, mais celles-ci sont déconseillées, car elles peuvent être désactivées dans la configuration du serveur (php.ini ou .htaccess) : la portabilité du code est ainsi réduite.\n\nIl existe aussi cette syntaxe, peu courante : <script language="php"> et </script>.', 'Test général - Niveau 2', 1),
+(6, 1, 'Développement PHP', 20, 21, 'QCM', 'PHP', 'Instructions de début', 'Ce test s''adresse à un développeur Web pour les technologies Php et Mysql. Le test ne porte pas sur la programmation avancée en Mysql mais sur des requêtes usuelles.', 'QCM : PHP et MySQL', 1);

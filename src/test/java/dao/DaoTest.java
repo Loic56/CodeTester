@@ -396,13 +396,24 @@ public class DaoTest {
 
     private void delete() {
         printLine("Delete");
-        //  supprimer tous les candidats
+       //supprimer tous les candidats
+        List<Reponse> list1 = reponseDao.findAll();
+
+        if (list1 == null) {
+            System.out.println("Delete Reponse >>  NULL");
+        } else {
+            for (Reponse r : list1) {
+                System.out.println("Delete Reponse  => " + r.toString());
+                reponseDao.destroy(r);
+            }
+        }
         List<Candidat> list = candidatDao.findAll();
+
         if (list == null) {
             System.out.println("Delete Candidat >>  NULL");
         } else {
             for (Candidat cand : list) {
-                System.out.println("Delete => " + cand.toString());
+                System.out.println("Delete Candidat => " + cand.toString());
                 candidatDao.destroy(cand);
             }
         }
