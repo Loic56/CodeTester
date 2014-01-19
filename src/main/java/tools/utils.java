@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-
+import java.util.Collection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -363,11 +363,6 @@ public class utils {
 
         System.out.println("Passage id = " + thePassage.getPassageid());
 
-        // on choisit tous les tests 
-        // List<Test> listTest = testDao.findAll();
-//        Test test_ = testDao.find(Long.valueOf(6));
-//        System.out.println("test id = " + test_.getTestid());
-        // on créé une liste de jointures
         List<Jointure> listJointure = new ArrayList<Jointure>();
 
         // on associe chaque test à sa jointure et chaque jointure à un passage + persist la jointure
@@ -398,19 +393,27 @@ public class utils {
                 // pour chaque rubriques on récupère sa liste questions
                 List<Object> list2 = Arrays.asList(rub.getQuestionCollection().toArray());
                 System.out.println("  >> Pour la rubrique n°" + rub.getRubriqueid() + ", Nombre de question = " + list2.size());
+
+                //question
                 for (Object o2 : list2) {
 
                     // pour chaque question on créer une réponse vide
                     Question quest = (Question) o2;
+                    //List<Reponse> list_rep = (List<Reponse>) quest.getReponseCollection();
+
+                    Collection<Reponse> listReponse = quest.getReponseCollection();
 
                     Reponse rep = new Reponse();
                     rep.setReponsemessage("");
                     rep.setReponsetexte("");
                     rep.setReponseduree(0);
+                    rep.setQuestionid(quest);
                     rep.setPassageid(thePassage);
                     Reponse reponse = reponseDao.create(rep);
 
-                    quest.setReponseid(reponse);
+                    listReponse.add(reponse);
+
+                    quest.setReponseCollection(listReponse);
 
                     //merge
                     questionDao.edit(quest);
@@ -482,17 +485,18 @@ public class utils {
         return String.valueOf(number);
     }
 
+    // on doit prendre qu'il peut y avoir plusieurs bonnes réponses
     public static int verif_ReponseQCM(String questionid, String id_propositionChecked) {
         Question quest = questionDao.find(Long.valueOf(questionid));
         Proposition prop = propositionDao.find_(quest);
 
         System.out.println("prop:" + prop.getPropositionid() + " == checked:" + id_propositionChecked);
 
-        if (prop.getPropositionid().equals(id_propositionChecked)) {
-            System.out.println("Réponse OK");
+        if (prop.getPropositionid().toString().equals(id_propositionChecked)) {
+            System.out.println("La réponse est bonne");
             return 1;
         } else {
-            System.out.println("Réponse KO");
+            System.out.println("La réponse est fausse");
             return 0;
         }
     }

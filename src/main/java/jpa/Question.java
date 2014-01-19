@@ -52,19 +52,14 @@ public class Question implements Serializable {
     private Rubrique rubriqueid;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionid")
-    private Collection<Proposition> propositionCollection;
-
-    
-    
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionid")
     private Collection<ReponseHisto> reponseHistoCollection;
 
-    @JoinColumn(name = "REPONSEID", referencedColumnName = "REPONSEID")
-    @ManyToOne(optional = false)
-    private Reponse reponseid;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionid")
+    private Collection<Reponse> reponseCollection;
 
-    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "questionid")
+    private Collection<Proposition> propositionCollection;
+
     
     
     
@@ -100,12 +95,13 @@ public class Question implements Serializable {
         this.reponseHistoCollection = reponseHistoCollection;
     }
 
-    public Reponse getReponseid() {
-        return reponseid;
+    @XmlTransient
+    public Collection<Reponse> getReponseCollection() {
+        return reponseCollection;
     }
 
-    public void setReponseid(Reponse reponseid) {
-        this.reponseid = reponseid;
+    public void setReponseCollection(Collection<Reponse> reponseCollection) {
+        this.reponseCollection = reponseCollection;
     }
 
     public Rubrique getRubriqueid() {

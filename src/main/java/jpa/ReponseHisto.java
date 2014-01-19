@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package jpa;
 
 import java.io.Serializable;
@@ -33,33 +34,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "ReponseHisto.findByReponsefin", query = "SELECT r FROM ReponseHisto r WHERE r.reponsefin = :reponsefin"),
     @NamedQuery(name = "ReponseHisto.findByReponsehistoid", query = "SELECT r FROM ReponseHisto r WHERE r.reponsehistoid = :reponsehistoid")})
 public class ReponseHisto implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
+    @Lob
+    @Size(max = 65535)
+    @Column(name = "REPONSEVALEUR")
+    private String reponsevaleur;
+    @Column(name = "REPONSEDEBUT")
+    private Integer reponsedebut;
+    @Column(name = "REPONSEFIN")
+    private Integer reponsefin;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "REPONSEHISTOID")
     private Integer reponsehistoid;
-
-    @Lob
-    @Size(max = 65535)
-    @Column(name = "REPONSEVALEUR")
-    private String reponsevaleur;
-
-    @Column(name = "REPONSEDEBUT")
-    private Integer reponsedebut;
-
-    @Column(name = "REPONSEFIN")
-    private Integer reponsefin;
-
-    
-    
-    
     @JoinColumn(name = "QUESTIONID", referencedColumnName = "QUESTIONID")
     @ManyToOne(optional = false)
     private Question questionid;
-
     @JoinColumn(name = "PASSAGEID", referencedColumnName = "PASSAGEID")
     @ManyToOne(optional = false)
     private Passage passageid;
@@ -143,5 +134,5 @@ public class ReponseHisto implements Serializable {
     public String toString() {
         return "jpa.ReponseHisto[ reponsehistoid=" + reponsehistoid + " ]";
     }
-
+    
 }

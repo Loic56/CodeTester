@@ -7,9 +7,7 @@
 package jpa;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -17,12 +15,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -56,12 +52,13 @@ public class Reponse implements Serializable {
     @Column(name = "REPONSEMESSAGE")
     private String reponsemessage;
     
+    @JoinColumn(name = "QUESTIONID", referencedColumnName = "QUESTIONID")
+    @ManyToOne(optional = false)
+    private Question questionid;
+    
     @JoinColumn(name = "PASSAGEID", referencedColumnName = "PASSAGEID")
     @ManyToOne(optional = false)
     private Passage passageid;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reponseid")
-    private Collection<Question> questionCollection;
 
     public Reponse() {
     }
@@ -102,21 +99,20 @@ public class Reponse implements Serializable {
         this.reponsemessage = reponsemessage;
     }
 
+    public Question getQuestionid() {
+        return questionid;
+    }
+
+    public void setQuestionid(Question questionid) {
+        this.questionid = questionid;
+    }
+
     public Passage getPassageid() {
         return passageid;
     }
 
     public void setPassageid(Passage passageid) {
         this.passageid = passageid;
-    }
-
-    @XmlTransient
-    public Collection<Question> getQuestionCollection() {
-        return questionCollection;
-    }
-
-    public void setQuestionCollection(Collection<Question> questionCollection) {
-        this.questionCollection = questionCollection;
     }
 
     @Override

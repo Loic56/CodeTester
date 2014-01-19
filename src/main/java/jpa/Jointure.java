@@ -54,8 +54,8 @@ public class Jointure implements Serializable {
     public Jointure() {
     }
 
-    public Jointure(Test testid) {
-        this.testid = testid;
+    public Jointure(Test test) {
+        this.testid = test;
     }
 
     public Jointure(Integer jointureid) {

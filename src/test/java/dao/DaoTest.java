@@ -261,15 +261,12 @@ public class DaoTest {
                 for (Question quest : list2) {
 
                     Proposition p = new Proposition();
-                    //p.getReponseCollection().add(rep);
                     Collection<ReponseHisto> reponseHistoCollection = new ArrayList<ReponseHisto>();
                     Set<ReponseHisto> theReponseHistoCollection = new HashSet<ReponseHisto>(reponseHistoCollection);
 
                     Collection<Reponse> reponseCollection = new ArrayList<Reponse>();
                     Set<Reponse> theReponseCollection = new HashSet<Reponse>(reponseCollection);
 
-                    // p.setReponseCollection(theReponseCollection);
-                    //  p.setReponseHistoCollection(theReponseHistoCollection);
                     p.setQuestionid(quest);
                     short s = (short) 1;
 
@@ -414,7 +411,7 @@ public class DaoTest {
         } else {
             for (Reponse r : list1) {
                 System.out.println("Delete Reponse  => " + r.toString());
-                reponseDao.destroy(r);
+                //reponseDao.destroy(r);
             }
         }
         List<Candidat> list = candidatDao.findAll();

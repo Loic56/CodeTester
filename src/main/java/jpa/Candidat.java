@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package jpa;
 
 import java.io.Serializable;
@@ -41,37 +40,38 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Candidat.findByCandidatMail", query = "SELECT c FROM Candidat c WHERE c.candidatMail = :candidatMail"),
     @NamedQuery(name = "Candidat.findByCandidatDateNaissance", query = "SELECT c FROM Candidat c WHERE c.candidatDateNaissance = :candidatDateNaissance")})
 public class Candidat implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "CANDIDATID")
     private Integer candidatid;
-    
+
     @Size(max = 5)
     @Column(name = "CANDIDAT_CIVILITE")
     private String candidatCivilite;
-    
+
     @Size(max = 255)
     @Column(name = "CANDIDAT_NOM")
     private String candidatNom;
-    
+
     @Size(max = 255)
     @Column(name = "CANDIDAT_PRENOM")
     private String candidatPrenom;
-    
+
     @Size(max = 255)
     @Column(name = "CANDIDAT_MAIL")
     private String candidatMail;
-    
+
     @Column(name = "CANDIDAT_DATE_NAISSANCE")
     @Temporal(TemporalType.DATE)
     private Date candidatDateNaissance;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "candidatid")
     private Collection<Passage> passageCollection;
 
- public Candidat() {
+    public Candidat() {
     }
 
     public Candidat(String candidatCivilite, String candidatNom, String candidatPrenom, String candidatMail, Date candidatDateNaissance) {
@@ -176,5 +176,5 @@ public class Candidat implements Serializable {
     public String toString() {
         return "jpa.Candidat[ candidatid=" + candidatid + " ]";
     }
-    
+
 }

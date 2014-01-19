@@ -24,15 +24,11 @@
             <column name="PASSAGEID" not-null="false"/>
         </many-to-one>
     
-    
-    <!--        @OneToMany     -->
-        <set fetch="select" inverse="true" lazy="true" name="questionCollection" table="question">
-            <key>
-                <column name="REPONSEID" not-null="true"/>
-            </key>
-            <one-to-many class="jpa.Question"/>
-        </set>
+            <many-to-one class="jpa.Question" name="questionid">
+            <column name="QUESTIONID" not-null="false"/>
+        </many-to-one>
         
+
   
     
     

@@ -37,11 +37,13 @@
         </set>
     
     
-        <many-to-one class="jpa.Reponse" name="reponseid">
-            <column name="REPONSEID" not-null="true"/>
-        </many-to-one>
-    
-    
+           
+        <set fetch="select" inverse="true" lazy="true" name="reponseCollection" table="reponse_histo">
+            <key>
+                <column name="QUESTIONID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Reponse"/>
+        </set>
 
     
     

@@ -156,7 +156,7 @@ public class QCM implements Serializable {
     
     public void Decrement() {
         setDureeTest(getDureeTest() - 1);
-        System.out.println("decremente, durée = " + getDureeTest());
+      //  System.out.println("decremente, durée = " + getDureeTest());
         if (getDureeTest() == 0) {
             // mais impossible de retour en arrière
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";

@@ -111,20 +111,20 @@ public class TestDao implements ITestDao {
     @Override
     public Test update(Test test) {
         try {
-            System.out.println("1");
+           // System.out.println("1");
             Session session = sessionFactory.openSession();
-            System.out.println("2");
+            //System.out.println("2");
             Transaction transaction = session.beginTransaction();
-            System.out.println("3");
+            //System.out.println("3");
             transaction.begin();
-            System.out.println("4");
+            //System.out.println("4");
             
             session.update(test);
-            System.out.println("5");
+            //System.out.println("5");
             session.flush();
             // id est généré par l'insertion en base !
             int id = test.getTestid();
-            System.out.println("6");
+            //System.out.println("6");
             session.flush();
             List<Test> list = session.createQuery("from Test where testid = " + id).list();
             transaction.commit();
