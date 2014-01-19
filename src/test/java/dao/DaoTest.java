@@ -70,7 +70,7 @@ public class DaoTest {
         //test04();
         test05();
         test06();
-        //test07();
+        test07();
         test08();
         test09();
         test10();
@@ -79,6 +79,7 @@ public class DaoTest {
         test13();
         test14();
         test15();
+        test16();
 
     }
 
@@ -365,7 +366,8 @@ public class DaoTest {
 
     public void test13() {
         printLine("TEST13");
-        Reponse rep = reponseDao.find(Long.valueOf(1));
+        //Reponse rep = reponseDao.find(Long.valueOf(1));
+        //System.out.println("test 13 >> Reponse" + rep.toString());
     }
 
     // Dao question
@@ -378,9 +380,17 @@ public class DaoTest {
         }
     }
 
-    // Dao proposition find the good one
     public void test15() {
         printLine("TEST15");
+        List<Test> list = testDao.findAll();
+        for (Test t : list) {
+            System.out.println("test >> " + t.toString());
+        }
+    }
+
+    // Dao proposition find the good one
+    public void test16() {
+        printLine("TEST16");
         Question quest = questionDao.find(Long.valueOf(16));
         Proposition p = propositionDao.find_(quest);
 
@@ -396,7 +406,7 @@ public class DaoTest {
 
     private void delete() {
         printLine("Delete");
-       //supprimer tous les candidats
+        //supprimer tous les candidats
         List<Reponse> list1 = reponseDao.findAll();
 
         if (list1 == null) {
@@ -418,5 +428,4 @@ public class DaoTest {
             }
         }
     }
-
 }

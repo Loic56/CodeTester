@@ -486,9 +486,13 @@ public class utils {
         Question quest = questionDao.find(Long.valueOf(questionid));
         Proposition prop = propositionDao.find_(quest);
 
+        System.out.println("prop:" + prop.getPropositionid() + " == checked:" + id_propositionChecked);
+
         if (prop.getPropositionid().equals(id_propositionChecked)) {
+            System.out.println("Réponse OK");
             return 1;
         } else {
+            System.out.println("Réponse KO");
             return 0;
         }
     }
