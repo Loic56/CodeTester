@@ -117,24 +117,22 @@ public class QCM implements Serializable {
     
     // on passe à la page suivante
     public String Suivant() {
-
-
+        //on doit récupérer l'index de la checkboxe cochée
+        System.out.println("id de la proposition cochée: " +getMaValeur());
+        
         // la réponse du candidat + l'id de la question
-        int retour = utils.verif_ReponseQCM(getQuestionid()); // renvoie 1 si reponse OK 0 si KO
-
+        int retour = utils.verif_ReponseQCM(getQuestionid(), getMaValeur() ); // renvoie 1 si reponse OK 0 si KO
         // on met à jour la réponse ds la base
         if (retour == 1) {
             utils.enreg_ReponseQCM(getQuestionid(), 1);
         } else if (retour == 0) {
             utils.enreg_ReponseQCM(getQuestionid(), 0);
         }
-
         // si dernière question on renvoie vers la vue de recap
         if (getCount() == (getNb_quest_total() - 1)) {
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
             utils.redirect(url);
         }
-
         // sinon on réinitialise l'énoncé pr la question suivante
         setCount((Integer) (getCount() + 1));
         initQuestion();

@@ -25,6 +25,8 @@ public interface IPropositionDao {
 
     public Proposition find(Long id);
     
+    public Proposition find_(Question quest);
+    
     public List<Proposition> find(Question question);
 
     public List<Proposition> findAll();

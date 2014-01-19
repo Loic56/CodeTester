@@ -70,7 +70,7 @@ public class DaoTest {
         //test04();
         test05();
         test06();
-        test07();
+        //test07();
         test08();
         test09();
         test10();
@@ -78,6 +78,7 @@ public class DaoTest {
         test12();
         test13();
         test14();
+        test15();
 
     }
 
@@ -266,7 +267,7 @@ public class DaoTest {
                     Collection<Reponse> reponseCollection = new ArrayList<Reponse>();
                     Set<Reponse> theReponseCollection = new HashSet<Reponse>(reponseCollection);
 
-                   // p.setReponseCollection(theReponseCollection);
+                    // p.setReponseCollection(theReponseCollection);
                     //  p.setReponseHistoCollection(theReponseHistoCollection);
                     p.setQuestionid(quest);
                     short s = (short) 1;
@@ -341,7 +342,7 @@ public class DaoTest {
                 for (Proposition prop : listProp) {
                     System.out.println("\n*************************************");
                     System.out.println("prop : " + prop.getPropositionlibelle());
-                    
+
                     //    List<Object> listReponse = Arrays.asList(prop.getReponseCollection().toArray());
                 }
             }
@@ -375,6 +376,15 @@ public class DaoTest {
         for (Proposition p : list) {
             System.out.println("test 14 >> Proposition" + p.toString());
         }
+    }
+
+    // Dao proposition find the good one
+    public void test15() {
+        printLine("TEST15");
+        Question quest = questionDao.find(Long.valueOf(16));
+        Proposition p = propositionDao.find_(quest);
+
+        System.out.println("test 15 >> Proposition" + p.toString());
     }
 
     public void printLine(String test) {

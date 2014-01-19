@@ -482,8 +482,15 @@ public class utils {
         return String.valueOf(number);
     }
 
-    public static int verif_ReponseQCM(String questionid) {
-        return 1;
+    public static int verif_ReponseQCM(String questionid, String id_propositionChecked) {
+        Question quest = questionDao.find(Long.valueOf(questionid));
+        Proposition prop = propositionDao.find_(quest);
+
+        if (prop.getPropositionid().equals(id_propositionChecked)) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     public static void enreg_ReponseQCM(String questionid, int i) {

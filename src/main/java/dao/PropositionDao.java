@@ -102,8 +102,6 @@ public class PropositionDao implements IPropositionDao {
         return null;
     }
 
-    
-    
     @Override
     public List<Proposition> find(Test test) {
         try {
@@ -121,8 +119,6 @@ public class PropositionDao implements IPropositionDao {
         return null;
     }
 
-    
-    
     @Override
     public List<Proposition> find(Question question) {
         try {
@@ -135,6 +131,24 @@ public class PropositionDao implements IPropositionDao {
         } catch (Exception e) {
             // e.printStackTrace();
             new PamException("Proposition find by question => pamException", 0);
+        } finally {
+            getSessionFactory().close();
+        }
+        return null;
+    }
+
+    @Override
+    public Proposition find_(Question question) {
+        try {
+            org.hibernate.Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            transaction.begin();
+            List<Proposition> list = session.createQuery("select p from Proposition p where p.questionid =:question and p.propositionvrai = 1").setParameter("question", question).list();
+            transaction.commit();
+            return (list.isEmpty() ? null : list.get(0));
+        } catch (Exception e) {
+            // e.printStackTrace();
+            new PamException("Proposition find_the_one by question => pamException", 0);
         } finally {
             getSessionFactory().close();
         }

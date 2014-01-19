@@ -36,17 +36,26 @@ public class JointureDao implements IJointureDao, Serializable {
     @Override
     public Jointure create(Jointure jointure) {
         try {
+            System.out.println("1");
             Session session = sessionFactory.openSession();
+            System.out.println("2");
             Transaction transaction = session.beginTransaction();
-            transaction.begin();;
+            System.out.println("3");
+            transaction.begin();
+            System.out.println("4");
             session.saveOrUpdate(jointure);
+            System.out.println("5");
             session.flush();
+            System.out.println("6");
             int id = jointure.getJointureid();
+            System.out.println("7");
             transaction.commit();
+            System.out.println("8");
             List<Jointure> list = session.createQuery("from Jointure where jointureid = " + id).list(); // pas de commit -> fait planter !
             return (list.isEmpty() ? null : list.get(0));
         } catch (Exception e) {
-            new PamException("Jointure create => pamException", 0);
+            e.printStackTrace();
+           // new PamException("Jointure create => pamException", 0);
         } finally {
             getSessionFactory().close();
         }
