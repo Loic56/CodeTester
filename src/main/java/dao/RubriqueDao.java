@@ -70,18 +70,12 @@ public class RubriqueDao implements IRubriqueDao {
 
     @Override
     public List<Rubrique> find(Test test) {
-        try {
-            System.out.println("1");
+        try {      
             org.hibernate.Session session = sessionFactory.openSession();
-            System.out.println("2");
             Transaction transaction = session.beginTransaction();
-            System.out.println("3");
             transaction.begin();
-            System.out.println("4");
             List<Rubrique> list = session.createQuery("select r from Rubrique r where r.testid =:test ").setParameter("test", test).list();
-            System.out.println("5");
             transaction.commit();
-            System.out.println("6");
             return (list.isEmpty() ? null : list);
         } catch (Exception e) {
             //e.printStackTrace();

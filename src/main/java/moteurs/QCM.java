@@ -45,7 +45,7 @@ public class QCM implements Serializable {
     private String maValeur;
 
     private String time;
-    
+
     private String test_id;
     private int dureeTest;
     private Integer nb_quest_total;
@@ -65,15 +65,14 @@ public class QCM implements Serializable {
         questionDao = (IQuestionDao) ctx.getBean("questionDao");
         propositionDao = (IPropositionDao) ctx.getBean("propositionDao");
         reponseDao = (IReponseDao) ctx.getBean("reponseDao");
-        
-        
+
         count = 0;
 
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 
         int passage_id = ((Integer) sessionMap.get("passage_id"));
-        setTest_id (((String) sessionMap.get("testid")));
+        setTest_id(((String) sessionMap.get("testid")));
         System.out.println("test_id= " + getTest_id());
 
         this.tab_test = ((Hashtable<String, Hashtable<Integer, List<Question>>>) sessionMap.get("tab_test"));
@@ -92,7 +91,6 @@ public class QCM implements Serializable {
             }
         }
 
-        
         // mélange de la liste
         Collections.shuffle(the_list);
         nb_quest_total = the_list.size();
@@ -113,25 +111,27 @@ public class QCM implements Serializable {
         setRubrique(getThe_list().get(getCount()).getRubriqueid().getRubriqueid().toString());
     }
 
-    
-    
     // on passe à la page suivante
     public String Suivant() {
         //on doit récupérer l'index de la checkboxe cochée
-        System.out.println("id de la proposition cochée: " +getMaValeur());
-        
-        // la réponse du candidat + l'id de la question
-        int retour = utils.verif_ReponseQCM(getQuestionid(), getMaValeur() ); // renvoie 1 si reponse OK 0 si KO
-        // on met à jour la réponse ds la base
-        if (retour == 1) {
-            utils.enreg_ReponseQCM(getQuestionid(), 1);
-        } else if (retour == 0) {
-            utils.enreg_ReponseQCM(getQuestionid(), 0);
-        }
-        // si dernière question on renvoie vers la vue de recap
-        if (getCount() == (getNb_quest_total() - 1)) {
-            String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
-            utils.redirect(url);
+        System.out.println("id de la proposition cochée: " + getMaValeur());
+        if (getMaValeur() == null) {
+        // aucune case cochée
+            utils.enreg_ReponseQCM(getQuestionid(), 0 , "Non répondue");
+        } else {
+            // la réponse du candidat + l'id de la question
+            int retour = utils.verif_ReponseQCM(getQuestionid(), getMaValeur()); // renvoie 1 si reponse OK 0 si KO
+            // on met à jour la réponse ds la base
+            if (retour == 1) {
+                utils.enreg_ReponseQCM(getQuestionid(), 1, "Répondue");
+            } else if (retour == 0) {
+                utils.enreg_ReponseQCM(getQuestionid(), 0, "Répondue");
+            }
+            // si dernière question on renvoie vers la vue de recap
+            if (getCount() == (getNb_quest_total() - 1)) {
+                String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
+                utils.redirect(url);
+            }
         }
         // sinon on réinitialise l'énoncé pr la question suivante
         setCount((Integer) (getCount() + 1));
@@ -141,9 +141,6 @@ public class QCM implements Serializable {
         return "QCM?faces-redirect=true";
     }
 
-    
-    
-    
     private void dureeToString(int dureeTest) {
         int hours = dureeTest / 3600;
         int minutes = (dureeTest % 3600) / 60;
@@ -151,12 +148,9 @@ public class QCM implements Serializable {
         setTime(utils.twoDigitString(minutes) + " : " + utils.twoDigitString(seconds));
     }
 
-    
-    
-    
     public void Decrement() {
         setDureeTest(getDureeTest() - 1);
-      //  System.out.println("decremente, durée = " + getDureeTest());
+        //  System.out.println("decremente, durée = " + getDureeTest());
         if (getDureeTest() == 0) {
             // mais impossible de retour en arrière
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
@@ -165,7 +159,6 @@ public class QCM implements Serializable {
         dureeToString(getDureeTest());
 
     }
-
 
     /**
      * @return the time
@@ -293,8 +286,6 @@ public class QCM implements Serializable {
         this.rubrique = rubrique;
     }
 
-    
-    
     /**
      * @return the mesElements
      */
@@ -311,8 +302,6 @@ public class QCM implements Serializable {
         return mesElements;
     }
 
-    
-    
     /**
      * @param mesElements the mesElements to set
      */

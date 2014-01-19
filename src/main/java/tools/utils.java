@@ -67,10 +67,10 @@ import moteurs.TheCodeTester;
  * @author Loïc
  */
 public class utils {
-
+    
     public static void main(String[] arg0) {
     }
-
+    
     public static Date stringToMySQLDate(String date) {
         Date theJavaDate = null;
         try {
@@ -82,7 +82,7 @@ public class utils {
         }
         return theJavaDate;
     }
-
+    
     public static String dateToMySQLString(Date theJavaDate) {
         String mysqlDateString = "";
         try {
@@ -96,7 +96,7 @@ public class utils {
         }
         return mysqlDateString;
     }
-
+    
     public static String getRelativePath(File file, File folder) {
         String filePath = file.getAbsolutePath();
         String folderPath = folder.getAbsolutePath();
@@ -106,7 +106,7 @@ public class utils {
             return null;
         }
     }
-
+    
     public static void writeOnDisk(String pathPHP, String leCode) {
         try {
             PrintWriter fichier = new PrintWriter(new FileWriter(pathPHP), false);
@@ -119,16 +119,16 @@ public class utils {
             e.printStackTrace();
         }
     }
-
+    
     public static void redirect(String url) {
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect(url);
-
+            
         } catch (IOException ex) {
             Logger.getLogger(TheCodeTester.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public static void buildXML(String pathEcriture, String pathLecture) throws TransformerConfigurationException, TransformerException {
         try {
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -143,7 +143,7 @@ public class utils {
                 InputStream flux = new FileInputStream(pathLecture);
                 InputStreamReader lecture = new InputStreamReader(flux);
                 BufferedReader buff = new BufferedReader(lecture);
-
+                
                 Element node = doc.createElement("Node");
                 rootElement.appendChild(node);
                 while ((line = buff.readLine()) != null) {
@@ -183,7 +183,7 @@ public class utils {
                 tab2.add(subtab);
                 theTrimedLine = theTrimedLine.replace(contenu, contenu2);
             }
-
+            
             String[] stringParts = theTrimedLine.split(";");
             int index_tab = 0;
             for (int c = 0; c < stringParts.length; c++) {
@@ -207,12 +207,12 @@ public class utils {
             pce.printStackTrace();
         }
     }
-
+    
     public static void buildXML2(String pathXML) {
         System.out.println("*****************************************************************");
         int index_for = 0;
         int index_if = 0;
-
+        
         try {
             String filepath = pathXML;
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -229,63 +229,63 @@ public class utils {
                 String value = node.getTextContent();
                 System.out.println("\n*********************************************************");
                 System.out.println(value);
-
+                
                 if (value.length() > 3 && value.contains("for")) {
                     System.out.println("la ligne contient for ");
                     int debut_for = value.indexOf("for");
                     String svalue = value.substring(debut_for, value.length());
-
+                    
                     int debut_cond = svalue.indexOf("(") + 1;
                     int fin_cond = svalue.indexOf(")");
-
+                    
                     Element for_ = doc.createElement("for");
                     for_.setAttribute("count", String.valueOf(index_for + 1));
                     node.appendChild(for_);
                     Element condition = doc.createElement("condition");
                     for_.appendChild(condition);
-
+                    
                     String cond = value.substring(debut_cond, fin_cond);
                     System.out.println(cond);
                     String[] split = cond.split("/");
-
+                    
                     for (int s = 0; s < split.length; s++) {
                         Element element = doc.createElement("condition" + (s + 1));
                         element.appendChild(doc.createTextNode(split[s]));
                         condition.appendChild(element);
                     }
-
+                    
                     String forToSup = value.substring(debut_for, (fin_cond + 1));
                     value = value.replace(forToSup, "");
                     index_for++;
                 }
-
+                
                 if (value.length() > 2 && value.contains("if")) {
                     System.out.println("la ligne contient if ");
-
+                    
                     int debut_if = value.indexOf("if");
-
+                    
                     String svalue = value.substring(debut_if, value.length());
                     System.out.println("svalue : " + svalue);
                     int debut_cond_if = svalue.indexOf("(") + 2;
                     int fin_cond_if = svalue.indexOf(")") + 2;
                     System.out.println("debut_cond_if = " + debut_cond_if + " fin_cond_if=" + fin_cond_if);
-
+                    
                     String cond = value.substring(debut_cond_if, fin_cond_if);
                     System.out.println("cond = " + cond);
-
+                    
                     Element if_ = doc.createElement("if");
                     if_.setAttribute("count", String.valueOf(index_if + 1));
                     node.appendChild(if_);
                     Element condition = doc.createElement("condition");
                     if_.appendChild(condition);
-
+                    
                     Element element = doc.createElement("condition1");
                     element.appendChild(doc.createTextNode(cond));
                     condition.appendChild(element);
-
+                    
                     index_if++;
                 }
-
+                
                 TransformerFactory transformerFactory = TransformerFactory.newInstance();
                 Transformer transformer = transformerFactory.newTransformer();
                 DOMSource source = new DOMSource(doc);
@@ -296,7 +296,7 @@ public class utils {
             e.printStackTrace();
         }
     }
-
+    
     public String CompareXML() throws SAXException, ParserConfigurationException, IOException {
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
         dbf.setNamespaceAware(true);
@@ -304,10 +304,10 @@ public class utils {
         dbf.setIgnoringElementContentWhitespace(true);
         dbf.setIgnoringComments(true);
         DocumentBuilder db = dbf.newDocumentBuilder();
-
+        
         Document doc1 = db.parse(new File("file1.xml"));
         doc1.normalizeDocument();
-
+        
         Document doc2 = db.parse(new File("file2.xml"));
         doc2.normalizeDocument();
 
@@ -326,7 +326,7 @@ public class utils {
         //   Assert.assertTrue(doc1.isEqualNode(doc2));
         return "";
     }
-
+    
     private static ICandidatDao candidatDao = null;
     private static ITestDao testDao = null;
     private static IPassageDao passageDao = null;
@@ -338,7 +338,7 @@ public class utils {
     // on créer les réponses pour chaque test 
     public static Passage createPassage(Candidat theCandidat, List<Test> theTests) {
         printLine("createPassage");
-
+        
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         candidatDao = (ICandidatDao) ctx.getBean("candidatDao");
         testDao = (ITestDao) ctx.getBean("testDao");
@@ -347,9 +347,9 @@ public class utils {
         propositionDao = (IPropositionDao) ctx.getBean("propositionDao");
         reponseDao = (IReponseDao) ctx.getBean("reponseDao");
         questionDao = (IQuestionDao) ctx.getBean("questionDao");
-
+        
         Passage passage = new Passage();
-
+        
         DateTime date = new DateTime();
         DateTime date_fin = date.plusWeeks(7);
         passage.setPassageDate(date.toDate());
@@ -360,23 +360,23 @@ public class utils {
         passage.setPassageEtat(0);
         passage.setCandidatid(candidatDao.find(Long.valueOf(theCandidat.getCandidatid())));
         Passage thePassage = passageDao.create(passage);
-
+        
         System.out.println("Passage id = " + thePassage.getPassageid());
-
+        
         List<Jointure> listJointure = new ArrayList<Jointure>();
 
         // on associe chaque test à sa jointure et chaque jointure à un passage + persist la jointure
         System.out.println(theTests.size());
         for (Test test : theTests) {
             System.out.println(test.toString());
-
+            
             Jointure j = new Jointure();
             j.setTestid(test); // test 
             j.setPassageid(thePassage); // passage
             Jointure jPersist = jointureDao.create(j);
             System.out.println("jointure id = " + jPersist.getJointureid());
             listJointure.add(jPersist);
-
+            
             Set<Jointure> listJointureToSet = new HashSet<Jointure>(listJointure);
             thePassage.setJointureCollection(listJointureToSet);
 
@@ -386,7 +386,7 @@ public class utils {
             // on récupère toutes rubriques associées à un test
             List<Object> list = Arrays.asList(test.getRubriqueCollection().toArray());
             System.out.println("nbres de rubriques pr ce test = " + list.size());
-
+            
             for (Object o : list) {
                 Rubrique rub = (Rubrique) o;
 
@@ -402,7 +402,7 @@ public class utils {
                     //List<Reponse> list_rep = (List<Reponse>) quest.getReponseCollection();
 
                     Collection<Reponse> listReponse = quest.getReponseCollection();
-
+                    
                     Reponse rep = new Reponse();
                     rep.setReponsemessage("");
                     rep.setReponsetexte("");
@@ -410,9 +410,9 @@ public class utils {
                     rep.setQuestionid(quest);
                     rep.setPassageid(thePassage);
                     Reponse reponse = reponseDao.create(rep);
-
+                    
                     listReponse.add(reponse);
-
+                    
                     quest.setReponseCollection(listReponse);
 
                     //merge
@@ -422,11 +422,11 @@ public class utils {
         }
         return thePassage;
     }
-
+    
     public static int verifXML() {
         return ((int) (Math.random() * (1 + 1 - 0)) + 0);
     }
-
+    
     public static void Enreg_rep(String questionid, int i, String isCodeCompiled) {
         String etat = "";
         if (isCodeCompiled.equals("1")) {
@@ -434,11 +434,11 @@ public class utils {
         } else if (isCodeCompiled.equals("0")) {
             etat = "Non répondue";
         }
-
+        
         System.out.println("******************************************************");
         System.out.println("  Enreg_rep => question " + questionid + " : " + i);
         System.out.println("******************************************************");
-
+        
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         propositionDao = (IPropositionDao) ctx.getBean("propositionDao");
         reponseDao = (IReponseDao) ctx.getBean("reponseDao");
@@ -448,33 +448,33 @@ public class utils {
         Question quest = questionDao.find(Long.valueOf(questionid));
 //        Proposition prop = propositionDao.find(quest).get(0);
         Reponse rep = reponseDao.find(quest);
-
+        
         int id = rep.getReponseid();
 
         // System.out.println("reponse id: "+id);
         Reponse theReponse = reponseDao.find(Long.valueOf(id));
-
+        
         theReponse.setReponsemessage(String.valueOf(i));
         theReponse.setReponsetexte(etat);
         // System.out.println("the reponse: " + theReponse.toString());
 
         reponseDao.edit(theReponse); // merge 
     }
-
+    
     public static List<Reponse> findReponses(Passage passage, Test test) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         reponseDao = (IReponseDao) ctx.getBean("reponseDao");
         List<Reponse> list = reponseDao.find(passage, test);
         return list;
     }
-
+    
     public static int getDureeTest(String test_id) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         testDao = (ITestDao) ctx.getBean("testDao");
         Test test = testDao.find(Long.valueOf(test_id));
         return (test.getTestduree() * 60); // en sec
     }
-
+    
     public static String twoDigitString(int number) {
         if (number == 0) {
             return "00";
@@ -489,9 +489,9 @@ public class utils {
     public static int verif_ReponseQCM(String questionid, String id_propositionChecked) {
         Question quest = questionDao.find(Long.valueOf(questionid));
         Proposition prop = propositionDao.find_(quest);
-
+        
         System.out.println("prop:" + prop.getPropositionid() + " == checked:" + id_propositionChecked);
-
+        
         if (prop.getPropositionid().toString().equals(id_propositionChecked)) {
             System.out.println("La réponse est bonne");
             return 1;
@@ -500,11 +500,14 @@ public class utils {
             return 0;
         }
     }
-
-    public static void enreg_ReponseQCM(String questionid, int i) {
-
+    
+    public static void enreg_ReponseQCM(String questionid, int i, String etat) {
+        Reponse r = reponseDao.find(questionDao.find(Long.valueOf(questionid)));
+        r.setReponsemessage(String.valueOf(i));
+        r.setReponsetexte(etat);
+        reponseDao.edit(r);
     }
-
+    
     public static void printLine(String s) {
         System.out.println("\n******************************************************");
         System.out.println("                  " + s);
