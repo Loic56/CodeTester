@@ -44,8 +44,8 @@ public class Recapitulatif implements Serializable {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 
-        int passage_id = 1; //((Integer) sessionMap.get("passage_id"));
-        String test_id = "1"; //((String) sessionMap.get("testid"));
+        int passage_id = ((Integer) sessionMap.get("passage_id"));
+        String test_id = ((String) sessionMap.get("testid"));
 
         Test test = testDao.find(Long.valueOf(passage_id));
         setTheTest(test);
@@ -53,12 +53,14 @@ public class Recapitulatif implements Serializable {
 
         // list de questions par rubriques
         List<Reponse> list = utils.findReponses(passage, test);
-        //       System.out.println("list.size: " + list.size());
+        
+        
+        // System.out.println("list.size: " + list.size());
         setListReponse(list);
 
-//        for (Reponse r : getListReponse()) {
-//            System.out.println(r.toString());
-//        }
+        for (Reponse r : getListReponse()) {
+            System.out.println(r.toString());
+        }
         // String image = "enonces_PHP/boucles/small/boucle_" + id_quest + ".JPG";
     }
 

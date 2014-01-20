@@ -65,8 +65,8 @@ public class TheEnd implements Serializable {
         setTestid((String) sessionMap.get("testid"));
 
         //calcul de la note du candidat
-        int passage_id = 1; //((Integer) sessionMap.get("passage_id"));
-        String test_id = "1"; //((String) sessionMap.get("testid"));
+        int passage_id = ((Integer) sessionMap.get("passage_id"));
+        String test_id = ((String) sessionMap.get("testid"));
 
         Test test = testDao.find(Long.valueOf(test_id));
         setTheTest(test);

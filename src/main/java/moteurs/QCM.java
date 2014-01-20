@@ -113,11 +113,12 @@ public class QCM implements Serializable {
 
     // on passe à la page suivante
     public String Suivant() {
+
         //on doit récupérer l'index de la checkboxe cochée
         System.out.println("id de la proposition cochée: " + getMaValeur());
         if (getMaValeur() == null) {
-        // aucune case cochée
-            utils.enreg_ReponseQCM(getQuestionid(), 0 , "Non répondue");
+            // aucune case cochée
+            utils.enreg_ReponseQCM(getQuestionid(), 0, "Non répondue");
         } else {
             // la réponse du candidat + l'id de la question
             int retour = utils.verif_ReponseQCM(getQuestionid(), getMaValeur()); // renvoie 1 si reponse OK 0 si KO
@@ -127,18 +128,27 @@ public class QCM implements Serializable {
             } else if (retour == 0) {
                 utils.enreg_ReponseQCM(getQuestionid(), 0, "Répondue");
             }
-            // si dernière question on renvoie vers la vue de recap
-            if (getCount() == (getNb_quest_total() - 1)) {
-                String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
-                utils.redirect(url);
-            }
         }
+        
+        System.out.println("*******************************************");
+        System.out.println("count : " + getCount() + " == nb_quest_total - 1 : " + (getNb_quest_total() -1));
+        System.out.println("*******************************************");
+        
+        // PLANTAGE
+        // si dernière question on renvoie vers la vue de recap
+        if (getCount() == (getNb_quest_total() - 1)) {
+            System.out.println("recap");
+            String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
+            utils.redirect(url);
+        }
+        System.out.println("qcm");
         // sinon on réinitialise l'énoncé pr la question suivante
         setCount((Integer) (getCount() + 1));
         initQuestion();
         String url = "http://localhost:8080/CodeTester/faces/QCM.xhtml";
         utils.redirect(url);
         return "QCM?faces-redirect=true";
+
     }
 
     private void dureeToString(int dureeTest) {

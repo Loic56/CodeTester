@@ -80,7 +80,7 @@ public class DaoTest {
         test14();
         test15();
         test16();
-
+        test17();
     }
 
     // dao admin
@@ -392,6 +392,22 @@ public class DaoTest {
         Proposition p = propositionDao.find_(quest);
 
         System.out.println("test 15 >> Proposition" + p.toString());
+    }
+
+    // Dao proposition find the good one
+    public void test17() {
+        printLine("TEST17");
+        Passage p = passageDao.find(Long.valueOf(1));
+        Test t = testDao.find(Long.valueOf(6));
+        
+        //List<Reponse> list = utils.findReponses(p, t);
+//
+//        if (list == null) {
+//        } else {
+//            for (Reponse rep : list) {
+//                System.out.println("Réponse >> " + rep.toString());
+//            }
+//        }
     }
 
     public void printLine(String test) {

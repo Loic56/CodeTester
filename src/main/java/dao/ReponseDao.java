@@ -188,11 +188,17 @@ public class ReponseDao implements IReponseDao {
     @Override
     public List<Reponse> find(Passage passage, Test test) {
         try {
+            System.out.println("1");
             org.hibernate.Session session = sessionFactory.openSession();
+            System.out.println("2");
             Transaction transaction = session.beginTransaction();
+            System.out.println("3");
             transaction.begin();
-            List<Reponse> list = session.createQuery("select r from Reponse r where r.propositionid.questionid.rubriqueid.testid =:test and r.passageid =:passage ").setParameter("test", test).setParameter("passage", passage).list();
+            System.out.println("4");
+            List<Reponse> list = session.createQuery("select r from Reponse r where r.questionid.rubriqueid.testid =:test and r.passageid =:passage ").setParameter("test", test).setParameter("passage", passage).list();
+            System.out.println("5");
             transaction.commit();
+            System.out.println("6");
             return (list.isEmpty() ? null : list);
         } catch (Exception e) {
             e.printStackTrace();

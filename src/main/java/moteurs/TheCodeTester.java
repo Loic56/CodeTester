@@ -180,9 +180,9 @@ public class TheCodeTester implements Serializable {
             e.printStackTrace();
         }
 
-        System.out.println("*****************************************************");
+        System.out.println("********************************************");
         System.out.println("count : " + getCount() + " == nb_quest_total : " + getNb_quest_total());
-        System.out.println("****************************************************");
+        System.out.println("********************************************");
 
         // si dernière question on renvoie vers la vue de recap
         if (getCount() == (getNb_quest_total() - 1)) {
