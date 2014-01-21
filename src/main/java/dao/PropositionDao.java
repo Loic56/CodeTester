@@ -6,6 +6,7 @@
 package dao;
 
 import exception.PamException;
+import java.io.Serializable;
 import java.util.List;
 import jpa.Proposition;
 import jpa.Question;
@@ -21,7 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Loïc
  */
-public class PropositionDao implements IPropositionDao {
+public class PropositionDao implements IPropositionDao, Serializable  {
 
     @Autowired
     private SessionFactory sessionFactory;

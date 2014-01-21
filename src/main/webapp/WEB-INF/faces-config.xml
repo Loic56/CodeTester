@@ -72,7 +72,7 @@
     </managed-bean>
     
     
-        <managed-bean>
+    <managed-bean>
         <managed-bean-class>theEnd</managed-bean-class>    
         <managed-bean-name>web.forms.TheEnd</managed-bean-name>    
         <managed-bean-scope>session</managed-bean-scope>

@@ -283,6 +283,9 @@ public class DaoTest {
 
     }
 
+    
+    
+    
     // test complet
     private void test12() {
         printLine("TEST12");
@@ -295,23 +298,21 @@ public class DaoTest {
         System.out.println("Passage id = " + thePassage.getPassageid());
 
         // on choisit tous les tests 
-        // List<Test> listTest = testDao.findAll();
-        Test test_ = testDao.find(Long.valueOf(1));
+        Test test_ = testDao.find(Long.valueOf(6));
         System.out.println("test id = " + test_.getTestid());
 
         // on créé une liste de jointures
         List<Jointure> listJointure = new ArrayList<Jointure>();
 
         // on associe chaque test à sa jointure et chaque jointure à un passage + persist la jointure
-//        for (Test test_ : listTest) {
+
         Jointure j = new Jointure();
         j.setTestid(test_); // test 
         j.setPassageid(thePassage); // passage
         Jointure jPersist = jointureDao.create(j);
         System.out.println("jointure id = " + jPersist.getJointureid());
         listJointure.add(jPersist);
-//        }
-
+        
         Set<Jointure> listJointureToSet = new HashSet<Jointure>(listJointure);
 
         thePassage.setJointureCollection(listJointureToSet);
@@ -325,46 +326,62 @@ public class DaoTest {
 
         for (Object o : list) {
             Rubrique rub = (Rubrique) o;
-
+            rub.setTestid(test_);
+            
             // pour chaque rubriques on récupère sa liste questions
             List<Object> list2 = Arrays.asList(rub.getQuestionCollection().toArray());
             System.out.println("  >> Pour la rubrique n°" + rub.getRubriqueid() + ", Nombre de question = " + list2.size());
             for (Object o2 : list2) {
-
-                // pour chaque question on récupère une liste de propositions (déjà en base!)
                 Question quest = (Question) o2;
+                
+                //on créer une réponse vide pr chaque question // pas d etest ni de rub 
+                Reponse r = new Reponse();
+                r.setPassageid(thePassage);
+                r.setQuestionid(quest);
+                r.setReponsemessage("fuck");
+                r.setReponsetexte("");
+                Reponse rep = reponseDao.create(r);
+                quest.getReponseCollection().add(rep);
+                questionDao.edit(quest);
+                
+                // pour chaque question on récupère une liste de propositions (déjà en base!)
                 List<Object> list3 = Arrays.asList(quest.getPropositionCollection().toArray());
-
                 List<Proposition> listProp = propositionDao.find(quest);
 
                 for (Proposition prop : listProp) {
-                    System.out.println("\n*************************************");
-                    System.out.println("prop : " + prop.getPropositionlibelle());
-
-                    //    List<Object> listReponse = Arrays.asList(prop.getReponseCollection().toArray());
+                    //System.out.println("\n*************************************");
+                    //System.out.println("prop : " + prop.getPropositionlibelle());
                 }
             }
+            
+            rubriqueDao.edit(rub);
         }
 
+//        List<Reponse> liste = reponseDao.find(thePassage, test_);
+//        for(Reponse r : liste){
+//            System.out.println("Reponse : "+r.toString());
+//        }
+        
+        
         // OK - on supprime tout ce qui vient d'être créé
-        List<Passage> list2 = passageDao.findAll();
-        for (Passage p : list2) {
-            passageDao.destroy(p);
-        }
-        List<Jointure> list3 = jointureDao.findAll();
-        for (Jointure jo : list3) {
-            jointureDao.destroy(jo);
-        }
-        List<Reponse> list4 = reponseDao.findAll();
-        for (Reponse r : list4) {
-            reponseDao.destroy(r);
-        }
+//        List<Passage> list2 = passageDao.findAll();
+//        for (Passage p : list2) {
+//            passageDao.destroy(p);
+//        }
+//        List<Jointure> list3 = jointureDao.findAll();
+//        for (Jointure jo : list3) {
+//            jointureDao.destroy(jo);
+//        }
+//        List<Reponse> list4 = reponseDao.findAll();
+//        for (Reponse r : list4) {
+//            reponseDao.destroy(r);
+//        }
     }
 
     public void test13() {
         printLine("TEST13");
-        //Reponse rep = reponseDao.find(Long.valueOf(1));
-        //System.out.println("test 13 >> Reponse" + rep.toString());
+        Reponse rep = reponseDao.find(Long.valueOf(1));
+        System.out.println("test 13 >> Reponse" + rep.toString());
     }
 
     // Dao question
@@ -390,24 +407,30 @@ public class DaoTest {
         printLine("TEST16");
         Question quest = questionDao.find(Long.valueOf(16));
         Proposition p = propositionDao.find_(quest);
-
         System.out.println("test 15 >> Proposition" + p.toString());
     }
 
+    
+    
+    
     // Dao proposition find the good one
     public void test17() {
         printLine("TEST17");
-        Passage p = passageDao.find(Long.valueOf(1));
-        Test t = testDao.find(Long.valueOf(6));
         
-        //List<Reponse> list = utils.findReponses(p, t);
-//
-//        if (list == null) {
-//        } else {
-//            for (Reponse rep : list) {
-//                System.out.println("Réponse >> " + rep.toString());
-//            }
-//        }
+        Reponse r = reponseDao.find(Long.valueOf(15));
+        System.out.println("passage_id="+r.getPassageid()+"\nquest_id="+r.getQuestionid()+"\nrub_id="+r.getQuestionid().getRubriqueid()+"\ntest_id=" +r.getQuestionid().getRubriqueid().getTestid());
+        
+        Passage p = passageDao.find(Long.valueOf(2));
+        Test t = testDao.find(Long.valueOf(6));
+
+        List<Reponse> list = reponseDao.find(p, t);
+        if (list == null) {
+             System.out.println("Réponse >> aucune ! ");
+        } else {
+            for (Reponse rep : list) {
+                System.out.println("Réponse >> " + rep.toString());
+            }
+        }
     }
 
     public void printLine(String test) {
@@ -420,16 +443,16 @@ public class DaoTest {
     private void delete() {
         printLine("Delete");
         //supprimer tous les candidats
-        List<Reponse> list1 = reponseDao.findAll();
-
-        if (list1 == null) {
-            System.out.println("Delete Reponse >>  NULL");
-        } else {
-            for (Reponse r : list1) {
-                System.out.println("Delete Reponse  => " + r.toString());
-                //reponseDao.destroy(r);
-            }
-        }
+//        List<Reponse> list1 = reponseDao.findAll();
+//
+//        if (list1 == null) {
+//            System.out.println("Delete Reponse >>  NULL");
+//        } else {
+//            for (Reponse r : list1) {
+//                System.out.println("Delete Reponse  => " + r.toString());
+//                //reponseDao.destroy(r);
+//            }
+//        }
         List<Candidat> list = candidatDao.findAll();
 
         if (list == null) {

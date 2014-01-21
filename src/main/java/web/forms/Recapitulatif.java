@@ -7,7 +7,6 @@ package web.forms;
 
 import dao.IPassageDao;
 import dao.ITestDao;
-import java.io.File;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -37,24 +36,33 @@ public class Recapitulatif implements Serializable {
     private Test theTest;
 
     public Recapitulatif() {
+        System.out.println("1");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
+        System.out.println("2");
         testDao = (ITestDao) ctx.getBean("testDao");
+        System.out.println("3");
         passageDao = (IPassageDao) ctx.getBean("passageDao");
+        System.out.println("4");
 
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
-
+        System.out.println("5");
         int passage_id = ((Integer) sessionMap.get("passage_id"));
+        System.out.println("passage_id= " + passage_id);
         String test_id = ((String) sessionMap.get("testid"));
+        System.out.println("test_id=" + test_id);
 
         Test test = testDao.find(Long.valueOf(passage_id));
+        System.out.println("6");
         setTheTest(test);
         Passage passage = passageDao.find(Long.valueOf(test_id));
-
+        System.out.println("7");
         // list de questions par rubriques
         List<Reponse> list = utils.findReponses(passage, test);
         
         
+        System.out.println("size="+list.size());
+
         // System.out.println("list.size: " + list.size());
         setListReponse(list);
 

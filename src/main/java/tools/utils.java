@@ -461,12 +461,16 @@ public class utils {
         reponseDao.edit(theReponse); // merge 
     }
     
+    
+    
     public static List<Reponse> findReponses(Passage passage, Test test) {
+        printLine("findReponse");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         reponseDao = (IReponseDao) ctx.getBean("reponseDao");
         List<Reponse> list = reponseDao.find(passage, test);
         return list;
     }
+    
     
     public static int getDureeTest(String test_id) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");

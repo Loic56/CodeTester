@@ -6,6 +6,7 @@
 package dao;
 
 import exception.PamException;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -33,7 +34,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Loïc
  */
-public class ReponseDao implements IReponseDao {
+public class ReponseDao implements IReponseDao, Serializable  {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -155,7 +156,7 @@ public class ReponseDao implements IReponseDao {
             org.hibernate.Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             transaction.begin();
-            List<Reponse> list = session.createQuery("select r from Reponse r where r.pasageidid =:passage ").setParameter("passage", passage).list();
+            List<Reponse> list = session.createQuery("select r from Reponse r where r.passageid =:passage ").setParameter("passage", passage).list();
             transaction.commit();
             return (list.isEmpty() ? null : list);
         } catch (Exception e) {
@@ -188,17 +189,11 @@ public class ReponseDao implements IReponseDao {
     @Override
     public List<Reponse> find(Passage passage, Test test) {
         try {
-            System.out.println("1");
             org.hibernate.Session session = sessionFactory.openSession();
-            System.out.println("2");
             Transaction transaction = session.beginTransaction();
-            System.out.println("3");
-            transaction.begin();
-            System.out.println("4");
-            List<Reponse> list = session.createQuery("select r from Reponse r where r.questionid.rubriqueid.testid =:test and r.passageid =:passage ").setParameter("test", test).setParameter("passage", passage).list();
-            System.out.println("5");
+            transaction.begin();//
+            List<Reponse> list = session.createQuery("select r from Reponse r where r.questionid.rubriqueid.testid =:test and  r.passageid =:passage ").setParameter("test", test).setParameter("passage", passage).list();
             transaction.commit();
-            System.out.println("6");
             return (list.isEmpty() ? null : list);
         } catch (Exception e) {
             e.printStackTrace();

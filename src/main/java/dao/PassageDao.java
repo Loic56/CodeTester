@@ -6,6 +6,7 @@
 package dao;
 
 import exception.PamException;
+import java.io.Serializable;
 import java.util.List;
 import javax.transaction.Transactional;
 import jpa.Passage;
@@ -23,7 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Loïc
  */
 @Transactional
-public class PassageDao implements IPassageDao {
+public class PassageDao implements IPassageDao , Serializable {
 
     @Autowired
     private SessionFactory sessionFactory;

@@ -6,10 +6,12 @@
 package dao;
 
 import exception.PamException;
+import java.io.Serializable;
 import java.util.List;
 import jpa.Rubrique;
 import jpa.Test;
 import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Loïc
  */
-public class RubriqueDao implements IRubriqueDao {
+public class RubriqueDao implements IRubriqueDao, Serializable {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -38,7 +40,25 @@ public class RubriqueDao implements IRubriqueDao {
 
     @Override
     public Rubrique edit(Rubrique rubrique) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Transaction transaction = null;
+        try {
+            Session session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            transaction.begin();
+            session.merge(rubrique);
+            transaction.commit();
+            // id est généré par l'insertion en base !
+            int id = rubrique.getRubriqueid();
+            session.flush();
+            List<Rubrique> list = session.createQuery("from Rubrique where rubriqueid = " + id).list();
+            return (list.isEmpty() ? null : list.get(0));
+        } catch (Exception e) {
+            transaction.rollback();
+            e.printStackTrace();
+        } finally {
+            getSessionFactory().close();
+        }
+        return null;
     }
 
     @Override
@@ -70,7 +90,7 @@ public class RubriqueDao implements IRubriqueDao {
 
     @Override
     public List<Rubrique> find(Test test) {
-        try {      
+        try {
             org.hibernate.Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             transaction.begin();

@@ -6,6 +6,7 @@
 package dao;
 
 import exception.PamException;
+import java.io.Serializable;
 import java.util.List;
 import javax.transaction.Transactional;
 import jpa.Test;
@@ -22,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @author Loïc
  */
 @Transactional
-public class TestDao implements ITestDao {
+public class TestDao implements ITestDao, Serializable  {
 
     @Autowired
     private SessionFactory sessionFactory;
