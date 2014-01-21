@@ -6,7 +6,9 @@
 package web.forms;
 
 import dao.IPassageDao;
+import dao.IReponseDao;
 import dao.ITestDao;
+import dao.ReponseDao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -32,40 +34,40 @@ public class Recapitulatif implements Serializable {
     /// on doit récupérer toutes les réponses pour un passage pour un test
     private ITestDao testDao = null;
     private IPassageDao passageDao = null;
+    private IReponseDao reponseDao = null;
     private List<Reponse> listReponse;
     private Test theTest;
 
     public Recapitulatif() {
-        System.out.println("1");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        System.out.println("2");
         testDao = (ITestDao) ctx.getBean("testDao");
-        System.out.println("3");
         passageDao = (IPassageDao) ctx.getBean("passageDao");
-        System.out.println("4");
+        reponseDao = (IReponseDao) ctx.getBean("reponseDao");
 
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
-        System.out.println("5");
+
         int passage_id = ((Integer) sessionMap.get("passage_id"));
-        System.out.println("passage_id= " + passage_id);
         String test_id = ((String) sessionMap.get("testid"));
-        System.out.println("test_id=" + test_id);
+        System.out.println("passage_id=" + passage_id + " test_id=" + test_id);
 
         Test test = testDao.find(Long.valueOf(passage_id));
-        System.out.println("6");
         setTheTest(test);
-        Passage passage = passageDao.find(Long.valueOf(test_id));
+        System.out.println("6");
+
+        Passage passage = passageDao.find(Long.valueOf(passage_id));
         System.out.println("7");
+
         // list de questions par rubriques
         List<Reponse> list = utils.findReponses(passage, test);
-        
-        
-        System.out.println("size="+list.size());
 
+        List<Reponse> list2 = reponseDao.find(passage, test);
+
+        System.out.println("size=" + list.size());
+
+//  la ça foire ! ! ! !
         // System.out.println("list.size: " + list.size());
         setListReponse(list);
-
         for (Reponse r : getListReponse()) {
             System.out.println(r.toString());
         }
