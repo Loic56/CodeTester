@@ -82,20 +82,38 @@ public class TheEnd implements Serializable {
         }
 
         System.out.println("note = " + note);
-        System.out.println("note = " + note);
-        System.out.println("note = " + note);
-        System.out.println("note = " + note);
-        System.out.println("note = " + note);
-
     }
 
     public String retourAccueil() {
         // on enlève le test de la list 
         Test test = testDao.find(Long.valueOf(getTestid()));
+
+        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
         List<Test> theTests = ((List<Test>) sessionMap.get("theTests"));
-        theTests.remove(test);
-        // on remet la list en session
-        sessionMap.put("theTests", theTests);
+
+        try {
+            System.out.println("Test >> " + theTests.size());
+            for (Test t : theTests) {
+                System.out.println("Test >> " + t.toString());
+                
+                System.out.println(getTestid()+ " == "+t.getTestid()+" ? ");
+                
+                if (getTestid().equals(t.getTestid().toString())) {
+                    
+                    //on enlève le test qu'on vient de passer de la session
+                    theTests.remove(test);
+                    // on remet la list en session
+                    System.out.println("on vire le test de la session");
+                    sessionMap.put("theTests", theTests);
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        List<Test> theTestsAfter = ((List<Test>) sessionMap.get("theTests"));
+        System.out.println("Test >> " + theTestsAfter.size());
 
         return "index?faces-redirect=true";
 

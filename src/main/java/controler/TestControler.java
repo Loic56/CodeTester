@@ -60,9 +60,9 @@ public class TestControler implements Serializable {
         questionDao = (IQuestionDao) ctx.getBean("questionDao");
     }
 
-    // plante ? ?? ? ?
+
     public String DebuterTest() {
-        utils.printLine("DébuterTest");
+        utils.printLine("       DébuterTest        ");
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 
@@ -124,6 +124,9 @@ public class TestControler implements Serializable {
         }
     }
 
+    
+    
+    
     // les tests en attente
     public String Link() {
         System.out.println("Link()");
@@ -134,6 +137,8 @@ public class TestControler implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         this.setTestid(fc.getExternalContext().getRequestParameterMap().get("testid"));
 
+        
+        
         sessionMap.put("testid", getTestid());
 
         // le test qui correspond au lien que l'on vient de cliquer

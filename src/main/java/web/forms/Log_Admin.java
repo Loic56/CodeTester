@@ -36,17 +36,17 @@ public class Log_Admin implements Serializable {
 
     private IAdminDao adminDao = null;
 
-    
-    
     public Log_Admin() {
         error = "0";
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         this.adminDao = (IAdminDao) ctx.getBean("adminDao");
         checkCookie();
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+        System.out.println("info = " + fc.getExternalContext().getRequestParameterMap().get("testid"));
+
     }
 
-    
-    
     public void checkCookie() {
         FacesContext facesContext = FacesContext.getCurrentInstance();
         String cookieName = null;
@@ -79,8 +79,6 @@ public class Log_Admin implements Serializable {
         }
     }
 
-    
-    
     public String Link() {
         System.out.println("Link() ");
 

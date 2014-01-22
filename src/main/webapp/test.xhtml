@@ -66,12 +66,12 @@ and open the template in the editor.
 
 
                         <c:if test="#{menuTest.testIsSelected eq 0}">
-                            <h3>Récapitulatif des test choisis</h3>
+                            <!--<h3 >Récapitulatif des test choisis</h3>-->
                             <div style="width:auto;height:20px;text-align:center;border:1px solid black;background-color:orange;">Aucun test n'a été choisi</div>
                         </c:if>
 
                         <c:if test="#{menuTest.testIsSelected eq 2}">
-                            <h3>Récapitulatif des test choisis</h3>
+                            <h3 style="color:#498161;">Récapitulatif des test choisis</h3>
                             <h:dataTable value="#{menuTest.listTest}" var="test"
                                          styleClass="order-table"
                                          headerClass="order-table-header"

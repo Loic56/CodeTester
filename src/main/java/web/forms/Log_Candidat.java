@@ -39,9 +39,6 @@ public class Log_Candidat implements Serializable {
     private Hashtable<String, Hashtable<Integer, List<Question>>> tab_test;
     private Hashtable<Integer, List<Question>> tab_rub;
 
-    
-    
-    
     public Log_Candidat() {
         error = "0";
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
@@ -49,16 +46,11 @@ public class Log_Candidat implements Serializable {
         this.theCandidat = ((Candidat) sessionMap.get("theCandidat"));
     }
 
-    
     public String deconnexion() {
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "index?faces-redirect=true";
     }
 
-    
-    
-    
-    
     public String Connexion() {
         System.out.println(getNom() + "\n" + getPrenom() + "\n" + getDate());
         System.out.println(utils.dateToMySQLString(getDate()));
@@ -72,18 +64,19 @@ public class Log_Candidat implements Serializable {
             Map<String, Object> sessionMap = externalContext.getSessionMap();
 
             List<Test> theTests = (List<Test>) sessionMap.get("theTests");
+
+            for (Test t : theTests) {
+                System.out.println("Test >> " + t.toString());
+            }
+
             Candidat theCandidat = (Candidat) sessionMap.get("theCandidat");
 
-            for(Test t : theTests){
-                System.out.println(t.toString());
-            }
-            
-            // le candidat s'est logué avec succès on peut créer un passage
+            // le candidat s'est logué avec succès on peut créer un passage ds la BDD
             Passage p = utils.createPassage(theCandidat, theTests);
-            
+
             utils.printLine("            Create Passage              ");
             int passage_id = p.getPassageid();
-            System.out.println("passage_id="+passage_id);
+            System.out.println("passage_id=" + passage_id);
             sessionMap.put("passage_id", passage_id);
 
             return "helloCandidat";
@@ -95,9 +88,6 @@ public class Log_Candidat implements Serializable {
         }
     }
 
-    
-    
-    
     /**
      * @return the date
      */

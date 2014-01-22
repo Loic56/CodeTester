@@ -86,29 +86,8 @@ public class InfoReservation implements Serializable {
 
     public String Suivant() {
         System.out.println("Suivant()");
-
-        /// On créé un passage avec un candidat et une list de tests + persist
-//        Passage passage = new Passage();
-//        passage.setCandidatid(candidatDao.find(Long.valueOf(getTheCandidat().getCandidatid())));
-//
-//        listJointure = new ArrayList<Jointure>();
-//        for (Test test : getTheTests()) {
-//            Jointure j = new Jointure();
-//            j.setTestid(test);
-//            Jointure jPersist = jointureDao.create(j);
-//            listJointure.add(jPersist);
-//        }
-//
-//        Set<Jointure> jointureToSet = new HashSet<Jointure>(listJointure);  
-//        passage.setJointureCollection(jointureToSet);
-//        Passage thePassage = passageDao.create(passage);
-//
-//        // persist
-//        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-//        Map<String, Object> sessionMap = externalContext.getSessionMap();
-//        sessionMap.put("thePassage", passage);
-        // créer une hashmap pour indexer les tests en session
         return "log_candidat?faces-redirect=true";
+
     }
 
     /**

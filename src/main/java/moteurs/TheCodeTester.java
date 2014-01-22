@@ -249,7 +249,7 @@ public class TheCodeTester implements Serializable {
 
     public void Decrement() {
         dureeTest--;
-        System.out.println("decremente, durée = " + getDureeTest());
+        // System.out.println("decremente, durée = " + getDureeTest());
         if (dureeTest == 0) {
             // mais impossible de retour en arrière
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";

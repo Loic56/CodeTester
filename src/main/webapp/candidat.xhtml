@@ -38,14 +38,14 @@ and open the template in the editor.
                             <p:fieldset legend="Dans la liste" style="width:350px;padding:20px;border:1px solid silver;float:left;margin-top:20px;">  
                                 <br/>
                                 <a style="float:left;margin-right:10px;">Candidat: </a>
-                                
-                                
+
+
                                 <p:selectOneListbox  id="listCandidat" value="#{menuCandidat.maValeur}"  style="width:auto;height:100px;margin-bottom:10px;" >
                                     <f:selectItems id="theCandidat" value="#{menuCandidat.mesElements}"  var="theElement"  itemValue="#{theElement.candidatid}" itemLabel="#{theElement.candidatPrenom} #{theElement.candidatNom} "/>
                                 </p:selectOneListbox > 
-                                
-                                
-                                
+
+
+
                                 <hr />
                                 <p:commandButton value="Choisir" action="#{menuCandidat.Choisir}" id="withIcon" 
                                                  icon="ui-icon-disk" style="margin-top:5px;margin-left:100px;width:120px;" />
@@ -88,10 +88,10 @@ and open the template in the editor.
                         <hr style="margin-top:400px;"/>
 
                         <br />
-                        <h3>Le candidat choisi</h3>
 
                         <c:if test="#{menuCandidat.isSelected eq 1}">
-
+                            <h3 style="color:#498161;">Le candidat choisi</h3>
+                            
                             <h:dataTable value="#{menuCandidat.list}" var="candidat"
                                          styleClass="order-table"
                                          headerClass="order-table-header"

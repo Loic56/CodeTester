@@ -124,14 +124,7 @@ public class MenuTest implements Serializable {
         firstSubmenu.addElement(item);
         model.addElement(thirdSubmenu);
 
-//        DefaultSubMenu quatrzSubmenu = new DefaultSubMenu("");
-//        DefaultSubMenu cinqzSubmenu = new DefaultSubMenu("");
-//        DefaultSubMenu sixSubmenu = new DefaultSubMenu("");
-//        DefaultSubMenu septzSubmenu = new DefaultSubMenu("");
-//        model.addElement(quatrzSubmenu);
-//        model.addElement(cinqzSubmenu);
-//        model.addElement(sixSubmenu);
-//        model.addElement(septzSubmenu);
+
     }
 
     public String AfficheInfo(String id) {
