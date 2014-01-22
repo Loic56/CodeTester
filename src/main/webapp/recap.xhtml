@@ -28,14 +28,14 @@
                         <br/>
                         <h:outputText value="#{recap.theTest.testmatiere} - #{recap.theTest.theme}" style="font-size:20px;"/> 
                         <br/> <br/>
-                        
+
                         <p:panelGrid id="tab_recap" columns="4" style="width:920px;">  
                             <h:outputText value="En cliquant sur une des cases en fin de ligne, vous revenez à la question concernée" style="color:#f5ba80;"/> 
+                            <br /><br />
                             <p:commandButton value="Fin de test" action="#{recap.FinishHim}" id="withIcon"   
                                              icon="ui-icon-disk" style="float:right;"/> 
-                            
-                              <p:commandButton value="Tester" action="#{recap.Tester}" 
-                                             icon="ui-icon-disk" style="float:right;"/> 
+
+
                         </p:panelGrid>
 
                         <br/><br/><br/>
@@ -51,7 +51,7 @@
 
                             <h:column>
                                 <f:facet name="header">Enoncé</f:facet>
-                                    #{list.propositionid.questionid.questiontext}
+                                    #{list.questionid.questiontext}
                             </h:column>
 
                             <h:column>
@@ -67,7 +67,7 @@
                             </h:column>
                         </h:dataTable>
 
-<br/><br/>
+                        <br/><br/>
 
                     </h:form>
                 </p:panel>  

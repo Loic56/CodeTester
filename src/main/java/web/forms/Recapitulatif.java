@@ -9,6 +9,8 @@ import dao.IPassageDao;
 import dao.IReponseDao;
 import dao.ITestDao;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -49,56 +51,31 @@ public class Recapitulatif implements Serializable {
 
         int passage_id = ((Integer) sessionMap.get("passage_id"));
         String test_id = ((String) sessionMap.get("testid"));
-        System.out.println("passage_id=" + passage_id + " test_id=" + test_id);
+        System.out.println("passage_id=" + passage_id + " \ntest_id=" + test_id);
 
-        setTheTest(testDao.find(Long.valueOf(passage_id)));
+        setTheTest(testDao.find(Long.valueOf(test_id)));
         setThepassage(passageDao.find(Long.valueOf(passage_id)));
 
-        // String image = "enonces_PHP/boucles/small/boucle_" + id_quest + ".JPG";
+        try {
+            Passage p = passageDao.find(Long.valueOf(getThepassage().getPassageid().toString()));
+            Test t = testDao.find(Long.valueOf(getTheTest().getTestid().toString()));
+
+            List<Reponse> list = reponseDao.find(p, t);
+            listReponse = new ArrayList<Reponse>();
+            if (list != null) {
+                for (Reponse rep : list) {
+                    listReponse.add(rep);
+                }
+            } else {
+                System.out.println("list=null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void Tester() {
-        System.out.println("test=" + getTheTest().toString());
-        System.out.println("passage=" + getThepassage().toString());
 
-        try {
-            // list de questions par rubriques
-            List<Reponse> list = reponseDao.findAll();
-            if (list != null) {
-                System.out.println("size=" + list.size());
-            } else {
-                System.out.println("size=null");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            // list de questions par rubriques
-            List<Reponse> list2 = reponseDao.find(getThepassage(), getTheTest());
-            if (list2 != null) {
-                System.out.println("size2=" + list2.size());
-            } else {
-                System.out.println("size2=null");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        try {
-            // list de questions par rubriques
-            Passage p = passageDao.find(Long.valueOf(1));
-            Test t = testDao.find(Long.valueOf(6));
-
-            List<Reponse> list3 = reponseDao.find(p, t);
-            if (list3 != null) {
-                System.out.println("size3=" + list3.size());
-            } else {
-                System.out.println("size3=null");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     /**
