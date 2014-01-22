@@ -120,7 +120,7 @@ public class QCM implements Serializable {
 
         //on doit récupérer l'index de la checkboxe cochée
         System.out.println("id de la proposition cochée: " + getMaValeur());
-        if (getMaValeur() == null) {
+        if (getMaValeur().equals("")) {
             // aucune case cochée
             utils.enreg_ReponseQCM(getQuestionid(), 0, "Non répondue");
         } else {

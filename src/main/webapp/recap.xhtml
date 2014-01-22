@@ -31,14 +31,17 @@
 
                         <p:panelGrid id="tab_recap" columns="4" style="width:920px;">  
                             <h:outputText value="En cliquant sur une des cases en fin de ligne, vous revenez à la question concernée" style="color:#f5ba80;"/> 
-                            <br /><br />
                             <p:commandButton value="Fin de test" action="#{recap.FinishHim}" id="withIcon"   
                                              icon="ui-icon-disk" style="float:right;"/> 
 
 
                         </p:panelGrid>
 
-                        <br/><br/><br/>
+                        <br/><br/>
+                        <h:outputText value="format : #{recap.test_format}" style="color:black;"/>
+                        
+                        
+                        <br/>
                         <h:dataTable value="#{recap.listReponse}" var="list"
                                      styleClass="order-table"
                                      headerClass="order-table-header"
@@ -46,7 +49,7 @@
                                      style="width:850px;margin-left:auto;margin-right:auto;">
                             <h:column>
                                 <f:facet name="header">Id</f:facet>
-                                    #{list.reponseid} 
+                                <h:outputText value="#{list.reponseid}" style="color:white;"/>
                             </h:column>
 
                             <h:column>
@@ -61,12 +64,22 @@
 
                             <h:column>
                                 <f:facet name="header">Retour</f:facet>
-                                <h:link outcome="theCodeTester" >
-                                    <h:graphicImage library="images" name="img_accueil/back3.png"  style="height:35px;" />
-                                </h:link>
+                                <c:if test="#{recap.test_format eq 1 }">
+                                    <h:link outcome="QCM" >
+                                        <h:graphicImage library="images" name="img_accueil/back3.png"  style="height:27px;" />
+                                    </h:link>
+                                </c:if>
                             </h:column>
+                            
+                            
                         </h:dataTable>
-
+                        
+                        
+                        
+                        
+                        <br/><br/><br/>
+                        <p:commandButton value="Fin de test" action="#{recap.FinishHim}"    
+                                         icon="ui-icon-disk" style="float:right;"/>
                         <br/><br/>
 
                     </h:form>

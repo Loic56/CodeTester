@@ -39,7 +39,10 @@ public class Recapitulatif implements Serializable {
     private List<Reponse> listReponse;
     private Test theTest;
     private Passage thepassage;
+    private String test_format;
 
+    
+    
     public Recapitulatif() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         testDao = (ITestDao) ctx.getBean("testDao");
@@ -55,6 +58,8 @@ public class Recapitulatif implements Serializable {
 
         setTheTest(testDao.find(Long.valueOf(test_id)));
         setThepassage(passageDao.find(Long.valueOf(passage_id)));
+        if(testDao.find(Long.valueOf(test_id)).getTestformat().equals("QCM"))
+        setTest_format("1");
 
         try {
             Passage p = passageDao.find(Long.valueOf(getThepassage().getPassageid().toString()));
@@ -164,6 +169,20 @@ public class Recapitulatif implements Serializable {
      */
     public void setThepassage(Passage thepassage) {
         this.thepassage = thepassage;
+    }
+
+    /**
+     * @return the test_format
+     */
+    public String getTest_format() {
+        return test_format;
+    }
+
+    /**
+     * @param test_format the test_format to set
+     */
+    public void setTest_format(String test_format) {
+        this.test_format = test_format;
     }
 
 }
