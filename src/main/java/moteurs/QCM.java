@@ -47,6 +47,7 @@ public class QCM implements Serializable {
     private String time;
 
     private String test_id;
+    private int passage_id;
     private int dureeTest;
     private Integer nb_quest_total;
     private Integer count; // compteur pr affichage
@@ -72,8 +73,11 @@ public class QCM implements Serializable {
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 
         int passage_id = ((Integer) sessionMap.get("passage_id"));
+        setPassage_id(passage_id);
         setTest_id(((String) sessionMap.get("testid")));
+
         System.out.println("test_id= " + getTest_id());
+        System.out.println("passage_id= " + passage_id);
 
         this.tab_test = ((Hashtable<String, Hashtable<Integer, List<Question>>>) sessionMap.get("tab_test"));
 
@@ -129,25 +133,28 @@ public class QCM implements Serializable {
                 utils.enreg_ReponseQCM(getQuestionid(), 0, "Répondue");
             }
         }
-        
+
         System.out.println("*******************************************");
-        System.out.println("count : " + getCount() + " == nb_quest_total - 1 : " + (getNb_quest_total() -1));
+        System.out.println("count : " + getCount() + " == nb_quest_total - 1 : " + (getNb_quest_total() - 1));
         System.out.println("*******************************************");
-        
+
         // PLANTAGE
         // si dernière question on renvoie vers la vue de recap
         if (getCount() == (getNb_quest_total() - 1)) {
             System.out.println("recap");
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
             utils.redirect(url);
+        } else {
+            System.out.println("qcm");
+            // sinon on réinitialise l'énoncé pr la question suivante
+            setCount((Integer) (getCount() + 1));
+            initQuestion();
+            String url = "http://localhost:8080/CodeTester/faces/QCM.xhtml";
+            utils.redirect(url);
+            return "QCM?faces-redirect=true";
         }
-        System.out.println("qcm");
-        // sinon on réinitialise l'énoncé pr la question suivante
-        setCount((Integer) (getCount() + 1));
-        initQuestion();
-        String url = "http://localhost:8080/CodeTester/faces/QCM.xhtml";
-        utils.redirect(url);
-        return "QCM?faces-redirect=true";
+        System.out.println("void");
+        return "";
 
     }
 
@@ -301,8 +308,8 @@ public class QCM implements Serializable {
      */
     public List<Proposition> getMesElements() {
         mesElements = new ArrayList<Proposition>();
-        Question quest = questionDao.find(Long.valueOf(getQuestionid()));
-        List<Proposition> list = propositionDao.find(quest);
+        Question quest = getQuestionDao().find(Long.valueOf(getQuestionid()));
+        List<Proposition> list = getPropositionDao().find(quest);
         for (Proposition prop : list) {
             Proposition p = new Proposition();
             p.setPropositionid(prop.getPropositionid());
@@ -401,6 +408,20 @@ public class QCM implements Serializable {
      */
     public void setTest_id(String test_id) {
         this.test_id = test_id;
+    }
+
+    /**
+     * @return the passage_id
+     */
+    public int getPassage_id() {
+        return passage_id;
+    }
+
+    /**
+     * @param passage_id the passage_id to set
+     */
+    public void setPassage_id(int passage_id) {
+        this.passage_id = passage_id;
     }
 
 }

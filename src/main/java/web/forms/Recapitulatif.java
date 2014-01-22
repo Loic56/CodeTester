@@ -8,7 +8,6 @@ package web.forms;
 import dao.IPassageDao;
 import dao.IReponseDao;
 import dao.ITestDao;
-import dao.ReponseDao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,7 @@ public class Recapitulatif implements Serializable {
     private IReponseDao reponseDao = null;
     private List<Reponse> listReponse;
     private Test theTest;
+    private Passage thepassage;
 
     public Recapitulatif() {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -51,27 +51,54 @@ public class Recapitulatif implements Serializable {
         String test_id = ((String) sessionMap.get("testid"));
         System.out.println("passage_id=" + passage_id + " test_id=" + test_id);
 
-        Test test = testDao.find(Long.valueOf(passage_id));
-        setTheTest(test);
-        System.out.println("6");
+        setTheTest(testDao.find(Long.valueOf(passage_id)));
+        setThepassage(passageDao.find(Long.valueOf(passage_id)));
 
-        Passage passage = passageDao.find(Long.valueOf(passage_id));
-        System.out.println("7");
-
-        // list de questions par rubriques
-        List<Reponse> list = utils.findReponses(passage, test);
-
-        List<Reponse> list2 = reponseDao.find(passage, test);
-
-        System.out.println("size=" + list.size());
-
-//  la ça foire ! ! ! !
-        // System.out.println("list.size: " + list.size());
-        setListReponse(list);
-        for (Reponse r : getListReponse()) {
-            System.out.println(r.toString());
-        }
         // String image = "enonces_PHP/boucles/small/boucle_" + id_quest + ".JPG";
+    }
+
+    public void Tester() {
+        System.out.println("test=" + getTheTest().toString());
+        System.out.println("passage=" + getThepassage().toString());
+
+        try {
+            // list de questions par rubriques
+            List<Reponse> list = reponseDao.findAll();
+            if (list != null) {
+                System.out.println("size=" + list.size());
+            } else {
+                System.out.println("size=null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            // list de questions par rubriques
+            List<Reponse> list2 = reponseDao.find(getThepassage(), getTheTest());
+            if (list2 != null) {
+                System.out.println("size2=" + list2.size());
+            } else {
+                System.out.println("size2=null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            // list de questions par rubriques
+            Passage p = passageDao.find(Long.valueOf(1));
+            Test t = testDao.find(Long.valueOf(6));
+
+            List<Reponse> list3 = reponseDao.find(p, t);
+            if (list3 != null) {
+                System.out.println("size3=" + list3.size());
+            } else {
+                System.out.println("size3=null");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -104,6 +131,62 @@ public class Recapitulatif implements Serializable {
      */
     public void setTheTest(Test theTest) {
         this.theTest = theTest;
+    }
+
+    /**
+     * @return the testDao
+     */
+    public ITestDao getTestDao() {
+        return testDao;
+    }
+
+    /**
+     * @param testDao the testDao to set
+     */
+    public void setTestDao(ITestDao testDao) {
+        this.testDao = testDao;
+    }
+
+    /**
+     * @return the passageDao
+     */
+    public IPassageDao getPassageDao() {
+        return passageDao;
+    }
+
+    /**
+     * @param passageDao the passageDao to set
+     */
+    public void setPassageDao(IPassageDao passageDao) {
+        this.passageDao = passageDao;
+    }
+
+    /**
+     * @return the reponseDao
+     */
+    public IReponseDao getReponseDao() {
+        return reponseDao;
+    }
+
+    /**
+     * @param reponseDao the reponseDao to set
+     */
+    public void setReponseDao(IReponseDao reponseDao) {
+        this.reponseDao = reponseDao;
+    }
+
+    /**
+     * @return the thepassage
+     */
+    public Passage getThepassage() {
+        return thepassage;
+    }
+
+    /**
+     * @param thepassage the thepassage to set
+     */
+    public void setThepassage(Passage thepassage) {
+        this.thepassage = thepassage;
     }
 
 }

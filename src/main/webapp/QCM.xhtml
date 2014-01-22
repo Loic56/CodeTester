@@ -38,24 +38,27 @@ and open the template in the editor.
                         <p:poll interval="1"   
                                 listener="#{qcm.Decrement}" update="txt_count" />  
                         <br/>
-                        <br/>
-                        <h:outputText value="Question n°:#{qcm.count} - Question_id:#{qcm.questionid}" />   <br/>
-                        <br/>
-                        <h:outputText value="#{qcm.enonce}" />   
-                        <hr/>
-                        <br/>
-                        <br/>
-                        <h:outputText value="Propositions:" />  
+                        <h:outputText value="Question n°: #{qcm.count} / #{qcm.nb_quest_total}"   style="color:#21bc79;"/>   <br/>
+                            <br/>
+                            <br/> 
+                        
+                            <h:outputText value=" question_id : #{qcm.questionid}"  />   
+                            <br/><br/>
+                            <h:outputText value="#{qcm.enonce}" />   
+                            <hr/>
+                            <br/>
+                            <br/>
+                            <h:outputText value="Propositions:" />  
 
-                        <p:selectOneRadio id="listPropositions" value="#{qcm.maValeur}" layout="grid" columns="1" style="margin-left:50px;">  
-                            <f:selectItems id="theProposition" value="#{qcm.mesElements}" var="theElement"  itemValue="#{theElement.propositionid}" itemLabel=" #{theElement.propositionlibelle} "/>  
-                        </p:selectOneRadio>  
+                            <p:selectOneRadio id="listPropositions" value="#{qcm.maValeur}" layout="grid" columns="1" style="margin-left:50px;">  
+                                <f:selectItems id="theProposition" value="#{qcm.mesElements}" var="theElement"  itemValue="#{theElement.propositionid}" itemLabel=" #{theElement.propositionlibelle} "/>  
+                            </p:selectOneRadio>  
 
 
-                        <br/>
+                            <br/>
 
-                        <br/>
-                        <p:commandButton value="Suivant" action="#{qcm.Suivant}" icon="ui-icon-check" style="margin:0;margin-left:auto;margin-right:auto;" /> 
+                            <br/>
+                            <p:commandButton value="Suivant" action="#{qcm.Suivant}" icon="ui-icon-check" style="margin:0;margin-left:auto;margin-right:auto;" /> 
                     </p:panel>  
                 </h:form>  
             </div>

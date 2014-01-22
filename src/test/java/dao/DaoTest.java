@@ -415,7 +415,7 @@ public class DaoTest {
     
     // Dao proposition find the good one
     public void test17() {
-        printLine("TEST17");
+//        printLine("TEST17");
 //        
 //        Reponse r = reponseDao.find(Long.valueOf(15));
 //        System.out.println("passage_id="+r.getPassageid()+"\nquest_id="+r.getQuestionid()+"\nrub_id="+r.getQuestionid().getRubriqueid()+"\ntest_id=" +r.getQuestionid().getRubriqueid().getTestid());
@@ -433,6 +433,9 @@ public class DaoTest {
 //        }
     }
 
+    
+    
+    
     public void printLine(String test) {
         System.out.println("////////////////////////////////////////////////////////////");
         System.out.println("\n============================================================");

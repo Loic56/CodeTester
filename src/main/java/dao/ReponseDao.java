@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import jpa.Passage;
-import jpa.Proposition;
 import jpa.Question;
 import jpa.Reponse;
 import jpa.Test;
@@ -192,7 +191,7 @@ public class ReponseDao implements IReponseDao, Serializable  {
             org.hibernate.Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             transaction.begin();//
-            List<Reponse> list = session.createQuery("select r from Reponse r where r.questionid.rubriqueid.testid =:test and  r.passageid =:passage ").setParameter("test", test).setParameter("passage", passage).list();
+            List<Reponse> list = session.createQuery("select r from Reponse r where r.questionid.rubriqueid.testid =:test and r.passageid =:passage ").setParameter("test", test).setParameter("passage", passage).list();
             transaction.commit();
             return (list.isEmpty() ? null : list);
         } catch (Exception e) {

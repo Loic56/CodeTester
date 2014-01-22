@@ -81,8 +81,9 @@ public class Log_Candidat implements Serializable {
             // le candidat s'est logué avec succès on peut créer un passage
             Passage p = utils.createPassage(theCandidat, theTests);
             
-
+            utils.printLine("            Create Passage              ");
             int passage_id = p.getPassageid();
+            System.out.println("passage_id="+passage_id);
             sessionMap.put("passage_id", passage_id);
 
             return "helloCandidat";
