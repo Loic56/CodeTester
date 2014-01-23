@@ -23,11 +23,10 @@ import jpa.Candidat;
 import jpa.Jointure;
 import jpa.Passage;
 import jpa.Question;
-import jpa.Rubrique;
 import jpa.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+
 
 /**
  *
@@ -50,8 +49,6 @@ public class Log_Candidat implements Serializable {
     private IPassageDao passageDao = null;
     private ICandidatDao candidatDao = null;
 
-    private Hashtable<String, Hashtable<Integer, List<Question>>> tab_test;
-    private Hashtable<Integer, List<Question>> tab_rub;
 
     public Log_Candidat() {
         error = "0";
@@ -68,7 +65,7 @@ public class Log_Candidat implements Serializable {
     public String Connexion() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
-
+        setError("0");
         // on cherche un candidat ds la base avec nom / prénom /date
         System.out.println("date:" + getDate());
         Candidat cand = getCandidatDao().find(getNom(), getPrenom(), getDate());
@@ -88,6 +85,7 @@ public class Log_Candidat implements Serializable {
             // on vérifie que le passage est fait ds les temps prévu 
             if (pass == null) {
                 System.out.println("passage non trouvé");
+                setError("1");
                 setMsg_error("Aucun passage n'a été créé pour ce candidat");
             } else {
                 System.out.println("pass:" + pass.toString());
@@ -105,9 +103,15 @@ public class Log_Candidat implements Serializable {
             }
         }
 
+        
+        
         if (getError().equals("1")) {
             return "log_candidat?faces-redirect=true";
         } else {
+            // on remet les champs à 0
+            setNom("");
+            setPrenom("");
+            setDate(null);
             return "helloCandidat";
         }
     }
@@ -222,34 +226,6 @@ public class Log_Candidat implements Serializable {
      */
     public void setCandidatDao(ICandidatDao candidatDao) {
         this.candidatDao = candidatDao;
-    }
-
-    /**
-     * @return the tab_test
-     */
-    public Hashtable<String, Hashtable<Integer, List<Question>>> getTab_test() {
-        return tab_test;
-    }
-
-    /**
-     * @param tab_test the tab_test to set
-     */
-    public void setTab_test(Hashtable<String, Hashtable<Integer, List<Question>>> tab_test) {
-        this.tab_test = tab_test;
-    }
-
-    /**
-     * @return the tab_rub
-     */
-    public Hashtable<Integer, List<Question>> getTab_rub() {
-        return tab_rub;
-    }
-
-    /**
-     * @param tab_rub the tab_rub to set
-     */
-    public void setTab_rub(Hashtable<Integer, List<Question>> tab_rub) {
-        this.tab_rub = tab_rub;
     }
 
     /**

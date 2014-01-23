@@ -45,7 +45,10 @@ and open the template in the editor.
 
                         <br />
                         <c:if test="#{logCandidat.error eq 1}">
-                            <div id="div_error">Le candidat n'a pas été trouvé / Erreur de saisie </div>
+                            <div id="div_error">
+                                <h:outputText value="#{logCandidat.msg_error}" />
+                            </div>
+
                         </c:if>
 
 

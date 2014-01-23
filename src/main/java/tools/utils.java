@@ -361,10 +361,13 @@ public class utils {
 
         // on le passe à 1 lorsque tous les tests du passage seront effectués
         passage.setPassageEtat(0);
+        
         passage.setCandidatid(candidatDao.find(Long.valueOf(theCandidat.getCandidatid())));
+        
+        
         Passage thePassage = passageDao.create(passage);
         
-        System.out.println("Passage id = " + thePassage.getPassageid());
+        System.out.println("    >> Passage id = " + thePassage.getPassageid());
         
         List<Jointure> listJointure = new ArrayList<Jointure>();
 
@@ -377,7 +380,7 @@ public class utils {
             j.setTestid(test); // test 
             j.setPassageid(thePassage); // passage
             Jointure jPersist = jointureDao.create(j);
-            System.out.println("jointure id = " + jPersist.getJointureid());
+            System.out.println("    >> jointure id = " + jPersist.getJointureid());
             listJointure.add(jPersist);
             
             Set<Jointure> listJointureToSet = new HashSet<Jointure>(listJointure);
@@ -388,7 +391,7 @@ public class utils {
 
             // on récupère toutes rubriques associées à un test
             List<Object> list = Arrays.asList(test.getRubriqueCollection().toArray());
-            System.out.println("nbres de rubriques pr ce test = " + list.size());
+            System.out.println("    >> Nbres de rubriques pr ce test = " + list.size());
             
             for (Object o : list) {
                 Rubrique rub = (Rubrique) o;
@@ -423,6 +426,7 @@ public class utils {
                 }
             }
         }
+        
         return thePassage;
     }
     
@@ -516,8 +520,9 @@ public class utils {
     }
     
     public static void printLine(String s) {
-        System.out.println("\n******************************************************");
-        System.out.println("                  " + s);
-        System.out.println("********************************************************\n");
+        System.out.println("////////////////////////////////////////////////////////////");
+        System.out.println("\n============================================================");
+        System.out.println("                    " + s + "                                 ");
+        System.out.println("------------------------------------------------------------");
     }
 }

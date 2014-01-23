@@ -73,9 +73,9 @@ public class InfoReservation implements Serializable {
 
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
-        
 
         this.theTests = ((List<Test>) sessionMap.get("theTests"));
+        System.out.println("theTests.size() = " + theTests.size());
         this.theCandidat = (Candidat) sessionMap.get("theCandidat");
 
         listCandidat.add(theCandidat);
@@ -86,24 +86,15 @@ public class InfoReservation implements Serializable {
         dureeTotale = String.valueOf(duree);
     }
 
-    
-    
-    
     public String Suivant() {
-        System.out.println("Suivant()");
 
         // passage validé par l'admin - on enregistre le passage ds la BDD
         Passage p = utils.createPassage(getTheCandidat(), getTheTests());
-        
+
         // le passage est référencé ds la BDD on supprime les variables de session
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        
-        
-        return "log_candidat?faces-redirect=true";
-        
-        
-        
 
+        return "log_candidat?faces-redirect=true";
     }
 
     /**
@@ -153,6 +144,10 @@ public class InfoReservation implements Serializable {
      * @return the theTests
      */
     public List<Test> getTheTests() {
+        System.out.println("----------------------");
+        for (Test t : theTests) {
+            System.out.println(t.toString());
+        }
         return theTests;
     }
 

@@ -8,7 +8,9 @@ package web.forms;
 import dao.IPassageDao;
 import dao.ITestDao;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -43,7 +45,7 @@ public class TheEnd implements Serializable {
 
     private int note;
     private int nbQuest;
-
+    private List<Test> theTests;
     private String theDate;
 
     public TheEnd() {
@@ -84,38 +86,35 @@ public class TheEnd implements Serializable {
         System.out.println("note = " + note);
     }
 
-    public String retourAccueil() {
-        // on enlève le test de la list 
-        Test test = testDao.find(Long.valueOf(getTestid()));
+    public void retourAccueil() {
+        Test myTest = getTestDao().find(Long.valueOf(getTestid()));
 
-        externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        sessionMap = externalContext.getSessionMap();
-        List<Test> theTests = ((List<Test>) sessionMap.get("theTests"));
+        setExternalContext(FacesContext.getCurrentInstance().getExternalContext());
+        setSessionMap(getExternalContext().getSessionMap());
+
+        List<Test> theTests = ((List<Test>) getSessionMap().get("theTests"));
+        List<Test> theTestsAfter = new ArrayList<Test>();
+
+        getSessionMap().remove("theTests");
 
         try {
-            System.out.println("Test >> " + theTests.size());
             for (Test t : theTests) {
-                System.out.println("Test >> " + t.toString());
-                
-                System.out.println(getTestid()+ " == "+t.getTestid()+" ? ");
-                
-                if (getTestid().equals(t.getTestid().toString())) {
-                    
-                    //on enlève le test qu'on vient de passer de la session
-                    theTests.remove(test);
-                    // on remet la list en session
-                    System.out.println("on vire le test de la session");
-                    sessionMap.put("theTests", theTests);
+                if (t.equals(myTest)) {
+                    theTests.remove(myTest);
+                } else {
+                    theTestsAfter.add(t);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-        List<Test> theTestsAfter = ((List<Test>) sessionMap.get("theTests"));
-        System.out.println("Test >> " + theTestsAfter.size());
 
-        return "index?faces-redirect=true";
+        System.out.println("theTestsAfter.size() : " + theTestsAfter.size());
+        // on remet la list en session
+        getSessionMap().put("theTests", theTestsAfter);
+        
+        String url = "http://localhost:8080/CodeTester/faces/helloCandidat.xhtml";
+        utils.redirect(url);
 
     }
 
@@ -201,6 +200,76 @@ public class TheEnd implements Serializable {
      */
     public void setTheDate(String theDate) {
         this.theDate = theDate;
+    }
+
+    /**
+     * @return the testDao
+     */
+    public ITestDao getTestDao() {
+        return testDao;
+    }
+
+    /**
+     * @param testDao the testDao to set
+     */
+    public void setTestDao(ITestDao testDao) {
+        this.testDao = testDao;
+    }
+
+    /**
+     * @return the passageDao
+     */
+    public IPassageDao getPassageDao() {
+        return passageDao;
+    }
+
+    /**
+     * @param passageDao the passageDao to set
+     */
+    public void setPassageDao(IPassageDao passageDao) {
+        this.passageDao = passageDao;
+    }
+
+    /**
+     * @return the externalContext
+     */
+    public ExternalContext getExternalContext() {
+        return externalContext;
+    }
+
+    /**
+     * @param externalContext the externalContext to set
+     */
+    public void setExternalContext(ExternalContext externalContext) {
+        this.externalContext = externalContext;
+    }
+
+    /**
+     * @return the sessionMap
+     */
+    public Map<String, Object> getSessionMap() {
+        return sessionMap;
+    }
+
+    /**
+     * @param sessionMap the sessionMap to set
+     */
+    public void setSessionMap(Map<String, Object> sessionMap) {
+        this.sessionMap = sessionMap;
+    }
+
+    /**
+     * @return the theTests
+     */
+    public List<Test> getTheTests() {
+        return theTests;
+    }
+
+    /**
+     * @param theTests the theTests to set
+     */
+    public void setTheTests(List<Test> theTests) {
+        this.theTests = theTests;
     }
 
 }

@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package jpa;
 
 import java.io.Serializable;
@@ -43,45 +42,73 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Test.findByTheme", query = "SELECT t FROM Test t WHERE t.theme = :theme"),
     @NamedQuery(name = "Test.findByNiveau", query = "SELECT t FROM Test t WHERE t.niveau = :niveau")})
 public class Test implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "TESTID")
     private Integer testid;
+
     @Size(max = 255)
     @Column(name = "TESTMATIERE")
     private String testmatiere;
+
     @Column(name = "TESTDUREE")
     private Short testduree;
+
     @Column(name = "TEST_NBQUESTION_RUB")
     private Integer testNbquestionRub;
+
     @Size(max = 50)
     @Column(name = "TESTNATURE")
     private String testnature;
+
     @Size(max = 255)
     @Column(name = "TESTFORMAT")
     private String testformat;
+
     @Lob
     @Size(max = 65535)
     @Column(name = "TEST_START")
     private String testStart;
+
     @Lob
     @Size(max = 65535)
     @Column(name = "TEST_DESCRIPTION")
     private String testDescription;
+
     @Size(max = 255)
     @Column(name = "THEME")
     private String theme;
+
     @Column(name = "NIVEAU")
     private Integer niveau;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "testid")
     private Collection<Rubrique> rubriqueCollection;
+
     @JoinColumn(name = "CATEGORIEID", referencedColumnName = "CATEGORIEID")
     @ManyToOne(optional = false)
     private Categorie categorieid;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "testid")
     private Collection<Jointure> jointureCollection;
+
+    
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Test)) {
+            return false;
+        }
+        Test other = (Test) object;
+        if ((this.testid == null && other.testid != null) || (this.testid != null && !this.testid.equals(other.testid))) {
+            return false;
+        }
+        return true;
+    }
+
 
     public Test() {
     }
@@ -196,6 +223,7 @@ public class Test implements Serializable {
         this.jointureCollection = jointureCollection;
     }
 
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -203,22 +231,11 @@ public class Test implements Serializable {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Test)) {
-            return false;
-        }
-        Test other = (Test) object;
-        if ((this.testid == null && other.testid != null) || (this.testid != null && !this.testid.equals(other.testid))) {
-            return false;
-        }
-        return true;
-    }
-
+    
+    
     @Override
     public String toString() {
         return "jpa.Test[ testid=" + testid + " ]";
     }
-    
+
 }
