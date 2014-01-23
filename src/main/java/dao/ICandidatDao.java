@@ -5,6 +5,7 @@
  */
 package dao;
 
+import java.util.Date;
 import java.util.List;
 import jpa.Candidat;
 
@@ -21,6 +22,8 @@ public interface ICandidatDao {
     public void destroy(Candidat candidat);
 
     public Candidat find(Long id);
+    
+     public Candidat find(String nom, String prenom, Date date);
 
     public Candidat find(String login, String password);
 

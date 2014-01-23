@@ -120,14 +120,17 @@ public class utils {
         }
     }
     
+    
+    
     public static void redirect(String url) {
         try {
             FacesContext.getCurrentInstance().getExternalContext().redirect(url);
-            
         } catch (IOException ex) {
             Logger.getLogger(TheCodeTester.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    
     
     public static void buildXML(String pathEcriture, String pathLecture) throws TransformerConfigurationException, TransformerException {
         try {

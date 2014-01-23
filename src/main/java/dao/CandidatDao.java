@@ -7,6 +7,7 @@ package dao;
 
 import exception.PamException;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import jpa.Candidat;
 import org.hibernate.Criteria;
@@ -15,6 +16,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
+import tools.utils;
 
 /**
  *
@@ -44,7 +46,7 @@ public class CandidatDao implements ICandidatDao, Serializable {
             // id est généré par l'insertion en base !
             int id = candidat.getCandidatid();
             session.flush();
-            List<Candidat> list = session.createQuery("from Candidat where candidatid = " + id).list(); 
+            List<Candidat> list = session.createQuery("from Candidat where candidatid = " + id).list();
             return (list.isEmpty() ? null : list.get(0));
         } catch (Exception e) {
             new PamException("Candidat create => pamException", 0);
@@ -54,16 +56,11 @@ public class CandidatDao implements ICandidatDao, Serializable {
         return null;
     }
 
-    
-    
     @Override
     public Candidat edit(Candidat candidat) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
-    
     @Override
     public void destroy(Candidat candidat) {
         try {
@@ -105,8 +102,6 @@ public class CandidatDao implements ICandidatDao, Serializable {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    
-    
     @Override
     public List<Candidat> findAll() {
         try {
@@ -118,6 +113,25 @@ public class CandidatDao implements ICandidatDao, Serializable {
             return crit.list();
         } catch (Exception e) {
             new PamException("Candidat findAll => pamException", 0);
+        } finally {
+            getSessionFactory().close();
+        }
+        return null;
+    }
+
+    @Override
+    public Candidat find(String nom, String prenom, Date date) {
+        // Date theDate = utils.stringToMySQLDate(date);
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            transaction.begin();
+            List<Candidat> list = session.createQuery("select c from Candidat c where c.candidatNom=:nom and c.candidatPrenom=:prenom and c.candidatDateNaissance=:date").setParameter("nom", nom).setParameter("prenom", prenom).setParameter("date", date).list();
+            transaction.commit();
+            return (list.isEmpty() ? null : list.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+           // new PamException("Candidat find by id => pamException", 0);
         } finally {
             getSessionFactory().close();
         }

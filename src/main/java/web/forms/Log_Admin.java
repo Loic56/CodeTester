@@ -43,8 +43,9 @@ public class Log_Admin implements Serializable {
         checkCookie();
 
         FacesContext fc = FacesContext.getCurrentInstance();
-        System.out.println("info = " + fc.getExternalContext().getRequestParameterMap().get("testid"));
 
+        String s = fc.getExternalContext().getRequestParameterMap().get("info");
+        System.out.println("info = " + s);
     }
 
     public void checkCookie() {

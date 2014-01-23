@@ -81,6 +81,8 @@ public class DaoTest {
         test15();
         test16();
         test17();
+        test18();
+        test19();
     }
 
     // dao admin
@@ -283,15 +285,13 @@ public class DaoTest {
 
     }
 
-    
-    
-    
     // test complet
     private void test12() {
         printLine("TEST12");
 
         // nouveau passage
         Passage passage = new Passage();
+        passage.setPassageEtat(0);
         // sam faber
         passage.setCandidatid(candidatDao.find(Long.valueOf(1)));
         Passage thePassage = passageDao.create(passage);
@@ -305,14 +305,13 @@ public class DaoTest {
         List<Jointure> listJointure = new ArrayList<Jointure>();
 
         // on associe chaque test à sa jointure et chaque jointure à un passage + persist la jointure
-
         Jointure j = new Jointure();
         j.setTestid(test_); // test 
         j.setPassageid(thePassage); // passage
         Jointure jPersist = jointureDao.create(j);
         System.out.println("jointure id = " + jPersist.getJointureid());
         listJointure.add(jPersist);
-        
+
         Set<Jointure> listJointureToSet = new HashSet<Jointure>(listJointure);
 
         thePassage.setJointureCollection(listJointureToSet);
@@ -327,13 +326,13 @@ public class DaoTest {
         for (Object o : list) {
             Rubrique rub = (Rubrique) o;
             rub.setTestid(test_);
-            
+
             // pour chaque rubriques on récupère sa liste questions
             List<Object> list2 = Arrays.asList(rub.getQuestionCollection().toArray());
             System.out.println("  >> Pour la rubrique n°" + rub.getRubriqueid() + ", Nombre de question = " + list2.size());
             for (Object o2 : list2) {
                 Question quest = (Question) o2;
-                
+
                 //on créer une réponse vide pr chaque question // pas d etest ni de rub 
                 Reponse r = new Reponse();
                 r.setPassageid(thePassage);
@@ -343,7 +342,7 @@ public class DaoTest {
                 Reponse rep = reponseDao.create(r);
                 quest.getReponseCollection().add(rep);
                 questionDao.edit(quest);
-                
+
                 // pour chaque question on récupère une liste de propositions (déjà en base!)
                 List<Object> list3 = Arrays.asList(quest.getPropositionCollection().toArray());
                 List<Proposition> listProp = propositionDao.find(quest);
@@ -353,16 +352,14 @@ public class DaoTest {
                     //System.out.println("prop : " + prop.getPropositionlibelle());
                 }
             }
-            
+
             rubriqueDao.edit(rub);
         }
 
-//        List<Reponse> liste = reponseDao.find(thePassage, test_);
-//        for(Reponse r : liste){
-//            System.out.println("Reponse : "+r.toString());
-//        }
-        
-        
+        List<Reponse> liste = reponseDao.find(thePassage, test_);
+        for(Reponse r : liste){
+            System.out.println("Reponse : "+r.toString());
+        }
         // OK - on supprime tout ce qui vient d'être créé
         List<Passage> list2 = passageDao.findAll();
         for (Passage p : list2) {
@@ -404,15 +401,12 @@ public class DaoTest {
 
     // Dao proposition find the good one
     public void test16() {
-        printLine("TEST16");
-        Question quest = questionDao.find(Long.valueOf(16));
-        Proposition p = propositionDao.find_(quest);
-        System.out.println("test 15 >> Proposition" + p.toString());
+//        printLine("TEST16");
+//        Question quest = questionDao.find(Long.valueOf(16));
+//        Proposition p = propositionDao.find_(quest);
+//        System.out.println("test 15 >> Proposition" + p.toString());
     }
 
-    
-    
-    
     // Dao proposition find the good one
     public void test17() {
 //        printLine("TEST17");
@@ -433,9 +427,29 @@ public class DaoTest {
 //        }
     }
 
+    // Dao proposition find the good one
+    public void test18() {
+        printLine("TEST18");
+        Candidat c = candidatDao.find(Long.valueOf(1));
+        Passage p = passageDao.find(c);
+
+        if (p != null) {
+            System.out.println("test 18 >> Passage en attente pour le candidat 1 : " + p.toString());
+
+        }
+    }
     
-    
-    
+        // Dao proposition find the good one
+    public void test19() {
+        printLine("TEST19");
+        
+//        Candidat c = candidatDao.find("Faber","Samuel","01-01-1985");
+//        if (c != null) {
+//            System.out.println("test 19 >> candidat : " + c.toString());
+//
+//        }
+    }
+
     public void printLine(String test) {
         System.out.println("////////////////////////////////////////////////////////////");
         System.out.println("\n============================================================");

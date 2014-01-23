@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.List;
+import jpa.Candidat;
 import jpa.Passage;
 
 /**
@@ -21,6 +22,8 @@ public interface IPassageDao {
     public void destroy(Passage passage);
 
     public Passage find(Long id);
+    
+    public Passage find(Candidat candidat);
 
     public List<Passage> find(String format);
 

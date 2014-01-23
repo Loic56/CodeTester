@@ -70,11 +70,13 @@ public class TestControler implements Serializable {
         System.out.println("2:" + (List<Test>) sessionMap.get("theTests"));
         System.out.println("3:" + (Candidat) sessionMap.get("theCandidat"));
         System.out.println("4:" + ((String) sessionMap.get("testid")));
+        
         int passage_id = ((Integer) sessionMap.get("passage_id"));
-
         setTheTests((List<Test>) sessionMap.get("theTests"));
         setTheCandidat((Candidat) sessionMap.get("theCandidat"));
         setTestid((String) sessionMap.get("testid")); // l'id du test en cours
+        
+        
 
         Test t = testDao.find(Long.valueOf(getTestid()));
         // nature du test QCM / CODE ?

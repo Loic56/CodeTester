@@ -79,10 +79,18 @@ and open the template in the editor.
                         <p style="margin-top:300px;"><a >La durée total de l'ensemble des tests est de : </a> <h:outputText value="#{infoResa.dureeTotale}" /><a>min</a></p>
                         <hr />
 
+                        
+                        
                         <div style="margin-top:30px;">
                             <p:commandButton value="Annuler" action="#{infoResa.Annuler}" icon="ui-icon-check" style="margin:0"/>  
                             <p:commandButton value="Retour" action="#{infoResa.Retour}" icon="ui-icon-check" style="margin:0;margin-left:20px;" />  
-                            <p:commandButton value="Suivant" action="#{infoResa.Suivant}" icon="ui-icon-check" style="margin:0;margin-left:20px;" />  
+                            <p:commandButton value="Suivant" action="#{infoResa.Suivant}" icon="ui-icon-check" style="margin:0;margin-left:20px;" >  
+                                <p:confirm header="Confirmation" message="Créer la réservation ? " icon="ui-icon-alert" />  
+                            </p:commandButton>
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                            </p:confirmDialog>  
                         </div>
                     </p:panel>  
                 </div>  

@@ -9,6 +9,7 @@ import exception.PamException;
 import java.io.Serializable;
 import java.util.List;
 import javax.transaction.Transactional;
+import jpa.Candidat;
 import jpa.Passage;
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
@@ -17,14 +18,12 @@ import org.hibernate.classic.Session;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 
-
-
 /**
  *
  * @author Loïc
  */
 @Transactional
-public class PassageDao implements IPassageDao , Serializable {
+public class PassageDao implements IPassageDao, Serializable {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -138,6 +137,24 @@ public class PassageDao implements IPassageDao , Serializable {
             return crit.list();
         } catch (Exception e) {
             new PamException("Passage findAll => pamException", 0);
+        } finally {
+            getSessionFactory().close();
+        }
+        return null;
+    }
+
+    @Override
+    public Passage find(Candidat candidat) {
+        try {
+            org.hibernate.Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            transaction.begin();
+            List<Passage> list = session.createQuery("select p from Passage p where p.candidatid =:candidat and p.passageEtat = 0").setParameter("candidat", candidat).list();
+            transaction.commit();
+            return (list.isEmpty() ? null : list.get(0));
+        } catch (Exception e) {
+            //e.printStackTrace();
+            new PamException("Rubrique find by testid => pamException", 0);
         } finally {
             getSessionFactory().close();
         }
