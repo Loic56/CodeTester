@@ -39,6 +39,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import tools.utils;
 import tools.utils;
 import controler.TestControler;
+import tools.RegisterAction;
 
 /**
  *
@@ -82,7 +83,13 @@ class MetierTest {
 //        test08();
 //        test09();
 //        test10();
-        test11(1800);
+//       test11(1800);
+        
+        // test Java Mail
+//        test12();
+//        test13();
+//        test14();
+        test15();
     }
 
     private void test01() {
@@ -241,6 +248,57 @@ class MetierTest {
         int seconds = dureeTest % 60;
 
         System.out.println(hours + ":" + minutes + ":" + seconds);
+
+    }
+
+    public void test12() {
+        printLine("TEST12");
+        try {
+            utils.sendEmail();
+            System.out.println("sendEmail >> OK");
+        } catch (Exception e) {
+            System.out.println("sendEmail >> KO");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void test13() {
+        printLine("TEST13");
+        try {
+            utils.sendEmail2();
+            System.out.println("sendEmail2 >> OK");
+        } catch (Exception e) {
+            System.out.println("sendEmail2 >> KO");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void test14() {
+        printLine("TEST14");
+        // accès a mon comte ggogle pr 10 min
+        // https://accounts.google.com/b/0/DisplayUnlockCaptcha
+        try {
+            RegisterAction reg = new RegisterAction();
+            reg.execute();
+            System.out.println("RegisterAction >> OK");
+        } catch (Exception e) {
+            System.out.println("RegisterAction >> KO");
+            e.printStackTrace();
+        }
+
+    }
+
+    public void test15() {
+        printLine("TEST15");
+        try {
+            utils.sendEmail3();
+            System.out.println("sendEmail3 >> OK");
+        } catch (Exception e) {
+            System.out.println("sendEmail3 >> KO");
+            e.printStackTrace();
+        }
 
     }
 

@@ -95,7 +95,19 @@ public class TheEnd implements Serializable {
         List<Test> theTests = ((List<Test>) getSessionMap().get("theTests"));
         List<Test> theTestsAfter = new ArrayList<Test>();
 
+        try {
+            System.out.println("  ? ? " + getSessionMap().get("theTests"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         getSessionMap().remove("theTests");
+
+        try {
+            System.out.println("  ? ? " + getSessionMap().get("theTests"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             for (Test t : theTests) {
@@ -110,9 +122,16 @@ public class TheEnd implements Serializable {
         }
 
         System.out.println("theTestsAfter.size() : " + theTestsAfter.size());
-        // on remet la list en session
+
+        System.out.println("-------------------------------");
+// on remet la liste en session
         getSessionMap().put("theTests", theTestsAfter);
-        
+
+        for(Test t : (List<Test>)getSessionMap().get("theTests")){
+             System.out.println(" >> "+t.toString() );
+        }
+    
+                
         String url = "http://localhost:8080/CodeTester/faces/helloCandidat.xhtml";
         utils.redirect(url);
 

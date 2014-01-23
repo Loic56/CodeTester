@@ -53,6 +53,9 @@ public class InfoReservation implements Serializable {
     private IPassageDao passageDao = null;
     private IJointureDao jointureDao = null;
 
+    private Map<String, Object> sessionMap;
+    private ExternalContext externalContext;
+
     public String Retour() {
         return "test?faces-redirect=true";
     }
@@ -71,8 +74,8 @@ public class InfoReservation implements Serializable {
 
         listCandidat = new ArrayList<Candidat>();
 
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> sessionMap = externalContext.getSessionMap();
+        externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        sessionMap = externalContext.getSessionMap();
 
         this.theTests = ((List<Test>) sessionMap.get("theTests"));
         System.out.println("theTests.size() = " + theTests.size());
@@ -144,9 +147,12 @@ public class InfoReservation implements Serializable {
      * @return the theTests
      */
     public List<Test> getTheTests() {
-        System.out.println("----------------------");
-        for (Test t : theTests) {
-            System.out.println(t.toString());
+        List<Test> list = (List<Test>) getSessionMap().get("theTests");
+        if (list != null) {
+            System.out.println("list not null");
+            return list;
+        } else {
+            System.out.println("list null");
         }
         return theTests;
     }
@@ -156,6 +162,118 @@ public class InfoReservation implements Serializable {
      */
     public void setTheTests(List<Test> theTests) {
         this.theTests = theTests;
+    }
+
+/**
+ * @return the listJointure
+ */
+public List<Jointure> getListJointure() {
+        return listJointure;
+    }
+
+    /**
+     * @param listJointure the listJointure to set
+     */
+    public void setListJointure(List<Jointure> listJointure) {
+        this.listJointure = listJointure;
+    }
+
+    /**
+     * @return the duree
+     */
+    public Integer getDuree() {
+        return duree;
+    }
+
+    /**
+     * @param duree the duree to set
+     */
+    public void setDuree(Integer duree) {
+        this.duree = duree;
+    }
+
+    /**
+     * @return the candidatDao
+     */
+    public ICandidatDao getCandidatDao() {
+        return candidatDao;
+    }
+
+    /**
+     * @param candidatDao the candidatDao to set
+     */
+    public void setCandidatDao(ICandidatDao candidatDao) {
+        this.candidatDao = candidatDao;
+    }
+
+    /**
+     * @return the testDao
+     */
+    public ITestDao getTestDao() {
+        return testDao;
+    }
+
+    /**
+     * @param testDao the testDao to set
+     */
+    public void setTestDao(ITestDao testDao) {
+        this.testDao = testDao;
+    }
+
+    /**
+     * @return the passageDao
+     */
+    public IPassageDao getPassageDao() {
+        return passageDao;
+    }
+
+    /**
+     * @param passageDao the passageDao to set
+     */
+    public void setPassageDao(IPassageDao passageDao) {
+        this.passageDao = passageDao;
+    }
+
+    /**
+     * @return the jointureDao
+     */
+    public IJointureDao getJointureDao() {
+        return jointureDao;
+    }
+
+    /**
+     * @param jointureDao the jointureDao to set
+     */
+    public void setJointureDao(IJointureDao jointureDao) {
+        this.jointureDao = jointureDao;
+    }
+
+    /**
+     * @return the sessionMap
+     */
+    public Map<String, Object> getSessionMap() {
+        return sessionMap;
+    }
+
+    /**
+     * @param sessionMap the sessionMap to set
+     */
+    public void setSessionMap(Map<String, Object> sessionMap) {
+        this.sessionMap = sessionMap;
+    }
+
+    /**
+     * @return the externalContext
+     */
+    public ExternalContext getExternalContext() {
+        return externalContext;
+    }
+
+    /**
+     * @param externalContext the externalContext to set
+     */
+    public void setExternalContext(ExternalContext externalContext) {
+        this.externalContext = externalContext;
     }
 
 }

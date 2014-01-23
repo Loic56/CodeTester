@@ -51,6 +51,7 @@ public class QCM implements Serializable {
     private int dureeTest;
     private Integer nb_quest_total;
     private Integer count; // compteur pr affichage
+    private Integer count2; 
     private String questionid; // id de la question en cours
     private String enonce;
     private String rubrique;
@@ -422,6 +423,20 @@ public class QCM implements Serializable {
      */
     public void setPassage_id(int passage_id) {
         this.passage_id = passage_id;
+    }
+
+    /**
+     * @return the count2
+     */
+    public Integer getCount2() {
+        return (getCount()+1);
+    }
+
+    /**
+     * @param count2 the count2 to set
+     */
+    public void setCount2(Integer count2) {
+        this.count2 = count2;
     }
 
 }
