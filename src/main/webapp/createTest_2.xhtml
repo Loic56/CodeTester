@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+    <h:head>
+        <title>Création de test</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+
+        <div id="container">
+
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+            <div id="content">
+                <p:panel header="Création de test - page n°2"  style="height:auto"> 
+                    <h:form style="border:1px solid transparent;">
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">  
+
+                            <h:panelGrid columns="1" style="margin-bottom:10px;width:300px;" cellpadding="5">  
+                                <!--panel gauche-->
+                                <h:panelGrid columns="1" >  
+                                    <f:facet name="header">  
+                                        Ajouter une rubrique
+                                    </f:facet>   
+                                    <h:outputText value="Nom : " />  
+                                    <h:inputText value="#{create.nomRubrique}" />  
+                                    <p:commandButton id="submitButton" value="Créer"  style="margin-top:10px;margin-left:800px;" action="#{create.creerRubrique}"   />  
+                                </h:panelGrid>   
+
+                                <h:panelGrid columns="1" >  
+                                    <f:facet name="header">  
+                                        ALes rubriques
+                                    </f:facet>   
+
+                                    <p:treeTable id="treetable" value="#{create.root}" var="document">  
+                                        <p:column style="width:32%">  
+                                            <f:facet name="header">  
+                                                Nom
+                                            </f:facet>  
+                                            <h:outputText value="#{create.nomRubrique}" />  
+                                        </p:column>  
+                                    </p:treeTable>                
+
+                                </h:panelGrid>   
+
+                            </h:panelGrid>   
+
+
+                            <h:panelGrid columns="1" style="margin-bottom:10px;width:600px;" cellpadding="5">  
+                                <!--panel droit-->
+                            </h:panelGrid>   
+                        </h:panelGrid>      
+
+
+                    </h:form>
+                </p:panel>  
+            </div>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+
+        </div> <!-- container -->
+    </h:body>
+</html>     
