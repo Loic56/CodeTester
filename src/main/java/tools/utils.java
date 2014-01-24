@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URL;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
 import java.util.Collection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -66,11 +69,18 @@ import moteurs.TheCodeTester;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
+import javax.mail.Multipart;
 import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 
 /**
  *
@@ -612,21 +622,17 @@ public class utils {
         }
     }
 
-    
-    
-    
     public static void sendEmail3() {
 
         final String username = "lcrusson.pro@gmail.com";
         final String password = "richegrospenis";
 
         Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.socketFactory.port", "587");
-        props.put("mail.smtp.socketFactory.class",
-                "javax.net.ssl.SSLSocketFactory");
+        // tls
+        props.put("mail.smtp.host", "smtp.gmail.com"); // localhost
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.starttls.enable", "true");
 
         Session session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
@@ -652,5 +658,63 @@ public class utils {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static void sendEmail4() throws MessagingException {
+
+        final String username = "lcrusson.pro@gmail.com";
+        final String password = "richegrospenis";
+        String subject = "kekette";
+        String body = "Dans ton cul";
+
+        Properties mailProps = new Properties();
+        mailProps.put("mail.smtp.from", username);
+        mailProps.put("mail.smtp.host", "smtp.gmail.com");
+        mailProps.put("mail.smtp.port", "587");
+        mailProps.put("mail.smtp.auth", "true");
+        mailProps.put("mail.smtp.socketFactory.port", "587");
+        mailProps.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+        mailProps.put("mail.smtp.socketFactory.fallback", "true"); // false
+        mailProps.put("mail.smtp.starttls.enable", "true");
+
+        System.setProperty("javax.net.ssl.trustStore", "clientTrustStore.key"); // not found 
+        System.setProperty("javax.net.ssl.trustStorePassword", "qwerty");
+        
+        
+        
+
+        Session mailSession = Session.getDefaultInstance(mailProps, new Authenticator() {
+
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+
+        });
+
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setFrom(new InternetAddress(username));
+
+        //Getting  FROM_MAIL
+        String[] emails = new String[1];
+        emails[0] = new String();
+        emails[0] = "loic.crusson@live.fr";
+
+//        String[] emails = { recipients };
+        InternetAddress dests[] = new InternetAddress[emails.length];
+        for (int i = 0; i < emails.length; i++) {
+            dests[i] = new InternetAddress(emails[i].trim().toLowerCase());
+        }
+        message.setRecipients(Message.RecipientType.TO, dests);
+        message.setSubject(subject, "UTF-8");
+        Multipart mp = new MimeMultipart();
+        MimeBodyPart mbp = new MimeBodyPart();
+        mbp.setContent(body, "text/html;charset=utf-8");
+        mp.addBodyPart(mbp);
+        message.setContent(mp);
+        message.setSentDate(new java.util.Date());
+
+        Transport.send(message);
+
     }
 }

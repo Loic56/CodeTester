@@ -84,12 +84,12 @@ class MetierTest {
 //        test09();
 //        test10();
 //       test11(1800);
-        
         // test Java Mail
 //        test12();
 //        test13();
-//        test14();
-        test15();
+        //      test14();
+//        test15();
+        test16();
     }
 
     private void test01() {
@@ -302,10 +302,22 @@ class MetierTest {
 
     }
 
+    private void test16() {
+        printLine("TEST16");
+        try {
+            utils.sendEmail4();
+            System.out.println("sendEmail4 >> OK");
+        } catch (Exception e) {
+            System.out.println("sendEmail4 >> KO");
+            e.printStackTrace();
+        }
+    }
+
     public void printLine(String test) {
         System.out.println("////////////////////////////////////////////////////////////");
         System.out.println("\n============================================================");
         System.out.println("                    " + test + "                                 ");
         System.out.println("------------------------------------------------------------");
     }
+
 }

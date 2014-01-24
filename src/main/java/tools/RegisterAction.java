@@ -65,17 +65,18 @@ public class RegisterAction {
 
         // Setup your mail server
         props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.starttls.enable", true);
-        props.put("mail.smtp.auth", true);
+              props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.socketFactory.port", "587");
-        props.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+  
 
         // create some properties and get the default Session
         Session session = Session.getDefaultInstance(props, new Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(
-                        "lcrusson.pro@gmail.com", "richegrospenis");// Specify the Username and the PassWord
+                        "lcrusson.pro@gmail.com", "richegrospenis");
             }
         });
         
