@@ -36,9 +36,10 @@ import jpa.Reponse;
 import jpa.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
-import tools.utils;
+import tools.Utils;
+import tools.Utils;
 import controler.TestControler;
+import tools.Mails;
 import tools.RegisterAction;
 
 /**
@@ -193,7 +194,7 @@ class MetierTest {
     private void test06() {
         printLine("TEST06");
         for (int i = 0; i < 10; i++) {
-            int retour = utils.verifXML();
+            int retour = Utils.verifXML();
             System.out.println("retour : " + retour);
         }
 
@@ -254,7 +255,7 @@ class MetierTest {
     public void test12() {
         printLine("TEST12");
         try {
-            utils.sendEmail();
+            Mails.sendEmail();
             System.out.println("sendEmail >> OK");
         } catch (Exception e) {
             System.out.println("sendEmail >> KO");
@@ -266,7 +267,7 @@ class MetierTest {
     public void test13() {
         printLine("TEST13");
         try {
-            utils.sendEmail2();
+            Mails.sendEmail2();
             System.out.println("sendEmail2 >> OK");
         } catch (Exception e) {
             System.out.println("sendEmail2 >> KO");
@@ -293,7 +294,7 @@ class MetierTest {
     public void test15() {
         printLine("TEST15");
         try {
-            utils.sendEmail3();
+            Mails.sendEmail3();
             System.out.println("sendEmail3 >> OK");
         } catch (Exception e) {
             System.out.println("sendEmail3 >> KO");
@@ -305,7 +306,7 @@ class MetierTest {
     private void test16() {
         printLine("TEST16");
         try {
-            utils.sendEmail4();
+            Mails.sendEmail4();
             System.out.println("sendEmail4 >> OK");
         } catch (Exception e) {
             System.out.println("sendEmail4 >> KO");

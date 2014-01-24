@@ -25,7 +25,7 @@ import jpa.Proposition;
 import jpa.Question;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 /**
  *
@@ -42,7 +42,7 @@ public class QCM implements Serializable {
     private List<Question> the_list;
 
     private List<Proposition> mesElements;
-    private String maValeur;
+    private List<String> maValeur;
 
     private String time;
 
@@ -51,7 +51,7 @@ public class QCM implements Serializable {
     private int dureeTest;
     private Integer nb_quest_total;
     private Integer count; // compteur pr affichage
-    private Integer count2; 
+    private Integer count2;
     private String questionid; // id de la question en cours
     private String enonce;
     private String rubrique;
@@ -82,7 +82,7 @@ public class QCM implements Serializable {
 
         this.tab_test = ((Hashtable<String, Hashtable<Integer, List<Question>>>) sessionMap.get("tab_test"));
 
-        setDureeTest(utils.getDureeTest(test_id));
+        setDureeTest(Utils.getDureeTest(test_id));
         dureeToString(getDureeTest());
 
         // le tableau des (rubriques + questions)
@@ -123,35 +123,41 @@ public class QCM implements Serializable {
         System.out.println("id de la proposition cochée: " + getMaValeur());
         if (getMaValeur().equals("")) {
             // aucune case cochée
-            utils.enreg_ReponseQCM(getQuestionid(), 0, "Non répondue");
+            Utils.enreg_ReponseQCM(getQuestionid(), 0, "Non répondue");
         } else {
             // la réponse du candidat + l'id de la question
-            int retour = utils.verif_ReponseQCM(getQuestionid(), getMaValeur()); // renvoie 1 si reponse OK 0 si KO
+            int retour = Utils.verif_ReponseQCM(getQuestionid(), getMaValeur()); // renvoie 1 si reponse OK 0 si KO
             // on met à jour la réponse ds la base
             if (retour == 1) {
-                utils.enreg_ReponseQCM(getQuestionid(), 1, "Répondue");
+                Utils.enreg_ReponseQCM(getQuestionid(), 1, "Répondue");
             } else if (retour == 0) {
-                utils.enreg_ReponseQCM(getQuestionid(), 0, "Répondue");
+                Utils.enreg_ReponseQCM(getQuestionid(), 0, "Répondue");
+            }
+
+            List<String> list = getMaValeur();
+
+            for (String s : list) {
+                System.out.println(s.toString());
             }
         }
 
-        System.out.println("*******************************************");
-        System.out.println("count : " + getCount() + " == nb_quest_total - 1 : " + (getNb_quest_total() - 1));
-        System.out.println("*******************************************");
+//        System.out.println("*******************************************");
+//        System.out.println("count : " + getCount() + " == nb_quest_total - 1 : " + (getNb_quest_total() - 1));
+//        System.out.println("*******************************************");
 
         // PLANTAGE
         // si dernière question on renvoie vers la vue de recap
         if (getCount() == (getNb_quest_total() - 1)) {
             System.out.println("recap");
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
-            utils.redirect(url);
+            Utils.redirect(url);
         } else {
             System.out.println("qcm");
             // sinon on réinitialise l'énoncé pr la question suivante
             setCount((Integer) (getCount() + 1));
             initQuestion();
             String url = "http://localhost:8080/CodeTester/faces/QCM.xhtml";
-            utils.redirect(url);
+            Utils.redirect(url);
             return "QCM?faces-redirect=true";
         }
         System.out.println("void");
@@ -163,7 +169,7 @@ public class QCM implements Serializable {
         int hours = dureeTest / 3600;
         int minutes = (dureeTest % 3600) / 60;
         int seconds = dureeTest % 60;
-        setTime(utils.twoDigitString(minutes) + " : " + utils.twoDigitString(seconds));
+        setTime(Utils.twoDigitString(minutes) + " : " + Utils.twoDigitString(seconds));
     }
 
     public void Decrement() {
@@ -172,7 +178,7 @@ public class QCM implements Serializable {
         if (getDureeTest() == 0) {
             // mais impossible de retour en arrière
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
-            utils.redirect(url);
+            Utils.redirect(url);
         }
         dureeToString(getDureeTest());
 
@@ -330,14 +336,14 @@ public class QCM implements Serializable {
     /**
      * @return the maValeur
      */
-    public String getMaValeur() {
+    public List<String> getMaValeur() {
         return maValeur;
     }
 
     /**
      * @param maValeur the maValeur to set
      */
-    public void setMaValeur(String maValeur) {
+    public void setMaValeur(List<String> maValeur) {
         this.maValeur = maValeur;
     }
 
@@ -429,7 +435,7 @@ public class QCM implements Serializable {
      * @return the count2
      */
     public Integer getCount2() {
-        return (getCount()+1);
+        return (getCount() + 1);
     }
 
     /**

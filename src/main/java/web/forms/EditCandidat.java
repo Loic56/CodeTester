@@ -14,7 +14,7 @@ import javax.faces.bean.SessionScoped;
 import jpa.Candidat;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 /**
  *
@@ -47,8 +47,8 @@ public class EditCandidat implements Serializable{
     
     public String Ajouter() {
         System.out.println("Ajouter()");
-        System.out.println(getCivilite() + "\n" + getNom() + "\n" + getPrenom() + "\n" + getEmail() + "\n" + utils.stringToMySQLDate(getDate_naissance()));
-        Candidat c = new Candidat(getCivilite(), getNom(), getPrenom(), getEmail(), utils.stringToMySQLDate(getDate_naissance()));
+        System.out.println(getCivilite() + "\n" + getNom() + "\n" + getPrenom() + "\n" + getEmail() + "\n" + Utils.stringToMySQLDate(getDate_naissance()));
+        Candidat c = new Candidat(getCivilite(), getNom(), getPrenom(), getEmail(), Utils.stringToMySQLDate(getDate_naissance()));
         Candidat cand = candidatDao.create(c);
         // champs à zéro
         setCivilite("");

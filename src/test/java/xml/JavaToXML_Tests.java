@@ -10,7 +10,7 @@ package xml;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.xml.transform.TransformerException;
-import tools.utils;
+import tools.Utils;
 
 /**
  *
@@ -27,7 +27,7 @@ public class JavaToXML_Tests {
         try {
             String pathEcriture = "C:\\NetBeansProjects\\CodeTester\\code php\\niv 2\\resultatXML.xml";
             String pathLecture = "C:\\NetBeansProjects\\CodeTester\\code php\\niv 2\\boucles for imbriquées avec conditions.php";
-            utils.buildXML(pathEcriture, pathLecture);
+            Utils.buildXML(pathEcriture, pathLecture);
         } catch (TransformerException ex) {
             Logger.getLogger(JavaToXML_Tests.class.getName()).log(Level.SEVERE, null, ex);
         }

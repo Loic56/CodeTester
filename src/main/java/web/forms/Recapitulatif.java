@@ -22,7 +22,7 @@ import jpa.Reponse;
 import jpa.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 /**
  *

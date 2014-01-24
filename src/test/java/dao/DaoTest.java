@@ -23,7 +23,7 @@ import jpa.ReponseHisto;
 import jpa.Rubrique;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 /**
  *
@@ -58,10 +58,10 @@ public class DaoTest {
         propositionDao = (IPropositionDao) ctx.getBean("propositionDao");
         reponseDao = (IReponseDao) ctx.getBean("reponseDao");
 
-        this.sam = new Candidat("Mr", "Faber", "Samuel", "grosLard@hotmail.fr", utils.stringToMySQLDate("01-01-1985"));
-        this.rom = new Candidat("Mr", "Crusson", "Romain", "nazbrock.grave@hotmail.fr", utils.stringToMySQLDate("10-03-1983"));
-        this.loic = new Candidat("Mr", "Crusson", "loïc", "beaugosse.laclasse@hotmail.fr", utils.stringToMySQLDate("21-10-1980"));
-        this.rv = new Candidat("Mr", "Halgand", "Hervé", "duped.freeMan@hotmail.fr", utils.stringToMySQLDate("07-06-1983"));
+        this.sam = new Candidat("Mr", "Faber", "Samuel", "grosLard@hotmail.fr", Utils.stringToMySQLDate("01-01-1985"));
+        this.rom = new Candidat("Mr", "Crusson", "Romain", "nazbrock.grave@hotmail.fr", Utils.stringToMySQLDate("10-03-1983"));
+        this.loic = new Candidat("Mr", "Crusson", "loïc", "beaugosse.laclasse@hotmail.fr", Utils.stringToMySQLDate("21-10-1980"));
+        this.rv = new Candidat("Mr", "Halgand", "Hervé", "duped.freeMan@hotmail.fr", Utils.stringToMySQLDate("07-06-1983"));
 
         delete();
         test01();
@@ -101,7 +101,7 @@ public class DaoTest {
     // dao candidat create
     public void test02() {
         printLine("TEST02");
-        System.out.println("stringToMySQLDate  : " + utils.stringToMySQLDate("01-01-1985"));
+        System.out.println("stringToMySQLDate  : " + Utils.stringToMySQLDate("01-01-1985"));
 
         Candidat candidatInsere1 = candidatDao.create(sam);
         Candidat candidatInsere2 = candidatDao.create(rom);

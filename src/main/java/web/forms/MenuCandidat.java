@@ -19,7 +19,7 @@ import javax.faces.context.FacesContext;
 import jpa.Candidat;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 /**
  *
@@ -84,12 +84,11 @@ public class MenuCandidat implements Serializable {
 
         // on gére l'affichage de la datatable
         getList().add(theCandidat);
-        setTheDate(utils.dateToMySQLString(theCandidat.getCandidatDateNaissance()));
+        setTheDate(Utils.dateToMySQLString(theCandidat.getCandidatDateNaissance()));
         setTheMail(theCandidat.getCandidatMail());
         setTheNom(theCandidat.getCandidatNom());
         setThePrenom(theCandidat.getCandidatPrenom());
         setIsSelected("1");
-
         return "candidat?faces-redirect=true";
     }
 

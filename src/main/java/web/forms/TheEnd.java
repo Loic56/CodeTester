@@ -10,7 +10,6 @@ import dao.ITestDao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
@@ -23,7 +22,7 @@ import jpa.Reponse;
 import jpa.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 /**
  *
@@ -51,7 +50,7 @@ public class TheEnd implements Serializable {
     public TheEnd() {
 
         Date date = new Date();
-        setTheDate(utils.dateToMySQLString(date));
+        setTheDate(Utils.dateToMySQLString(date));
 
         externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
@@ -75,7 +74,7 @@ public class TheEnd implements Serializable {
         Passage passage = passageDao.find(Long.valueOf(passage_id));
 
         // list de questions par rubriques
-        List<Reponse> list = utils.findReponses(passage, test);
+        List<Reponse> list = Utils.findReponses(passage, test);
         setNbQuest(list.size());
 
         System.out.println("list = " + list.size());
@@ -124,7 +123,7 @@ public class TheEnd implements Serializable {
         System.out.println("theTestsAfter.size() : " + theTestsAfter.size());
 
         System.out.println("-------------------------------");
-// on remet la liste en session
+          System.out.println(" on remet la liste en session ");
         getSessionMap().put("theTests", theTestsAfter);
 
         for(Test t : (List<Test>)getSessionMap().get("theTests")){
@@ -133,7 +132,7 @@ public class TheEnd implements Serializable {
     
                 
         String url = "http://localhost:8080/CodeTester/faces/helloCandidat.xhtml";
-        utils.redirect(url);
+        Utils.redirect(url);
 
     }
 

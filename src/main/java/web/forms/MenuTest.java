@@ -22,7 +22,7 @@ import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 /**
  *
@@ -148,7 +148,7 @@ public class MenuTest implements Serializable {
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.put("theTests", getListTest());
 
-        utils.printLine(" Liste des tests ");
+        Utils.printLine(" Liste des tests ");
         System.out.println("nb de test : "+getListTest().size());
         return "info_reservation?faces-redirect=true";
     }

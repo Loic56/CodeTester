@@ -25,7 +25,7 @@ import jpa.Rubrique;
 import jpa.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 
 // tets git 
@@ -62,7 +62,7 @@ public class TestControler implements Serializable {
 
 
     public String DebuterTest() {
-        utils.printLine("       DébuterTest        ");
+        Utils.printLine("       DébuterTest        ");
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 

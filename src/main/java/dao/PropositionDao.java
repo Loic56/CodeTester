@@ -139,14 +139,14 @@ public class PropositionDao implements IPropositionDao, Serializable  {
     }
 
     @Override
-    public Proposition find_(Question question) {
+    public List<Proposition> find_(Question question) {
         try {
             org.hibernate.Session session = sessionFactory.openSession();
             Transaction transaction = session.beginTransaction();
             transaction.begin();
             List<Proposition> list = session.createQuery("select p from Proposition p where p.questionid =:question and p.propositionvrai = 1").setParameter("question", question).list();
             transaction.commit();
-            return (list.isEmpty() ? null : list.get(0));
+            return (list.isEmpty() ? null : list);
         } catch (Exception e) {
             // e.printStackTrace();
             new PamException("Proposition find_the_one by question => pamException", 0);

@@ -9,16 +9,12 @@ import dao.IAdminDao;
 import dao.ICandidatDao;
 import dao.IJointureDao;
 import dao.IPassageDao;
-import dao.IQuestionDao;
-import dao.IRubriqueDao;
 import dao.ITestDao;
 import java.io.Serializable;
 import jpa.Test;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -28,7 +24,7 @@ import jpa.Jointure;
 import jpa.Passage;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.utils;
+import tools.Utils;
 
 /**
  *
@@ -65,7 +61,7 @@ public class InfoReservation implements Serializable {
     }
 
     public InfoReservation() {
-        utils.printLine("InfoReservation");
+        Utils.printLine("InfoReservation");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         candidatDao = (ICandidatDao) ctx.getBean("candidatDao");
         testDao = (ITestDao) ctx.getBean("testDao");
@@ -77,10 +73,15 @@ public class InfoReservation implements Serializable {
         externalContext = FacesContext.getCurrentInstance().getExternalContext();
         sessionMap = externalContext.getSessionMap();
 
-        this.theTests = ((List<Test>) sessionMap.get("theTests"));
-        System.out.println("theTests.size() = " + theTests.size());
-        this.theCandidat = (Candidat) sessionMap.get("theCandidat");
 
+        //System.out.println("theTests.size() = " + theTests.size());
+        setTheCandidat((Candidat) sessionMap.get("theCandidat"));
+        setTheTests((List<Test>) sessionMap.get("theTests"));
+        
+        
+        
+        
+        
         listCandidat.add(theCandidat);
         for (Test test : theTests) {
             // System.out.println("test : " + test.toString());
@@ -89,14 +90,13 @@ public class InfoReservation implements Serializable {
         dureeTotale = String.valueOf(duree);
     }
 
+    
+    
     public String Suivant() {
-
         // passage validé par l'admin - on enregistre le passage ds la BDD
-        Passage p = utils.createPassage(getTheCandidat(), getTheTests());
-
+        Passage p = Utils.createPassage(getTheCandidat(), getTheTests());
         // le passage est référencé ds la BDD on supprime les variables de session
         FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-
         return "log_candidat?faces-redirect=true";
     }
 
@@ -148,13 +148,7 @@ public class InfoReservation implements Serializable {
      */
     public List<Test> getTheTests() {
         List<Test> list = (List<Test>) getSessionMap().get("theTests");
-        if (list != null) {
-            System.out.println("list not null");
-            return list;
-        } else {
-            System.out.println("list null");
-        }
-        return theTests;
+        return list;
     }
 
     /**
@@ -164,10 +158,10 @@ public class InfoReservation implements Serializable {
         this.theTests = theTests;
     }
 
-/**
- * @return the listJointure
- */
-public List<Jointure> getListJointure() {
+    /**
+     * @return the listJointure
+     */
+    public List<Jointure> getListJointure() {
         return listJointure;
     }
 
@@ -252,7 +246,7 @@ public List<Jointure> getListJointure() {
      * @return the sessionMap
      */
     public Map<String, Object> getSessionMap() {
-        return sessionMap;
+        return getExternalContext().getSessionMap();
     }
 
     /**
@@ -266,7 +260,7 @@ public List<Jointure> getListJointure() {
      * @return the externalContext
      */
     public ExternalContext getExternalContext() {
-        return externalContext;
+        return FacesContext.getCurrentInstance().getExternalContext();
     }
 
     /**

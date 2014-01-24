@@ -27,7 +27,7 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.xml.transform.TransformerException;
 import jpa.Question;
-import tools.utils;
+import tools.Utils;
 import controler.TestControler;
 
 /**
@@ -100,7 +100,7 @@ public class TheCodeTester implements Serializable {
         this.dirNameXML = (String) sessionMap.get("dirNameXML");
 
         // duree du test
-        setDureeTest(utils.getDureeTest(test_id));
+        setDureeTest(Utils.getDureeTest(test_id));
         //System.out.println("Durée : " + getDureeTest());
         dureeToString(getDureeTest());
 
@@ -157,20 +157,20 @@ public class TheCodeTester implements Serializable {
 
         //System.out.println("création du xml");
         try {
-            utils.buildXML(getDirNameXML() + "question_" + (getCount()) + ".xml", repPHP);
+            Utils.buildXML(getDirNameXML() + "question_" + (getCount()) + ".xml", repPHP);
         } catch (TransformerException ex) {
             Logger.getLogger(TheCodeTester.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         // on doit lui passer en paramètre le path de la réponse ?
-        int retour = utils.verifXML(); // renvoie 1 si reponse OK 0 si KO
+        int retour = Utils.verifXML(); // renvoie 1 si reponse OK 0 si KO
 
         // on met à jour la réponse ds la base
         System.out.println("vérifXML = " + retour);
         if (retour == 1) {
-            utils.Enreg_rep(getQuestionid(), 1, getCodeIsCompiled());
+            Utils.Enreg_rep(getQuestionid(), 1, getCodeIsCompiled());
         } else if (retour == 0) {
-            utils.Enreg_rep(getQuestionid(), 0, getCodeIsCompiled());
+            Utils.Enreg_rep(getQuestionid(), 0, getCodeIsCompiled());
         }
 
         // on vide le fichier de réponse
@@ -187,7 +187,7 @@ public class TheCodeTester implements Serializable {
         // si dernière question on renvoie vers la vue de recap
         if (getCount() == (getNb_quest_total() - 1)) {
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
-            utils.redirect(url);
+            Utils.redirect(url);
         }
 
         // sinon on réinitialise l'énoncé pr la question suivante
@@ -195,7 +195,7 @@ public class TheCodeTester implements Serializable {
         System.out.println(" count ++ => count = " + getCount());
         initQuestion();
         String url = "http://localhost:8080/CodeTester/faces/theCodeTester.xhtml";
-        utils.redirect(url);
+        Utils.redirect(url);
         return "theCodeTester?faces-redirect=true";
     }
 
@@ -242,9 +242,9 @@ public class TheCodeTester implements Serializable {
 
     public void Compiler() {
         codeIsCompiled = "1";
-        utils.writeOnDisk(getPathCodePHP(), getLeCode());
+        Utils.writeOnDisk(getPathCodePHP(), getLeCode());
         String url = "http://localhost:8080/CodeTester/faces/theCodeTester.xhtml";
-        utils.redirect(url);
+        Utils.redirect(url);
     }
 
     public void Decrement() {
@@ -253,7 +253,7 @@ public class TheCodeTester implements Serializable {
         if (dureeTest == 0) {
             // mais impossible de retour en arrière
             String url = "http://localhost:8080/CodeTester/faces/recap.xhtml";
-            utils.redirect(url);
+            Utils.redirect(url);
         }
         dureeToString(dureeTest);
 
@@ -263,7 +263,7 @@ public class TheCodeTester implements Serializable {
         int hours = dureeTest / 3600;
         int minutes = (dureeTest % 3600) / 60;
         int seconds = dureeTest % 60;
-        setTime(utils.twoDigitString(minutes) + " : " + utils.twoDigitString(seconds));
+        setTime(Utils.twoDigitString(minutes) + " : " + Utils.twoDigitString(seconds));
     }
 
     public String getCodeSaisit() {
