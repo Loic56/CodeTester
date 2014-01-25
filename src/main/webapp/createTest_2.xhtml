@@ -29,43 +29,48 @@ and open the template in the editor.
 
             <div id="content">
                 <p:panel header="Création de test - page n°2"  style="height:auto"> 
-                    <h:form style="border:1px solid transparent;">
-                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">  
 
-                            <h:panelGrid columns="1" style="margin-bottom:10px;width:300px;" cellpadding="5">  
-                                <!--panel gauche-->
-                                <h:panelGrid columns="1" >  
+                    <h:form style="border:1px solid transparent;">
+                        <p:panelGrid columns="2" style="margin-bottom:10px">  
+
+                            <!--panel gauche-->
+                            <p:panelGrid columns="1" style="margin-bottom:10px;width:300px;border-left:1px solid silver;border-right:1px solid silver;">  
+
+                                <p:panelGrid columns="1" style="width:100%;border:1px solid silver;" >  
                                     <f:facet name="header">  
                                         Ajouter une rubrique
                                     </f:facet>   
-                                    <h:outputText value="Nom : " />  
-                                    <h:inputText value="#{create.nomRubrique}" />  
-                                    <p:commandButton id="submitButton" value="Créer"  style="margin-top:10px;margin-left:800px;" action="#{create.creerRubrique}"   />  
-                                </h:panelGrid>   
+                                    <h:outputText value="Libellé de la rubrique: " />  
+                                    <h:inputText value="#{create.nomRubrique}" style="width:100%;" />  
+                                    <p:commandButton id="submitButton" value="Créer"  style="margin-top:10px;" action="#{create.creerRubrique}"   />  
+                                </p:panelGrid>   
+                                <br/>
+                                <hr/>
+                                <br/>
 
-                                <h:panelGrid columns="1" >  
+
+                                <p:panelGrid columns="1" style="width:100%;border:1px solid silver;">  
                                     <f:facet name="header">  
-                                        ALes rubriques
+                                        Les rubriques
                                     </f:facet>   
-
-                                    <p:treeTable id="treetable" value="#{create.root}" var="document">  
+                                    <p:treeTable id="treetable" value="#{create.root}" var="document" style="width:100%;border:none;" >  
                                         <p:column style="width:32%">  
-                                            <f:facet name="header">  
-                                                Nom
-                                            </f:facet>  
-                                            <h:outputText value="#{create.nomRubrique}" />  
+                                            <h:outputText value="#{document.name}" />  
                                         </p:column>  
                                     </p:treeTable>                
+                                </p:panelGrid>   
 
-                                </h:panelGrid>   
+                            </p:panelGrid>   
+                            <!--panel gauche-->
 
-                            </h:panelGrid>   
 
 
-                            <h:panelGrid columns="1" style="margin-bottom:10px;width:600px;" cellpadding="5">  
+
+                            <p:panelGrid columns="1" style="margin-bottom:10px;width:600px;" >  
                                 <!--panel droit-->
-                            </h:panelGrid>   
-                        </h:panelGrid>      
+                            </p:panelGrid>   
+
+                        </p:panelGrid>      
 
 
                     </h:form>

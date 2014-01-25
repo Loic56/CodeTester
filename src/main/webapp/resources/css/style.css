@@ -151,14 +151,14 @@ body{
 
 }
 
-.ui-panelgrid td, .ui-panelgrid tr
-{
-    border-style: none !important
-}
-/*  .ui-menu.ui-menu-parent.ui-menu-child{
-     width: 120 % !important; // or anything you want
 
-  }*/
+.ui-panelgrid td, .ui-panelgrid tr{
+       border-style: none !important;
+}
+
+
+
+
 
 #slideMenu-child{
     height: 300px !important;
