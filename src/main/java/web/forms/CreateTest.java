@@ -17,6 +17,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
@@ -25,6 +26,7 @@ import jpa.Categorie;
 import jpa.Question;
 import jpa.Rubrique;
 import jpa.Test;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.NodeUnselectEvent;
 import org.primefaces.model.DefaultTreeNode;
 import org.primefaces.model.TreeNode;
@@ -65,6 +67,10 @@ public class CreateTest implements Serializable {
     private ITestDao testDao = null;
     private IRubriqueDao rubriqueDao = null;
 
+    // création d'une question
+    private String enonce;
+    private String code_enonce;
+
     public CreateTest() {
 
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -78,7 +84,8 @@ public class CreateTest implements Serializable {
     }
 
     public String creerRubrique() {
-
+        System.out.println("creerRubrique");
+        // on supprime tous les noeuds existants
         List<TreeNode> nodes = getRoot().getChildren();
         Iterator<TreeNode> i = nodes.iterator();
         while (i.hasNext()) {
@@ -86,9 +93,6 @@ public class CreateTest implements Serializable {
             // Use isLeaf() method to check doesn't have childs.
             i.remove();
         }
-        
-        setNomRubrique("");
-        System.out.println("creerRubrique");
 
         Rubrique rubrique = new Rubrique();
         rubrique.setRubriquenom(getNomRubrique());
@@ -125,6 +129,8 @@ public class CreateTest implements Serializable {
 
         String url = "http://localhost:8080/CodeTester/faces/createTest_2.xhtml";
         Utils.redirect(url);
+        //raz inputtext
+        setNomRubrique("");
         getListRubrique().add(theRubrique);
         return "createTest_2?faces-redirect=true";
     }
@@ -159,6 +165,11 @@ public class CreateTest implements Serializable {
         setTheTest(theTest);
 
         return "createTest_2?faces-redirect=true";
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
     public void onNodeUnselect(NodeUnselectEvent event) {
@@ -372,6 +383,34 @@ public class CreateTest implements Serializable {
      * @param selectedTreeNode the selectedTreeNode to set
      */
     public void setSelectedTreeNode(TreeNode[] selectedTreeNode) {
-        this.selectedTreeNode = selectedTreeNode;
+        this.setSelectedTreeNode(selectedTreeNode);
+    }
+
+    /**
+     * @return the enonce
+     */
+    public String getEnonce() {
+        return enonce;
+    }
+
+    /**
+     * @param enonce the enonce to set
+     */
+    public void setEnonce(String enonce) {
+        this.enonce = enonce;
+    }
+
+    /**
+     * @return the code_enonce
+     */
+    public String getCode_enonce() {
+        return code_enonce;
+    }
+
+    /**
+     * @param code_enonce the code_enonce to set
+     */
+    public void setCode_enonce(String code_enonce) {
+        this.code_enonce = code_enonce;
     }
 }
