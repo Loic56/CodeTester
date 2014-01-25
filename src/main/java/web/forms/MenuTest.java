@@ -47,82 +47,63 @@ public class MenuTest implements Serializable {
 
     private List<Test> list;
 
+    
+    
+    
     public MenuTest() {
         testIsSelected = "0";
-
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         testDao = (ITestDao) ctx.getBean("testDao");
 
         this.model = new DefaultMenuModel();
         //PHP
         DefaultSubMenu firstSubmenu = new DefaultSubMenu("PHP");
+        DefaultSubMenu subSubmenu1 = new DefaultSubMenu("PHP - QCM");
+        DefaultSubMenu subSubmenu2 = new DefaultSubMenu("PHP - CODE");
+        firstSubmenu.addElement(subSubmenu1);
+        firstSubmenu.addElement(subSubmenu2);
         DefaultMenuItem item = null;
 
         list = testDao.findAll();
 
         for (Test test : list) {
-            if (test.getCategorieid().getCategorielibelle().equals("PHP") && test.getTestnature().equals("GEN")) {
+            if (test.getCategorieid().getCategorielibelle().equals("PHP") && test.getTestformat().equals("CODE")) {
                 item = new DefaultMenuItem(test.getTheme());
                 item.setIcon("ui-icon-home");
-                firstSubmenu.addElement(item);
+                subSubmenu2.addElement(item);
                 String id = String.valueOf(test.getTestid());
                 item.setCommand("#{menuTest.AfficheInfo(" + id + ")}");
             }
         }
-        //firstSubmenu.addElement(new );
-        
-        for (Test test : list) {
-            if (test.getCategorieid().getCategorielibelle().equals("PHP") && test.getTestnature().equals("THEM")) {
-                item = new DefaultMenuItem(test.getTheme());
-                item.setIcon("ui-icon-home");
-                firstSubmenu.addElement(item);
-                String id = String.valueOf(test.getTestid());
-                item.setCommand("#{menuTest.AfficheInfo(" + id + ")}");
-            }
-        }
-        
-        //firstSubmenu.addElement(new UISeparator());
+
         for (Test test : list) {
             if (test.getCategorieid().getCategorielibelle().equals("PHP") && test.getTestformat().equals("QCM")) {
                 item = new DefaultMenuItem(test.getTheme());
                 item.setIcon("ui-icon-home");
-                firstSubmenu.addElement(item);
+                subSubmenu1.addElement(item);
                 String id = String.valueOf(test.getTestid());
                 item.setCommand("#{menuTest.AfficheInfo(" + id + ")}");
             }
         }
-
         model.addElement(firstSubmenu);
 
         //JAVA 
         DefaultSubMenu secondSubmenu = new DefaultSubMenu("JAVA");
-        item = new DefaultMenuItem("Save");
-        item.setIcon("ui-icon-disk");
-        item.setCommand("#{menuTest.save}");
-        item.setUpdate("messages");
-        secondSubmenu.addElement(item);
-
-        item = new DefaultMenuItem("Delete");
-        item.setIcon("ui-icon-close");
-        item.setCommand("#{menuTest.delete}");
-        item.setAjax(false);
-        secondSubmenu.addElement(item);
-
-        item = new DefaultMenuItem("Redirect");
-        item.setIcon("ui-icon-search");
-        item.setCommand("#{menuTest.redirect}");
-        secondSubmenu.addElement(item);
-
+        DefaultSubMenu secondSubSubmenu1 = new DefaultSubMenu("JAVA - QCM");
+        DefaultSubMenu secondSubmenu2 = new DefaultSubMenu("JAVA - CODE");
+        secondSubmenu.addElement(secondSubSubmenu1);
+        secondSubmenu.addElement(secondSubmenu2);
         model.addElement(secondSubmenu);
 
+        
+        
         //SQL 
         DefaultSubMenu thirdSubmenu = new DefaultSubMenu("SQL");
-        item = new DefaultMenuItem("External");
-        item.setUrl("http://www.primefaces.org");
-        item.setIcon("ui-icon-home");
-        firstSubmenu.addElement(item);
+        DefaultSubMenu thirdSubSubmenu1 = new DefaultSubMenu("SQL - QCM");
+        DefaultSubMenu thirdSubSubmenu2 = new DefaultSubMenu("SQL - CODE");
+        thirdSubmenu.addElement(thirdSubSubmenu1);
+        thirdSubmenu.addElement(thirdSubSubmenu1);
         model.addElement(thirdSubmenu);
-
 
     }
 
@@ -148,12 +129,10 @@ public class MenuTest implements Serializable {
         sessionMap.put("theTests", getListTest());
 
         Utils.printLine(" Liste des tests ");
-        System.out.println("nb de test : "+getListTest().size());
+        System.out.println("nb de test : " + getListTest().size());
         return "info_reservation?faces-redirect=true";
     }
 
-    
-    
     public String Choisir() {
         setTestIsSelected("2");
         getListTest().add(getTheTest());

@@ -86,7 +86,13 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
+    <bean id="categorieDao" class="dao.CategorieDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
     <bean id="reponseDao" class="dao.ReponseDao">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    
+ 
 </beans>

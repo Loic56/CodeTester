@@ -42,15 +42,19 @@ public class Rubrique implements Serializable {
     @NotNull
     @Column(name = "RUBRIQUEID")
     private Integer rubriqueid;
+    
     @Size(max = 255)
     @Column(name = "RUBRIQUENOM")
     private String rubriquenom;
+    
     @JoinColumn(name = "TESTID", referencedColumnName = "TESTID")
     @ManyToOne(optional = false)
     private Test testid;
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rubriqueid")
     private Collection<Question> questionCollection;
 
+    
     public Rubrique() {
     }
 

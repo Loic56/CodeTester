@@ -83,6 +83,7 @@ public class DaoTest {
         test17();
         test18();
         test19();
+        test20();
     }
 
     // dao admin
@@ -357,8 +358,8 @@ public class DaoTest {
         }
 
         List<Reponse> liste = reponseDao.find(thePassage, test_);
-        for(Reponse r : liste){
-            System.out.println("Reponse : "+r.toString());
+        for (Reponse r : liste) {
+            System.out.println("Reponse : " + r.toString());
         }
         // OK - on supprime tout ce qui vient d'être créé
         List<Passage> list2 = passageDao.findAll();
@@ -438,16 +439,33 @@ public class DaoTest {
 
         }
     }
-    
-        // Dao proposition find the good one
+
+    // Dao proposition find the good one
     public void test19() {
         printLine("TEST19");
-        
+
 //        Candidat c = candidatDao.find("Faber","Samuel","01-01-1985");
 //        if (c != null) {
 //            System.out.println("test 19 >> candidat : " + c.toString());
 //
 //        }
+    }
+
+    private void test20() {
+        printLine("TEST20");
+        Rubrique rubrique = new Rubrique();
+        rubrique.setRubriquenom("nom rubrique");
+        rubrique.setTestid(testDao.find(Long.valueOf(1)));
+
+        List<Question> list = new ArrayList<Question>();
+        
+        Set<Question> collection = new HashSet<Question>(list);  
+        rubrique.setQuestionCollection(collection);
+        Rubrique theRubrique = rubriqueDao.create(rubrique);
+        if (theRubrique != null) {
+            System.out.println("test 20 >> : " + theRubrique.toString());
+
+        }
     }
 
     public void printLine(String test) {
@@ -481,4 +499,5 @@ public class DaoTest {
             }
         }
     }
+
 }

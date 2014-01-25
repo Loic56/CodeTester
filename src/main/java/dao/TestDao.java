@@ -36,7 +36,7 @@ public class TestDao implements ITestDao, Serializable  {
         return sessionFactory;
     }
 
-    // CA MARCHE PAS CA !
+    
     @Override
     public List<Test> find(String format) {
         try {
@@ -79,7 +79,22 @@ public class TestDao implements ITestDao, Serializable  {
 
     @Override
     public Test create(Test test) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            transaction.begin();
+            session.saveOrUpdate(test);
+            transaction.commit();  
+            int id = test.getTestid();
+            session.flush();
+            List<Test> list = session.createQuery("from Test where testid = " + id).list();
+            return (list.isEmpty() ? null : list.get(0));
+        } catch (Exception e) {
+            new PamException(" Test create => pamException", 0);
+        } finally {
+            getSessionFactory().close();
+        }
+        return null;
     }
 
     @Override

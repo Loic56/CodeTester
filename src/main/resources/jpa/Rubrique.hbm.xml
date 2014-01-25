@@ -4,16 +4,10 @@
 <hibernate-mapping>
   <class name="jpa.Rubrique" table="rubrique">
       
-      
-    <!--        <composite-id name="rubriquePK" class="jpa.RubriquePK">
-                 <key-property name="testid"/>
-                 <key-property name="rubriqueid"/>
-             </composite-id>
-        -->
-        
+     
         
     <id column="RUBRIQUEID" name="rubriqueid">
-      <generator class="native"/>
+      <generator class="increment"/>
     </id>
     
     <property name="rubriquenom" type="string">

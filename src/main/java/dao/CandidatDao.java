@@ -43,10 +43,10 @@ public class CandidatDao implements ICandidatDao, Serializable {
             Transaction transaction = session.beginTransaction();
             transaction.begin();
             session.saveOrUpdate(candidat);
-            transaction.commit();  // ?????
+            session.flush();
             // id est généré par l'insertion en base !
             int id = candidat.getCandidatid();
-            session.flush();
+            transaction.commit();
             List<Candidat> list = session.createQuery("from Candidat where candidatid = " + id).list();
             return (list.isEmpty() ? null : list.get(0));
         } catch (Exception e) {

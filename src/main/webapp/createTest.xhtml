@@ -68,8 +68,15 @@ and open the template in the editor.
                         <br/>
                         <hr/>
                         <br/>
-                        <p:commandButton id="submitButton" value="Suivant"  style="margin-top:10px;margin-left:800px;" action="#{create.suivant}"
-                                         icon="ui-icon-disk" />  
+
+                        <p:commandButton value="Créer le test" style="width:150px;margin-top:10px;margin-left:750px;" action="#{create.creerTest}" >  
+                            <p:confirm header="Confirmation" message="Créer le test ? " icon="ui-icon-alert" />  
+                        </p:commandButton>
+                        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                            <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                            <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                        </p:confirmDialog>  
+
 
                     </h:form>
                 </p:panel>  
