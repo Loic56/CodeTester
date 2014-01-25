@@ -84,6 +84,7 @@ public class DaoTest {
         test18();
         test19();
         test20();
+        test21();
     }
 
     // dao admin
@@ -258,9 +259,11 @@ public class DaoTest {
         for (Rubrique r : list) {
             System.out.println("Rub" + r.getRubriqueid() + ": " + r.getRubriquenom());
             List<Question> list2 = questionDao.find(r);
-            System.out.println("Nombre de questions pour cette rubrique :" + list2.size());
+            
             if (list2 == null) {
             } else {
+                System.out.println("Nombre de questions pour cette rubrique :" + list2.size());
+                
                 for (Question quest : list2) {
 
                     Proposition p = new Proposition();
@@ -458,13 +461,25 @@ public class DaoTest {
         rubrique.setTestid(testDao.find(Long.valueOf(1)));
 
         List<Question> list = new ArrayList<Question>();
-        
-        Set<Question> collection = new HashSet<Question>(list);  
+
+        Set<Question> collection = new HashSet<Question>(list);
         rubrique.setQuestionCollection(collection);
         Rubrique theRubrique = rubriqueDao.create(rubrique);
         if (theRubrique != null) {
             System.out.println("test 20 >> : " + theRubrique.toString());
 
+        }
+    }
+
+    // Dao proposition find the good one
+    public void test21() {
+        printLine("TEST21");
+        Test t = testDao.find(Long.valueOf(18));
+        List<Rubrique> list = rubriqueDao.find(t);
+        if (list != null) {
+            for (Rubrique rub : list) {
+                System.out.println("Rub >> " + rub.getRubriquenom());
+            }
         }
     }
 

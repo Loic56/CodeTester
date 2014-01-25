@@ -37,19 +37,12 @@ public class RubriqueDao implements IRubriqueDao, Serializable {
     public Rubrique create(Rubrique rubrique) {
         try {
             Session session = sessionFactory.openSession();
-            System.out.println("1");
             Transaction transaction = session.beginTransaction();
-            System.out.println("2");
             transaction.begin();
-            System.out.println("3");
             session.saveOrUpdate(rubrique);
-            System.out.println("4");
             session.flush();
-            System.out.println("5");
             int id = rubrique.getRubriqueid();
-            System.out.println("6");
             transaction.commit();
-            System.out.println("7");
             List<Rubrique> list = session.createQuery("from Rubrique where rubriqueid = " + id).list();
             return (list.isEmpty() ? null : list.get(0));
         } catch (Exception e) {
