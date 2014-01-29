@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package jpa;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import javax.faces.model.DataModel;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,25 +38,25 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Rubrique.findByRubriqueid", query = "SELECT r FROM Rubrique r WHERE r.rubriqueid = :rubriqueid"),
     @NamedQuery(name = "Rubrique.findByRubriquenom", query = "SELECT r FROM Rubrique r WHERE r.rubriquenom = :rubriquenom")})
 public class Rubrique implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "RUBRIQUEID")
     private Integer rubriqueid;
-    
+
     @Size(max = 255)
     @Column(name = "RUBRIQUENOM")
     private String rubriquenom;
-    
+
     @JoinColumn(name = "TESTID", referencedColumnName = "TESTID")
     @ManyToOne(optional = false)
     private Test testid;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "rubriqueid")
     private Collection<Question> questionCollection;
 
-    
     public Rubrique() {
     }
 
@@ -115,9 +117,13 @@ public class Rubrique implements Serializable {
         return true;
     }
 
+
+
     @Override
     public String toString() {
         return "jpa.Rubrique[ rubriqueid=" + rubriqueid + " ]";
     }
-    
+
+
+
 }

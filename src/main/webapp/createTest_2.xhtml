@@ -73,25 +73,32 @@ and open the template in the editor.
                                         <h:outputText value="#{create.theTest.testmatiere} - #{create.theTest.theme}" />
                                         <p>La durée de ce test est <h:outputText value="#{create.theTest.testduree}"/> min </p>
                                         <p><h:outputText value="Nb questions : #{create.theTest.testNbquestionRub}"/> questions </p>
-                                        
-                                        <p:dataTable value="#{create.listRubrique}" selection="#{create.rubToSup}" var="list" styleClass="order-table" 
-                                                     style="width:500px;margin-left:auto;margin-right:auto;" >
+
+
+
+
+                                        <h:dataTable value="#{create.listRubrique}" var="list" styleClass="order-table"
+                                                     headerClass="order-table-header"
+                                                     rowClasses="order-table-odd-row,order-table-even-row" 
+                                                     style="width:500px;margin-left:auto;margin-right:auto;"  >
+
                                             <h:column>
                                                 <f:facet name="header">Rubrique(s)</f:facet>
-                                                <p:panelGrid columns="2">  
-                                                    <h:outputText value="#{list.rubriquenom}" />
-                                                    <p:commandLink action="#{create.deleteRubrique}">
-                                                        <h:graphicImage library="images" name="logo/delete_cross3.png"  style="height:27px;" />
-                                                    </p:commandLink>
-                                                </p:panelGrid>   
+
+                                                <h:outputText value="#{list.rubriquenom}"/> 
+
                                             </h:column>
-                                        </p:dataTable>
-                                        
-                                        
-                                        
+
+
+                                            <h:column>
+                                                <f:facet name="header">Delete</f:facet>
+                                                <p:commandButton value="OK" style="float:right;" action="#{create.deleteRubrique}">
+                                                    <f:param name="rubToSup" value="#{list.rubriqueid}" />
+                                                </p:commandButton>
+                                            </h:column>
+                                        </h:dataTable>
                                         <br/>
                                     </p:fieldset> 
-
                                 </p:panelGrid>   
 
                             </h:form>
@@ -141,13 +148,43 @@ and open the template in the editor.
 
 
                                         <h:outputText value="Saisissez une proposition: " /> 
-                                        <p:panelGrid columns="3" >
-                                            <p:inputTextarea value="#{create.theProposition}" rows="3" cols="33" />  
-                                            <p:selectOneRadio id="check" value="#{create.propositionIsChecked}" />   
-                                            <p:commandButton value="Submit" action="#{create.ajouterProposition}" />  
+                                        <p:panelGrid columns="1" >
+                                            <p:inputTextarea value="#{create.theProposition}" rows="3" cols="77" />  
+                                            <p:panelGrid columns="2" > 
+                                                <h:outputText value="La proposition est-elle : vraie ? " />  
+                                                <h:selectOneRadio id="check" value="#{create.propositionEtat}">
+                                                    <f:selectItem itemValue="Vrai" itemLabel="Vraie" />
+                                                    <f:selectItem itemValue="Faux" itemLabel="Fausse" />
+                                                </h:selectOneRadio>
+                                            </p:panelGrid>
+                                            <p:commandButton value="Ajouter" action="#{create.ajouterProposition}" icon="ui-icon-check"/>  
+                                            <p:commandButton value="Ajouter2" actionListener="#{create.ajouterProposition}" icon="ui-icon-check" style="margin:0; "/>  
                                         </p:panelGrid>
 
-                                        <h:outputText value="type = #{create.type}" />  
+                                        <br/>
+                                        <hr/>
+                                        <br/>
+                                        <h:dataTable value="#{create.listProposition}" var="list" styleClass="order-table"
+                                                     headerClass="order-table-header"
+                                                     rowClasses="order-table-odd-row,order-table-even-row" 
+                                                     style="width:500px;margin-left:auto;margin-right:auto;"  >
+
+                                            <h:column>
+                                                <f:facet name="header">Proposition(s)</f:facet>
+                                                <h:outputText value="#{create.listProposition.rowIndex + 1}"/> 
+                                                <h:outputText value="#{list.propositionlibelle}"/> 
+                                                <h:outputText value="La réponse est-elle vraie : #{list.propositionvrai}"/> 
+                                            </h:column>
+                                            <h:column>
+                                                <h:outputText value="#{list.rubriqueid}"/> 
+                                            </h:column>
+                                        </h:dataTable>
+                                        <br/>
+                                        <hr/>
+                                        <br/>
+                                        <p:commandButton value="Valider la question" actionListener="#{create.validerQuestion}" />
+
+
                                         <c:if test="#{create.type eq 1}"> <!--type code-->
                                             <br/>
                                             <h:outputText value="Saisissez une partie du code : " /> 
@@ -170,7 +207,6 @@ and open the template in the editor.
 
                                     </p:panel> 
 
-                                    <p:commandButton value="Valider la question" actionListener="#{theCodeTester.Compiler}" onclick="submitData()" />
 
                                 </p:panelGrid>     
                                 <!-- panel principal -->

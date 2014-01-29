@@ -78,10 +78,22 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
-        <managed-bean>
+    <managed-bean>
         <managed-bean-class>create</managed-bean-class>    
         <managed-bean-name>web.forms.CreateTest</managed-bean-name>    
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-class>oneForm</managed-bean-class>    
+        <managed-bean-name>web.forms.Form1</managed-bean-name>    
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+        <managed-bean-class>secondForm</managed-bean-class>    
+        <managed-bean-name>web.forms.Form2</managed-bean-name>    
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
 </faces-config>
 

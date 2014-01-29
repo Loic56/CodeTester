@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web.forms;
+package web.bean;
 
 import dao.ICategorieDao;
 import dao.IPassageDao;
@@ -21,6 +21,7 @@ import java.util.Set;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import jpa.Categorie;
@@ -44,7 +45,7 @@ import tools.Utils;
  * @author Loïc
  */
 @ManagedBean(name = "create")
-@SessionScoped
+@ViewScoped
 public class CreateTest implements Serializable {
 
     // page1
@@ -61,7 +62,7 @@ public class CreateTest implements Serializable {
     private Rubrique rubToSup;
 
     private String theProposition;
-    private boolean propositionIsChecked;
+    private String propositionEtat;
     private List<Proposition> listProposition;
 
     // le test en cours
@@ -93,9 +94,28 @@ public class CreateTest implements Serializable {
         root = new DefaultTreeNode("root", null);
     }
 
+
+
     public void deleteRubrique() {
-        System.out.println("rubToSup :" + getRubToSup().getRubriquenom());
-        getListProposition().remove(getRubToSup());
+        FacesContext fc = FacesContext.getCurrentInstance();
+
+        String s = fc.getExternalContext().getRequestParameterMap().get("rubToSup");
+        System.out.println("rubToSup = " + s);
+        Rubrique r = getRubriqueDao().find(Long.valueOf(s));
+        String sup = "";
+        Rubrique rubr = null;
+
+        for (Rubrique rub : getListRubrique()) {
+            if (rub.equals(r)) {
+                sup = "ok";
+                rubr = rub;
+            }
+        }
+        if (sup.equals("ok")) {
+            System.out.println("ok");
+            getListRubrique().remove(rubr);
+        }
+
         String url = "http://localhost:8080/CodeTester/faces/createTest_2.xhtml";
         Utils.redirect(url);
     }
@@ -183,23 +203,36 @@ public class CreateTest implements Serializable {
         Test theTest = getTestDao().create(test);
         setTheTest(theTest);
 
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap(); 
+        
+        sessionMap.put("theTest", theTest);
+        
+        
         return "createTest_2?faces-redirect=true";
     }
 
-    public void ajouterProposition() {
+    public String ajouterProposition() {
+        System.out.println("ajouterProposition()");
         // type QCM
-        Proposition p = new Proposition();
-        p.setPropositionlibelle(getTheProposition());
-        String check = (isPropositionIsChecked() == true) ? "1" : "0";
-        p.setPropositionvrai(Short.valueOf(check));
-        p.setQuestionid(null);
+//        Proposition p = new Proposition();
+//        p.setPropositionlibelle(getTheProposition());
+//        System.out.println("2");
+//        String s = getPropositionEtat();
+//        System.out.println("3");
+//        String etat = (s.equals("vraie")) ? "1" : "0";
+//        p.setPropositionvrai(Short.valueOf(etat));
+//                System.out.println("4");
+//        p.setQuestionid(null);
+//
+//        System.out.println("libellé:" + getTheProposition() + " - vrai=" + etat);
+//
+//        Proposition theProp = getPropositionDao().create(p);
+//        getListProposition().add(theProp);
 
-        System.out.println("libellé:" + getTheProposition() + " - vrai=" + check);
-
-        Proposition theProp = getPropositionDao().create(p);
-        getListProposition().add(theProp);
         String url = "http://localhost:8080/CodeTester/faces/createTest_2.xhtml";
         Utils.redirect(url);
+        return "";
     }
 
     public void handleFileUpload(FileUploadEvent event) {
@@ -509,20 +542,6 @@ public class CreateTest implements Serializable {
     }
 
     /**
-     * @return the propositionIsChecked
-     */
-    public boolean isPropositionIsChecked() {
-        return propositionIsChecked;
-    }
-
-    /**
-     * @param propositionIsChecked the propositionIsChecked to set
-     */
-    public void setPropositionIsChecked(boolean propositionIsChecked) {
-        this.propositionIsChecked = propositionIsChecked;
-    }
-
-    /**
      * @return the rubToSup
      */
     public Rubrique getRubToSup() {
@@ -548,6 +567,20 @@ public class CreateTest implements Serializable {
      */
     public void setPropositionDao(IPropositionDao propositionDao) {
         this.propositionDao = propositionDao;
+    }
+
+    /**
+     * @return the propositionEtat
+     */
+    public String getPropositionEtat() {
+        return propositionEtat;
+    }
+
+    /**
+     * @param propositionEtat the propositionEtat to set
+     */
+    public void setPropositionEtat(String propositionEtat) {
+        this.propositionEtat = propositionEtat;
     }
 
 }

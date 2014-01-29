@@ -154,6 +154,7 @@ body{
 
 .ui-panelgrid td, .ui-panelgrid tr{
       border-style: none !important;
+      background-color: transparent;
 }
 
 
@@ -278,3 +279,7 @@ body{
     width:99%;
     height:75%;
 }
+
+.ui-editor {
+        height: 150px !important;
+    }

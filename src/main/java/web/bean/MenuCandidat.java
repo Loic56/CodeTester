@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package web.forms;
+package web.bean;
 
 import dao.IAdminDao;
 import dao.ICandidatDao;
