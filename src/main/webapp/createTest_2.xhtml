@@ -38,44 +38,76 @@ and open the template in the editor.
             <div id="content">
                 <p:panel header="Création de test - page n°2"  style="height:auto;"> 
 
-                    <h:form id="form" style="border:1px solid transparent;padding:0px;" > 
-                        <p:tabView id="tabView">  
-                            <p:tab id="tab1" title="Ajouter Rubriques">  
+                    <p:tabView id="tabView">  
+
+
+
+                        <p:tab id="tab1" title="Ajouter Rubriques">  
+                            <p:panelGrid columns="2" style="margin-bottom:10px;width:auto;">  
+                                <h:graphicImage library="images" name="logo/caution_2.png"  style="height:35px;" />
+                                <p style="color:#ed5757;">Chaque test doit comporter au moins une rubrique</p>
+                            </p:panelGrid>
+                            <p>Ex: Pour le test "Java - J2EE : Développeur expérimenté", on possède les rubriques suivantes : </p>
+                            <ul>
+                                <li>Les bases du langage Java</li>
+                                <li>Programmation cliente et bases de données et nouveautés de la version 1.5</li>
+                                <li>Programmation Web - Servlets / JSP</li>
+                                <li>Programmation serveur - EJB et Java Persistance API / Java Server Faces</li>
+                            </ul>
+                            <hr/>
+
+                            <h:form id="form1" style="border:1px solid transparent;padding:0px;"> 
                                 <p:panelGrid columns="2" style="margin-bottom:10px;width:880px;margin-left:-20px;">  
-                                    
-                                     <p:panelGrid columns="1" style="width:250px;border:1px solid silver;" >  
-                                            <f:facet name="header">  
-                                                Ajouter une rubrique
-                                            </f:facet>   
-                                            <br/>
-                                            <h:outputText value="Libellé : " />  
-                                            <h:inputText value="#{create.nomRubrique}" style="width:100%;" />  
-                                            <p:commandButton id="submitButton" value="Créer"  style="margin-top:2px;float:right;" action="#{create.creerRubrique}"   />  
-                                        </p:panelGrid>   
-                                    
-                                        <p:panelGrid columns="1" style="width:610px;border:1px solid silver;" >  
-                                            <f:facet name="header">  
-                                                Informations du test
-                                            </f:facet>   
-                                            <br/>
-                       
-                                            
-                                            
-                                            
-                                            
-                                        </p:panelGrid>   
-                                </p:panelGrid>
-                                
-                            </p:tab>  
+
+                                    <p:panelGrid columns="1" style="width:250px;border:1px solid silver;" >  
+                                        <f:facet name="header">  
+                                            Ajouter une rubrique
+                                        </f:facet>   
+                                        <br/>
+                                        <h:outputText value="Libellé : " />  
+                                        <h:inputText value="#{create.nomRubrique}" style="width:100%;" />  
+                                        <p:commandButton  value="Créer" style="margin-top:2px;float:right;" action="#{create.creerRubrique}" />  
+                                    </p:panelGrid>   
+
+                                    <p:fieldset legend="Informations du test" style="text-align:center;width:auto;padding:20px;border:1px solid silver;margin-top:20px;"> 
+                                        <h:outputText value="#{create.theTest.testmatiere} - #{create.theTest.theme}" />
+                                        <p>La durée de ce test est <h:outputText value="#{create.theTest.testduree}"/> min </p>
+                                        <p><h:outputText value="Nb questions : #{create.theTest.testNbquestionRub}"/> questions </p>
+                                        
+                                        <p:dataTable value="#{create.listRubrique}" selection="#{create.rubToSup}" var="list" styleClass="order-table" 
+                                                     style="width:500px;margin-left:auto;margin-right:auto;" >
+                                            <h:column>
+                                                <f:facet name="header">Rubrique(s)</f:facet>
+                                                <p:panelGrid columns="2">  
+                                                    <h:outputText value="#{list.rubriquenom}" />
+                                                    <p:commandLink action="#{create.deleteRubrique}">
+                                                        <h:graphicImage library="images" name="logo/delete_cross3.png"  style="height:27px;" />
+                                                    </p:commandLink>
+                                                </p:panelGrid>   
+                                            </h:column>
+                                        </p:dataTable>
+                                        
+                                        
+                                        
+                                        <br/>
+                                    </p:fieldset> 
+
+                                </p:panelGrid>   
+
+                            </h:form>
+
+                        </p:tab>  
 
 
-                            <p:tab id="tab2" title="Créer une question">  
 
+
+                        <p:tab id="tab2" title="Créer une question">  
+                            <h:form id="form2" style="border:1px solid transparent;padding:0px;"> 
                                 <!-- panel principal -->
                                 <p:panelGrid columns="2" style="margin-bottom:10px;width:880px;margin-left:-20px;">  
 
                                     <p:panelGrid columns="1" style="margin-left:-20px;margin-bottom:10px;width:250px;border-right:1px solid silver;">  
-                                 
+
                                         <br/>
                                         <br/>
                                         <p:treeTable id="treetable" value="#{create.root}" var="document" style="width:100%;border:none;" 
@@ -98,34 +130,43 @@ and open the template in the editor.
 
 
 
-                                    <p:panel header="Créer une question" footer="Visca el Barca!" style="width:620px;">  
-                                        <h:outputText value="Saisissez l'énoncé d ela question : " /> 
+                                    <p:panel style="width:620px;">  
+                                        <h:outputText value="Saisissez l'énoncé de la question : " /> 
+
                                         <br/>
                                         <p:editor id="editor" value="#{create.enonce}" style="width:580px;"/>  
                                         <br/>
                                         <hr/>
                                         <br/>
-                                        <h:outputText value="Ajoutez une image pour l'énoncé : " /> 
-                                        <br/>
-                                        <p:fileUpload fileUploadListener="#{create.handleFileUpload}" mode="advanced"  
-                                                      update="messages" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>  
-                                        <p:growl id="messages" showDetail="true"/>  
-                                        <br/>
-                                        <h:outputText value="Ajoutez une image du résultat attendu : " /> 
-                                        <br/>
-                                        <p:fileUpload fileUploadListener="#{create.handleFileUpload2}" mode="advanced"  
-                                                      update="messages2" auto="true" sizeLimit="100000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/"/>  
-                                        <p:growl id="messages2" showDetail="true"/> 
-                                        <br/>
-                                        <hr/>
-                                        <br/>
-                                        <h:outputText value="Saisissez une partie du code : " /> 
-                                        <br/>
-                                        <div id="editor_enonce" style="width:580px;height:250px;" name="editor_enonce" value="#{create.code_enonce}"> </div>
-                                        <h:inputHidden id="hidden" value="#{create.code_enonce}" />
-                                        <br/>
-                                        <hr/>
-                                        <br/>
+
+
+                                        <h:outputText value="Saisissez une proposition: " /> 
+                                        <p:panelGrid columns="3" >
+                                            <p:inputTextarea value="#{create.theProposition}" rows="3" cols="33" />  
+                                            <p:selectOneRadio id="check" value="#{create.propositionIsChecked}" />   
+                                            <p:commandButton value="Submit" action="#{create.ajouterProposition}" />  
+                                        </p:panelGrid>
+
+                                        <h:outputText value="type = #{create.type}" />  
+                                        <c:if test="#{create.type eq 1}"> <!--type code-->
+                                            <br/>
+                                            <h:outputText value="Saisissez une partie du code : " /> 
+                                            <br/>
+                                            <div id="editor_enonce" style="width:580px;height:250px;" name="editor_enonce" value="#{create.code_enonce}"> </div>
+                                            <h:inputHidden id="hidden" value="#{create.code_enonce}" />
+                                            <br/>
+                                            <hr/>
+                                            <br/>
+                                            <!--    solarized_dark // cobalt -->
+                                            <script type="text/javascript">
+                                                // <![CDATA[
+                                                var editor = ace.edit("editor_enonce");
+                                                editor.setTheme("ace/theme/cobalt");
+                                                editor.getSession().setMode("ace/mode/php");
+                                                document.getElementById('editor_enonce').style.fontSize = '15px';
+                                                // ]]>
+                                            </script>
+                                        </c:if> 
 
                                     </p:panel> 
 
@@ -133,12 +174,20 @@ and open the template in the editor.
 
                                 </p:panelGrid>     
                                 <!-- panel principal -->
-                            </p:tab>  
+                            </h:form>
+                        </p:tab>  
 
-                            <p:tab id="tab3" title="Editer les Questions">  
-                            </p:tab>  
-                        </p:tabView>  
-                    </h:form>
+
+
+                        <p:tab id="tab3" title="Editer les Questions">  
+                            <h:form id="form3" style="border:1px solid transparent;padding:0px;"> 
+                            </h:form>
+                        </p:tab>  
+
+
+
+                    </p:tabView>  
+
 
                 </p:panel>  
             </div>
@@ -149,15 +198,7 @@ and open the template in the editor.
             </ui:insert>
 
 
-            <!--    solarized_dark // cobalt -->
-            <script type="text/javascript">
-                // <![CDATA[
-                var editor = ace.edit("editor_enonce");
-                editor.setTheme("ace/theme/cobalt");
-                editor.getSession().setMode("ace/mode/php");
-                document.getElementById('editor_enonce').style.fontSize = '15px';
-                // ]]>
-            </script>
+
 
         </div> <!-- container -->
     </h:body>
