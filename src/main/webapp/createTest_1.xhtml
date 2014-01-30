@@ -28,56 +28,55 @@ and open the template in the editor.
 
 
             <div id="content">
-                <p:panel header="Création de test - page n°1"  style="height:auto"> 
+                <p:panel header="Création de test - page n°1"  style="height:auto;"> 
                     <h:form style="border:1px solid transparent;">
-                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">  
+                        <h:panelGrid columns="2" style="margin-bottom:20px;margin-left:20px;margin-top:30px;" cellpadding="5">  
 
                             <h:outputText value="Type de test: " />  
-                            <p:selectOneMenu value="#{create.type}">  
+                            <p:selectOneMenu value="#{create1.type}">  
                                 <f:selectItem itemLabel="CODE" itemValue="1" />  
                                 <f:selectItem itemLabel="QCM" itemValue="2" />  
                             </p:selectOneMenu>  
 
 
                             <h:outputText value="Catégorie: " />  
-                            <p:selectOneMenu value="#{create.categorie}">  
+                            <p:selectOneMenu value="#{create1.categorie}">  
                                 <f:selectItem itemLabel="PHP" itemValue="1" />  
                                 <f:selectItem itemLabel="JAVA" itemValue="2" />  
                                 <f:selectItem itemLabel="SQL" itemValue="3" />  
                             </p:selectOneMenu>  
 
                             <h:outputText value="thème: " />  
-                            <h:inputText value="#{create.theme}" />  
+                            <h:inputText value="#{create1.theme}" />  
 
                             <h:outputText value="Durée (min): " />  
-                            <h:inputText value="#{create.duree}" />  
+                            <h:inputText value="#{create1.duree}" />  
 
                             <h:outputText value="Niveau: " />  
-                            <p:selectOneMenu value="#{create.niveau}">  
+                            <p:selectOneMenu value="#{create1.niveau}">  
                                 <f:selectItem itemLabel="1" itemValue="1" />  
                                 <f:selectItem itemLabel="2" itemValue="2" />  
                                 <f:selectItem itemLabel="3" itemValue="3" />  
                             </p:selectOneMenu>  
-
-
                         </h:panelGrid>  
-
-                        <h:outputText value="Entrez la description du test" />  
-                        <p:editor id="editor" value="#{create.description}" width="600"/>  
-
+                        
+                        <h:panelGrid columns="1" style="margin-bottom:10px;margin-left:20px;margin-top:30px;" cellpadding="5">  
+                            <h:outputText value="Entrez la description du test" />  
+                            <p:editor id="editor" value="#{create1.description}" width="600"/>  
+                        </h:panelGrid>  
+                        
+                        
                         <br/>
                         <hr/>
                         <br/>
 
-                        <p:commandButton value="Créer le test" style="width:150px;margin-top:10px;margin-left:750px;" action="#{create.creerTest}" >  
+                        <p:commandButton value="Suivant" style="width:150px;margin-top:10px;margin-left:700px;" action="#{create1.creerTest}" >  
                             <p:confirm header="Confirmation" message="Créer le test ? " icon="ui-icon-alert" />  
                         </p:commandButton>
                         <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
                             <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
                             <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
                         </p:confirmDialog>  
-
-
                     </h:form>
                 </p:panel>  
             </div>

@@ -1,0 +1,21 @@
+                        <p:panelGrid columns="1" style="margin-left:-20px;margin-bottom:10px;width:250px;border-right:1px solid silver;">  
+
+                            <br/>
+                            <br/>
+                            <p:treeTable id="treetable" value="#{create3.root}" var="document" style="width:100%;border:none;" 
+                                         selection="#{create3.selectedTreeNode}" selectionMode="checkbox">  
+                                <p:ajax event="unselect"  listener="#{create3.onNodeUnselect}" />
+                                <p:column style="width:32%">  
+                                    <f:facet name="header">  
+                                        Les rubriques
+                                    </f:facet> 
+                                    <h:outputText value="#{document.libelle}" />  
+                                </p:column>  
+                            </p:treeTable>   
+
+                            <p:panelGrid columns="1" style="height:1000px;border:1px solid red;">
+                                <f:facet name="header">  
+                                    Les rubriques
+                                </f:facet> 
+                            </p:panelGrid>   
+                        </p:panelGrid>   
