@@ -19,7 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  * @author Loïc
  */
-public class QuestionDao implements IQuestionDao, Serializable  {
+public class QuestionDao implements IQuestionDao, Serializable {
 
     @Autowired
     private SessionFactory sessionFactory;
@@ -34,7 +34,23 @@ public class QuestionDao implements IQuestionDao, Serializable  {
 
     @Override
     public Question create(Question question) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            transaction.begin();
+            session.saveOrUpdate(question);
+            session.flush();
+            int id = question.getQuestionid();
+            transaction.commit();
+            List<Question> list = session.createQuery("from Question where questionid = " + id).list();
+            return (list.isEmpty() ? null : list.get(0));
+        } catch (Exception e) {
+            e.printStackTrace();
+            new PamException("Rubrique create => pamException", 0);
+        } finally {
+            getSessionFactory().close();
+        }
+        return null;
     }
 
     @Override

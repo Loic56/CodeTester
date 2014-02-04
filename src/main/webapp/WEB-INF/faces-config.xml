@@ -64,7 +64,6 @@
         <managed-bean-scope>session</managed-bean-scope>
     </managed-bean>
     
-    
     <managed-bean>
         <managed-bean-class>recap</managed-bean-class>    
         <managed-bean-name>web.forms.Recapitulatif</managed-bean-name>    
@@ -93,8 +92,9 @@
     <managed-bean>
         <managed-bean-class>create3</managed-bean-class>    
         <managed-bean-name>web.forms.CreateTest_3</managed-bean-name>    
-        <managed-bean-scope>session</managed-bean-scope>
+        <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
+    
 </faces-config>
 
 

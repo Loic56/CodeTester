@@ -18,4 +18,31 @@
                                     Les rubriques
                                 </f:facet> 
                             </p:panelGrid>   
-                        </p:panelGrid>   
+                        </p:panelGrid
+                        
+                        
+                        
+                        
+                        
+                        <!--fileupload-->
+                        
+                         <h:outputText value="Ajouter une image :" /> 
+                            <br/>
+
+                            <h:inputFile id="file" 
+                                         label="file"
+                                         value="#{create3.file}" 
+                                         required="true" 
+                                         requiredMessage="File not selected !!">
+
+                                <f:validator validatorId="FileUploadValidator" />
+                            </h:inputFile>
+                            <h:message style="color: red" for="file" /><br />
+
+
+                            <h:commandButton id="submit" 
+                                             action="#{create3.uploadFile}"
+                                             value="upload file" /><br />
+
+                            <h:outputText value="#{create3.statusMessage}"
+                                          rendered="#{not empty create3.statusMessage}" />>   

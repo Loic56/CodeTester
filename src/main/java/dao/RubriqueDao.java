@@ -47,7 +47,7 @@ public class RubriqueDao implements IRubriqueDao, Serializable {
             return (list.isEmpty() ? null : list.get(0));
         } catch (Exception e) {
             e.printStackTrace();
-            new PamException("Rubrique create => pamException", 0);
+ //           new PamException("Rubrique create => pamException", 0);
         } finally {
             getSessionFactory().close();
         }

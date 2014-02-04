@@ -72,12 +72,12 @@ and open the template in the editor.
                                 <p>La durée de ce test est <h:outputText value="#{create2.theTest.testduree}"/> min </p>
                                 <p><h:outputText value="Nb questions : #{create2.theTest.testNbquestionRub}"/> questions </p>
 
-
-                                <h:dataTable value="#{create2.listRubrique}" var="list" styleClass="order-table"
-                                             headerClass="order-table-header"
-                                             rowClasses="order-table-odd-row,order-table-even-row" 
-                                             style="width:500px;margin-left:auto;margin-right:auto;"  >
-
+                                
+                                  <h:dataTable value="#{create2.listRubrique}" var="list" styleClass="order-table"
+                                         headerClass="order-table-header"
+                                         rowClasses="order-table-odd-row,order-table-even-row" 
+                                         style="width:450px;margin-left:auto;margin-top:2px;margin-right:auto;"  >
+                                      
                                     <h:column >
                                         <f:facet name="header">Rubrique(s)</f:facet>
                                         <h:outputText value="#{list.rubriquenom}"/> 

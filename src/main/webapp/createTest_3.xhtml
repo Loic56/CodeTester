@@ -37,16 +37,44 @@ and open the template in the editor.
             <div id="content">
                 <p:panel header="Création de test - page n°3"  style="height:auto;"> 
 
-                    <h:form id="form" style="border:1px solid transparent;padding:0px;"> 
-                        <!-- panel principal -->
-                        <!--<p:panelGrid columns="2" style="margin-bottom:10px;width:880px;margin-left:-20px;">-->  
-
+                    <h:form id="form" style="border:1px solid transparent;padding:0px;" enctype="multipart/form-data"> 
 
                         <p:panel style="width:auto;padding:20px;">  
-                            <h:outputText value="Saisissez l'énoncé de la question : " /> 
-
                             <br/>
-                            <p:editor id="editor" value="#{create3.enonce}" style="width:580px;"/>  
+                            <h:outputText value="Question n°#{create3.count}" />    
+                            <br/>
+                            <br/>
+
+                            <c:if test="#{create3.questionIsCreated eq 1}">
+
+                                
+                                
+                            </c:if>
+                            <c:if test="#{create3.questionIsCreated  eq 0}">
+                                <h:outputText value="Saisissez l'énoncé de la question :" /> 
+                                <br/>
+                                <p:editor id="editor" value="#{create3.enonce}" style="width:580px;"/>  
+                                <br/>
+                                <br/>
+
+                                <h:outputText value="Ajouter une image :" /> 
+                                <p:fileUpload fileUploadListener="#{create3.handleFileUpload}" 
+                                              mode="advanced" 
+                                              dragDropSupport="false"  
+                                              update="messages" 
+                                              sizeLimit="100000" 
+                                              fileLimit="3" 
+                                              label="Selectionner"
+                                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />  
+                                <p:growl id="messages" showDetail="true"/>  
+                                <br/>
+                                <h:commandButton id="Valider" class="btn" 
+                                                 action="#{create3.creerQuestion}"
+                                                 value="Créer la Question" />
+
+                            </c:if>
+                            <br/>
+                            <hr/>
                             <br/>
 
                             <h:outputText value="Selectionner une rubrique: " /> 
@@ -56,35 +84,47 @@ and open the template in the editor.
 
                             <br/><br/><br/>
 
-                            <h:outputText value="Saisissez une proposition: " /> 
-                            <p:panelGrid columns="1" >
-                                <p:inputTextarea value="#{create3.theProposition}" rows="3" cols="77" />  
-                                <p:panelGrid columns="2" > 
-                                    <h:outputText value="La proposition est-elle : vraie ? " />  
-                                    <p:selectOneRadio id="check" value="#{create3.propositionEtat}">
-                                        <f:selectItem itemValue="1" itemLabel="Vraie" />
-                                        <f:selectItem itemValue="2" itemLabel="Fausse" />
-                                    </p:selectOneRadio>
+                            <p:fieldset legend="Saisissez une proposition" style="width:500px;padding:20px;border:1px solid silver;float:left;margin-top:20px;">  
+                                <p:panelGrid columns="1" >
+                                    <p:inputTextarea value="#{create3.theProposition}" rows="3" cols="77" />  
+                                    <p:panelGrid columns="2" > 
+                                        <h:outputText value="La proposition est-elle : vraie ? " />  
+                                        <p:selectOneRadio id="check" value="#{create3.propositionEtat}">
+                                            <f:selectItem itemValue="1" itemLabel="Vraie" />
+                                            <f:selectItem itemValue="0" itemLabel="Fausse" />
+                                        </p:selectOneRadio>
+                                    </p:panelGrid>
                                 </p:panelGrid>
-                            </p:panelGrid>
-                            <br/><br/>
-                            <p:commandButton  value="Ajouter la proposition" action="#{create3.ajouterProposition}" />  
+                                <br/><br/>
+                                <h:commandButton id="Valider" class="btn" 
+                                                 action="#{create3.ajouterProposition}"
+                                                 value="Ajouter la proposition" />
+                            </p:fieldset>
+
                             <br/>
-                            <hr/>
+                            <hr style="margin-top:280px;"/>
                             <br/>
+
+
                             <h:dataTable value="#{create3.listProposition}" var="list" styleClass="order-table"
                                          headerClass="order-table-header"
                                          rowClasses="order-table-odd-row,order-table-even-row" 
-                                         style="width:850px;margin-left:auto;margin-right:auto;"  >
+                                         style="width:850px;margin-left:auto;margin-top:2px;margin-right:auto;"  >
 
                                 <h:column>
                                     <f:facet name="header">Proposition(s)</f:facet>
-                                    <h:outputText value="#{create3.listProposition.rowIndex + 1}"/> 
                                     <h:outputText value="#{list.propositionlibelle}"/> 
-                                    <h:outputText value="La réponse est-elle vraie : #{list.propositionvrai}"/> 
+
                                 </h:column>
                                 <h:column>
-                                    <h:outputText value="#{list.rubriqueid}"/> 
+                                    <f:facet name="header">La réponse est-elle vraie ?</f:facet>
+                                    <h:outputText value="état : #{list.propositionvrai}"/> 
+                                    <c:if test="#{list.propositionvrai eq 1}">
+                                        <h:outputText value=" oui "/> 
+                                    </c:if>
+                                    <c:if test="#{list.propositionvrai eq 0}">
+                                        <h:outputText value=" non "/> 
+                                    </c:if>
                                 </h:column>
                             </h:dataTable>
                             <br/>
@@ -109,12 +149,15 @@ and open the template in the editor.
                                     // ]]>
                                 </script>
                             </c:if> 
+                            <h:commandButton  class="btn" 
+                                              action="#{create3.validerQuestion}"
+                                              value="Valider la question" /><br />
 
+                            <h:commandButton  class="btn" 
+                                              action="#{create3.voirQuestion}"
+                                              value="Voir toutes les questions" /><br />
                         </p:panel> 
 
-
-                        <!--</p:panelGrid>-->     
-                        <!-- panel principal -->
                     </h:form>
 
                 </p:panel>

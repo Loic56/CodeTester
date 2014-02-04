@@ -7,18 +7,16 @@ package web.createTest;
 
 import dao.ICategorieDao;
 import dao.ITestDao;
+import java.io.File;
 import java.io.Serializable;
 import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import jpa.Categorie;
-import jpa.Rubrique;
 import jpa.Test;
 import org.primefaces.event.FileUploadEvent;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.TreeNode;
 import org.primefaces.model.UploadedFile;
 import org.springframework.context.ApplicationContext;
@@ -54,19 +52,24 @@ public class CreateTest_1 implements Serializable {
         testDao = (ITestDao) ctx.getBean("testDao");
     }
 
- 
-
     public String creerTest() {
         System.out.println("suivant");
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        Map<String, Object> sessionMap = externalContext.getSessionMap();
+
+        
         Test test = new Test();
         String matiere = "";
+        String s = "";
         String type = "";
         Categorie cat = getCategorieDao().find(Long.valueOf(getCategorie()));
         test.setCategorieid(cat);
         if (cat.getCategorieid() == 1) {
             matiere = "Développement PHP";
+            s = "PHP";
         } else if (cat.getCategorieid() == 2) {
             matiere = "Développement JAVA";
+            s = "JAVA";
         } else if (cat.getCategorieid() == 3) {
             matiere = "Développement SQL";
         }
@@ -84,35 +87,20 @@ public class CreateTest_1 implements Serializable {
         Test theTest = getTestDao().create(test);
         setTheTest(theTest);
 
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.put("theTest", theTest);
-        sessionMap.put("theType", getType());
+        
+        
+        // on créer lke repertoire ou seront stockées les images des énoncés
+        String dirName = "C:\\NetBeansProjects\\CodeTester\\target\\CodeTester-1.0-SNAPSHOT\\resources\\images\\enonces_" + s + "\\TESTID_" + theTest.getTestid() + "\\small\\";
+        sessionMap.put("dirName", dirName);
+        File file = new File(dirName);
+        boolean isCreated = file.mkdirs();
 
         return "createTest_2?faces-redirect=true";
     }
 
-    public void handleFileUpload(FileUploadEvent event) {
-        UploadedFile uploadedFile = event.getFile();
-        if (uploadedFile != null) {
-            System.out.println(uploadedFile.getFileName());
-        } else {
-            System.out.println("The file object is null.");
-        }
-//        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
 
-    public void handleFileUploadDeuz(FileUploadEvent event) {
-        UploadedFile uploadedFile = event.getFile();
-        if (uploadedFile != null) {
-            System.out.println(uploadedFile.getFileName());
-        } else {
-            System.out.println("The file object is null.");
-        }
-//        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-//        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
+
 
     /**
      * @return the type

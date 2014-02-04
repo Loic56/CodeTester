@@ -138,6 +138,8 @@ public class PropositionDao implements IPropositionDao, Serializable  {
         return null;
     }
 
+    
+    // ttes les bonnes propositions
     @Override
     public List<Proposition> find_(Question question) {
         try {
