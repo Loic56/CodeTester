@@ -8,7 +8,7 @@ package dao;
 import java.util.List;
 import jpa.Question;
 import jpa.Rubrique;
-
+import jpa.Test;
 
 /**
  *
@@ -27,5 +27,7 @@ public interface IQuestionDao {
     public List<Question> find(Rubrique rubrique);
 
     public List<Question> findAll();
+
+    public List<Question> findByTest(Test test);
 
 }

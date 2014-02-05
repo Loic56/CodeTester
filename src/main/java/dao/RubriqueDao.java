@@ -69,7 +69,7 @@ public class RubriqueDao implements IRubriqueDao, Serializable {
             List<Rubrique> list = session.createQuery("from Rubrique where rubriqueid = " + id).list();
             return (list.isEmpty() ? null : list.get(0));
         } catch (Exception e) {
-            transaction.rollback();
+            // transaction.rollback();
             e.printStackTrace();
         } finally {
             getSessionFactory().close();

@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import jpa.Question;
 import jpa.Rubrique;
+import jpa.Test;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -46,7 +47,7 @@ public class QuestionDao implements IQuestionDao, Serializable {
             return (list.isEmpty() ? null : list.get(0));
         } catch (Exception e) {
             e.printStackTrace();
-            new PamException("Rubrique create => pamException", 0);
+            new PamException("Question create => pamException", 0);
         } finally {
             getSessionFactory().close();
         }
@@ -120,6 +121,25 @@ public class QuestionDao implements IQuestionDao, Serializable {
     @Override
     public List<Question> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public List<Question> findByTest(Test test) {
+        try {
+            org.hibernate.Session session = sessionFactory.openSession();
+            Transaction transaction = session.beginTransaction();
+            transaction.begin();
+            List<Question> list = session.createQuery("select q from Question q where q.rubriqueid.testid =:test ").setParameter("test", test).list();
+            transaction.commit();;
+            return (list.isEmpty() ? null : list);
+        } catch (Exception e) {
+            new PamException("Question find by Test rubriqueid => pamException", 0);
+            e.printStackTrace();
+        } finally {
+            getSessionFactory().close();
+        }
+        return null;
+
     }
 
 }

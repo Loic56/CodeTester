@@ -95,6 +95,12 @@
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
     
+    <managed-bean>
+        <managed-bean-class>create4</managed-bean-class>    
+        <managed-bean-name>web.forms.CreateTest_4</managed-bean-name>    
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    
 </faces-config>
 
 

@@ -48,8 +48,8 @@ and open the template in the editor.
                             <p>La durée de ce test est <h:outputText value="#{testInfo.test.testduree}"/> min </p>
                             <p><h:outputText value="#{testInfo.test.testNbquestionRub}"/> questions </p>
                             <h:dataTable value="#{testInfo.list_rub}" var="list" styleClass="order-table"
-                                         headerClass="order-table-header"
-                                         rowClasses="order-table-odd-row,order-table-even-row" style="width:400px;">
+                                         headerClass="order-table-header" rowClasses="order-table-odd-row,order-table-even-row" 
+                                         style="width:400px;">
                                 <h:column>
                                     <f:facet name="header">Rubrique(s)</f:facet>
                                     <h:outputText value="#{list.rubriquenom}" />

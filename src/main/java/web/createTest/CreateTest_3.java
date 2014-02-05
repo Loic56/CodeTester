@@ -10,7 +10,6 @@ import dao.IQuestionDao;
 import dao.IRubriqueDao;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
@@ -25,15 +24,12 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.AjaxBehaviorEvent;
-import javax.servlet.http.Part;
 import jpa.Proposition;
 import jpa.Question;
 import jpa.Reponse;
 import jpa.ReponseHisto;
 import jpa.Rubrique;
 import jpa.Test;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.NodeUnselectEvent;
@@ -50,18 +46,17 @@ import tools.Utils;
  */
 @ManagedBean(name = "create3")
 @ViewScoped
-public class CreateTest_3 implements Serializable {  // enreg proposition 
-
-    // 
-    private TreeNode root;
-    private Document selectedDocument;
-    private TreeNode[] selectedTreeNode;
+public class CreateTest_3 implements Serializable {
 
     // le test en cours
     private Test theTest;
     private String type;
     private static Question theQuestion;
-    private String questionIsCreated;
+    private static String questionIsCreated;
+    private static String isImageUploaded;
+    private static String isRubriqueChoose;
+    private static String pathEnonce;
+    private static String isQuestionOk;
 
     private IRubriqueDao rubriqueDao = null;
     private IPropositionDao propositionDao = null;
@@ -80,13 +75,12 @@ public class CreateTest_3 implements Serializable {  // enreg proposition
     private String nomRubrique;
     private List<Rubrique> listRubrique;
 
-    private int count;
+    private static int count = 1;
 
+    
+    
     public CreateTest_3() {
         System.out.println("CreateTest_3");
-        setCount(1);
-        setQuestionIsCreated("0");
-
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
         setRubriqueDao((IRubriqueDao) ctx.getBean("rubriqueDao"));
         setPropositionDao((IPropositionDao) ctx.getBean("propositionDao"));
@@ -100,10 +94,20 @@ public class CreateTest_3 implements Serializable {  // enreg proposition
         setType((String) sessionMap.get("theType"));
         //System.out.println("type : " + getType());
         setListRubrique((List<Rubrique>) sessionMap.put("theRubriques", getListRubrique()));
+
+        try {
+            System.out.println("rub id : " + getTheQuestion().getRubriqueid().getRubriqueid());
+            System.out.println("path enonce : " + getPathEnonce());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
+    
+    
     public String creerQuestion() {
-
+        System.out.println("creerQuestion");
         Collection<ReponseHisto> list = new ArrayList<ReponseHisto>();
         Set<ReponseHisto> reponseHistoCollection = new HashSet<ReponseHisto>(list);
         Collection<Reponse> list2 = new ArrayList<Reponse>();
@@ -116,6 +120,8 @@ public class CreateTest_3 implements Serializable {  // enreg proposition
         quest.setReponseCollection(reponseCollection);
         quest.setReponseHistoCollection(reponseHistoCollection);
         quest.setRubriqueid(null);
+        // quest.setQuestionimage("");
+        quest.setQuestiontext(getEnonce());
         Question theQuestion = getQuestionDao().create(quest);
         System.out.println("theQuestion =  " + theQuestion);
         setTheQuestion(theQuestion);
@@ -125,7 +131,27 @@ public class CreateTest_3 implements Serializable {  // enreg proposition
         String url = "http://localhost:8080/CodeTester/faces/createTest_3.xhtml";
         Utils.redirect(url);
         return "";
+    }
 
+    public String choisirRubrique() {
+        Question quest = getQuestionDao().find(Long.valueOf(getTheQuestion().getQuestionid()));
+        quest.setRubriqueid(getRubriqueDao().find(Long.valueOf(getNomRubrique())));
+        // merge
+        Question theQuestion = getQuestionDao().edit(quest);
+
+        setTheQuestion(theQuestion);
+        setIsRubriqueChoose("1");
+        String url = "http://localhost:8080/CodeTester/faces/createTest_3.xhtml";
+
+        Utils.redirect(url);
+        return "";
+    }
+
+    public String ajouterImage() {
+        setIsImageUploaded("1");
+        String url = "http://localhost:8080/CodeTester/faces/createTest_3.xhtml";
+        Utils.redirect(url);
+        return "";
     }
 
     public String ajouterProposition() {
@@ -154,17 +180,24 @@ public class CreateTest_3 implements Serializable {  // enreg proposition
 
     private void raz() {
         // on remet les champs a zéro
-        setQuestionIsCreated("0");
+        setQuestionIsCreated(null);
+        setIsRubriqueChoose(null);
+        setIsImageUploaded(null);
         setEnonce("");
         setTheProposition("");
         setPropositionEtat("");
         setTheQuestion(null);
+        setIsQuestionOk(null);
     }
 
+    
+    
     public String voirQuestion() {
         System.out.println("voirQuestion()");
         return "createTest_4?faces-redirect=true";
     }
+    
+    
 
     public String validerQuestion() {
         System.out.println("validerQuestion()");
@@ -175,84 +208,57 @@ public class CreateTest_3 implements Serializable {  // enreg proposition
         return "createTest_3?faces-redirect=true";
     }
 
-    public void handleFileUpload(FileUploadEvent event) throws IOException {
+    public String okQuestion() {
+        setIsQuestionOk("1");
+        String url = "http://localhost:8080/CodeTester/faces/createTest_3.xhtml";
+        Utils.redirect(url);
+        return "";
+    }
+
+    public void handleFileUpload(FileUploadEvent event) {
+        System.out.println("handleFileUpload() ");
+        FacesMessage msg = new FacesMessage("Fichier uploadé", event.getFile().getFileName() + " is uploaded.");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
+
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 
-        String dirname = (String) sessionMap.get("dirname");
+        String dirname = (String) sessionMap.get("dirName");
         System.out.println("dirname = " + dirname);
-        // filename = PId_?QIq_?
-        String filename = "QID_" + getTheQuestion().getQuestionid();
+
+        String pathEnonce = (String) sessionMap.get("pathEnonce");
+        String filename = "QID_" + getTheQuestion().getQuestionid() + ".jpg";
         System.out.println("filename = " + filename);
 
-        FacesMessage msg = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+        //enonces_PHP\TESTID_21\small\QID_26.jpg
+        setPathEnonce(pathEnonce + filename);
+        // en base !
+        Question q = getTheQuestion();
+        q.setQuestionimage(getPathEnonce());
+        setTheQuestion(questionDao.edit(q));
+        
+        System.out.println("path enonce = " + getPathEnonce());
 
-        // String filename = FilenameUtils.getName(event.getFile().getFileName());
-        InputStream input = event.getFile().getInputstream();
-        OutputStream output = new FileOutputStream(new File(dirname, filename));
+        InputStream input = null;
+        OutputStream output = null;
+
+        try {
+            input = event.getFile().getInputstream();
+            output = new FileOutputStream(new File(dirname, filename));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         try {
             IOUtils.copy(input, output);
+        } catch (Exception e) {
+            e.printStackTrace();
         } finally {
             IOUtils.closeQuietly(input);
             IOUtils.closeQuietly(output);
         }
     }
 
-    
-    
-    
-    public void onRowSelect(SelectEvent event) {
-        Rubrique r = (Rubrique) event.getObject();
-        System.out.println("Suppression => id_rub = " + r.getRubriqueid());
-    }
-
-    public void onNodeUnselect(NodeUnselectEvent event) {
-        getRoot().getChildren().remove(event.getTreeNode());
-    }
-
-    /**
-     * @return the root
-     */
-    public TreeNode getRoot() {
-        return root;
-    }
-
-    /**
-     * @param root the root to set
-     */
-    public void setRoot(TreeNode root) {
-        this.root = root;
-    }
-
-    /**
-     * @return the selectedDocument
-     */
-    public Document getSelectedDocument() {
-        return selectedDocument;
-    }
-
-    /**
-     * @param selectedDocument the selectedDocument to set
-     */
-    public void setSelectedDocument(Document selectedDocument) {
-        this.selectedDocument = selectedDocument;
-    }
-
-    /**
-     * @return the selectedTreeNode
-     */
-    public TreeNode[] getSelectedTreeNode() {
-        return selectedTreeNode;
-    }
-
-    /**
-     * @param selectedTreeNode the selectedTreeNode to set
-     */
-    public void setSelectedTreeNode(TreeNode[] selectedTreeNode) {
-        this.setSelectedTreeNode(selectedTreeNode);
-    }
 
     /**
      * @return the theTest
@@ -465,7 +471,67 @@ public class CreateTest_3 implements Serializable {  // enreg proposition
      * @param questionIsCreated the questionIsCreated to set
      */
     public void setQuestionIsCreated(String questionIsCreated) {
+
+        System.out.println("setQuestionIsCreated : " + questionIsCreated);
         this.questionIsCreated = questionIsCreated;
+    }
+
+    /**
+     * @return the isImageUploaded
+     */
+    public String getIsImageUploaded() {
+        return isImageUploaded;
+    }
+
+    /**
+     * @param isImageUploaded the isImageUploaded to set
+     */
+    public void setIsImageUploaded(String isImageUploaded) {
+        System.out.println("setIsImageUploaded : " + isImageUploaded);
+        this.isImageUploaded = isImageUploaded;
+    }
+
+    /**
+     * @return the isRubriqueChoose
+     */
+    public String getIsRubriqueChoose() {
+        return isRubriqueChoose;
+    }
+
+    /**
+     * @param aIsRubriqueChoose the isRubriqueChoose to set
+     */
+    public void setIsRubriqueChoose(String aIsRubriqueChoose) {
+        System.out.println("setIsRubriqueChoose : " + aIsRubriqueChoose);
+        isRubriqueChoose = aIsRubriqueChoose;
+    }
+
+    /**
+     * @return the pathEnonce
+     */
+    public String getPathEnonce() {
+        return pathEnonce;
+    }
+
+    /**
+     * @param pathEnonce the pathEnonce to set
+     */
+    public void setPathEnonce(String pathEnonce) {
+        this.pathEnonce = pathEnonce;
+    }
+
+    /**
+     * @return the isQuestionOk
+     */
+    public String getIsQuestionOk() {
+        return isQuestionOk;
+    }
+
+    /**
+     * @param aIsQuestionOk the isQuestionOk to set
+     */
+    public void setIsQuestionOk(String aIsQuestionOk) {
+        isQuestionOk = aIsQuestionOk;
     }
 
 }

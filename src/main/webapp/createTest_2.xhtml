@@ -33,15 +33,15 @@ and open the template in the editor.
             </ui:insert>
 
             <div id="content">
-                <p:panel header="Création de test - page n°2"  style="height:auto;"> 
+                <p:panel header="Création de test - page n°2 : Ajouter les rubriques "  style="height:auto;"> 
 
 
                     <p:panelGrid columns="2" style="margin-bottom:10px;width:auto;margin:20px;">  
                         <h:graphicImage library="images" name="logo/caution_2.png"  style="height:35px;" />
                         <p style="color:#ed5757;">Chaque test doit comporter au moins une rubrique</p>
                     </p:panelGrid>
-                    
-                    
+
+
                     <p style="margin:20px;">Ex: Pour le test "Java - J2EE : Développeur expérimenté", on possède les rubriques suivantes : </p>
                     <ul style="margin:20px;">
                         <li>Les bases du langage Java</li>
@@ -72,12 +72,11 @@ and open the template in the editor.
                                 <p>La durée de ce test est <h:outputText value="#{create2.theTest.testduree}"/> min </p>
                                 <p><h:outputText value="Nb questions : #{create2.theTest.testNbquestionRub}"/> questions </p>
 
-                                
-                                  <h:dataTable value="#{create2.listRubrique}" var="list" styleClass="order-table"
-                                         headerClass="order-table-header"
-                                         rowClasses="order-table-odd-row,order-table-even-row" 
-                                         style="width:450px;margin-left:auto;margin-top:2px;margin-right:auto;"  >
-                                      
+
+                                <h:dataTable value="#{create2.listRubrique}" var="list" styleClass="order-table"
+                                             headerClass="order-table-header"
+                                             rowClasses="order-table-odd-row,order-table-even-row" 
+                                             style="width:550px;margin-left:auto;margin-top:2px;margin-right:auto;"  >
                                     <h:column >
                                         <f:facet name="header">Rubrique(s)</f:facet>
                                         <h:outputText value="#{list.rubriquenom}"/> 
@@ -85,7 +84,7 @@ and open the template in the editor.
 
                                     <h:column>
                                         <f:facet name="header">Delete</f:facet>
-                                        <p:commandButton value="OK" style="float:right;" action="#{create2.deleteRubrique}">
+                                        <p:commandButton value="OK" style="height:25px;font-size:12px;" action="#{create2.deleteRubrique}">
                                             <f:param name="rubToSup" value="#{list.rubriqueid}" />
                                         </p:commandButton>
                                     </h:column>

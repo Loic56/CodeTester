@@ -57,7 +57,6 @@ public class CreateTest_1 implements Serializable {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 
-        
         Test test = new Test();
         String matiere = "";
         String s = "";
@@ -88,19 +87,20 @@ public class CreateTest_1 implements Serializable {
         setTheTest(theTest);
 
         sessionMap.put("theTest", theTest);
-        
-        
+
         // on créer lke repertoire ou seront stockées les images des énoncés
-        String dirName = "C:\\NetBeansProjects\\CodeTester\\target\\CodeTester-1.0-SNAPSHOT\\resources\\images\\enonces_" + s + "\\TESTID_" + theTest.getTestid() + "\\small\\";
+        String dirName = "C:\\NetBeansProjects\\CodeTester\\src\\main\\webapp\\resources\\images\\enonces_" + s + "\\TESTID_" + theTest.getTestid() + "\\small\\";
+        String pathEnonce = "enonces_" + s + "\\TESTID_" + theTest.getTestid() + "\\small\\";
+
         sessionMap.put("dirName", dirName);
+        sessionMap.put("pathEnonce", pathEnonce);
+        
+        
         File file = new File(dirName);
         boolean isCreated = file.mkdirs();
 
         return "createTest_2?faces-redirect=true";
     }
-
-
-
 
     /**
      * @return the type

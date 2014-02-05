@@ -173,6 +173,7 @@ body{
     border-radius: 10px 10px 10px 10px  ;
 }
 
+
 .order-table-header{
     text-align:center;
     background:none repeat scroll 0 0 #cdcedd;
@@ -192,15 +193,14 @@ body{
 
 .order-table-odd-row{
     text-align:center;
-    background:none repeat scroll 0 0 #cbd6e5;
-    border-top:1px solid #BBBBBB;
+    background:none repeat scroll 0 0 #cbd6e5 !important;
+    border-top:1px solid #BBBBBB !important;
 }
 
 .order-table-even-row{
     text-align:center;
-    background:none repeat scroll 0 0 #d9d9cf; 
-    /*#F9F9F9*/
-    border-top:1px solid #BBBBBB;
+    background:none repeat scroll 0 0 #d9d9cf !important; 
+    border-top:1px solid #BBBBBB !important;
 }
 
 
