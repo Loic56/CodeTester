@@ -70,6 +70,8 @@ public class MenuCandidat implements Serializable {
     public String Suivant() {
         
         // candidat en session
+        System.out.println("\n\n Le candidat en session : )"+getCandidatSelected() + " \n\n ");
+        
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.put("theCandidat", getCandidatSelected());

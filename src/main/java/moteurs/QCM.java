@@ -55,6 +55,7 @@ public class QCM implements Serializable {
     private String questionid; // id de la question en cours
     private String enonce;
     private String rubrique;
+    private String imagePath;
 
     private ApplicationContext ctx;
     private IQuestionDao questionDao = null;
@@ -112,6 +113,15 @@ public class QCM implements Serializable {
         // on défini l'énoncé
         setEnonce(getThe_list().get(getCount()).getQuestiontext());
         setEnonce(getEnonce());
+        // image ?
+
+//        if (getThe_list().get(getCount()).getQuestionimage() != null) {
+//            System.out.println("Une image existe pour cette question");
+        // setIsImagExist("1");
+        setImagePath(getThe_list().get(getCount()).getQuestionimage());
+        System.out.println("Path = " + getImagePath());
+       // }
+
         // on définie sa rubrique
         setRubrique(getThe_list().get(getCount()).getRubriqueid().getRubriqueid().toString());
     }
@@ -144,8 +154,6 @@ public class QCM implements Serializable {
 //        System.out.println("*******************************************");
 //        System.out.println("count : " + getCount() + " == nb_quest_total - 1 : " + (getNb_quest_total() - 1));
 //        System.out.println("*******************************************");
-
-        // PLANTAGE
         // si dernière question on renvoie vers la vue de recap
         if (getCount() == (getNb_quest_total() - 1)) {
             System.out.println("recap");
@@ -443,6 +451,20 @@ public class QCM implements Serializable {
      */
     public void setCount2(Integer count2) {
         this.count2 = count2;
+    }
+
+    /**
+     * @return the imagePath
+     */
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    /**
+     * @param imagePath the imagePath to set
+     */
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 
 }

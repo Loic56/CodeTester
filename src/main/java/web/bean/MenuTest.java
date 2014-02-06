@@ -47,9 +47,6 @@ public class MenuTest implements Serializable {
 
     private List<Test> list;
 
-    
-    
-    
     public MenuTest() {
         testIsSelected = "0";
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -95,8 +92,6 @@ public class MenuTest implements Serializable {
         secondSubmenu.addElement(secondSubmenu2);
         model.addElement(secondSubmenu);
 
-        
-        
         //SQL 
         DefaultSubMenu thirdSubmenu = new DefaultSubMenu("SQL");
         DefaultSubMenu thirdSubSubmenu1 = new DefaultSubMenu("SQL - QCM");
@@ -128,8 +123,13 @@ public class MenuTest implements Serializable {
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.put("theTests", getListTest());
 
-        Utils.printLine(" Liste des tests ");
+        Utils.printLine(" Liste des tests en session ");
+        for (Test t : getListTest()) {
+            System.out.println("test_id : " + t.getTestid());
+        }
+
         System.out.println("nb de test : " + getListTest().size());
+
         return "info_reservation?faces-redirect=true";
     }
 

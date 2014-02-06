@@ -23,8 +23,8 @@
 
             <div id="content">
                 <p:panel header="Création de test - page n°4 : Toutes les questions "  style="height:auto;"> 
-                    <h:form id="form" style="border:1px solid transparent;padding:0px;" enctype="multipart/form-data"> 
-                        
+                    <h:form id="form" style="border:1px solid transparent;padding:0px;" > 
+
                         <h:panelGrid columns="2" style="width:800px;">  
                             <h:panelGrid columns="2" style="width:300px;">  
                                 <h:link outcome="createTest_3" >
@@ -37,20 +37,19 @@
                             </p:commandButton>
                         </h:panelGrid>  
 
-                        
+
                         <hr/>
-                       <p:panelGrid columns="2">
-                            <p:treeTable id="treetable" value="#{create4.root}" var="document" style="width:200px;" 
-                                         selection="#{create4.selectedTreeNode}" selectionMode="checkbox">  
+                        <p:panelGrid columns="2">
+
+                            <p:treeTable id="treetable" value="#{create4.root}" var="document" style="width:200px;" >  
                                 <p:ajax event="unselect"  listener="#{create4.onNodeUnselect}" />
                                 <p:column style="width:32%">  
                                     <f:facet name="header">  
                                         Les rubriques
                                     </f:facet> 
-                                    <h:outputText value="#{document.libelle}" />  
+                                    <h:outputText value="#{document.name}" />  
                                 </p:column>  
                             </p:treeTable> 
-
 
 
                             <p:panelGrid columns="1" style="width:650px;">
@@ -87,14 +86,11 @@
                                             </c:if>
                                         </h:column>
                                     </h:dataTable>
-                                    
-                      
-
                                 </c:forEach>
-                        </p:panelGrid>
+                            </p:panelGrid>
 
 
-                      </p:panelGrid> 
+                        </p:panelGrid> 
 
 
                         <p:commandButton value="Enregistrer" style="width:150px;margin-top:10px;margin-left:750px;" action="#{create4.enregTest}" >  
@@ -107,12 +103,16 @@
                         </p:confirmDialog>  
 
                     </h:form>
+
                 </p:panel>
             </div>
 
             <ui:insert name="footer" >
                 <ui:include src="/templates/footer.xhtml" />
             </ui:insert>
+
+
+
         </div> <!-- container -->
     </h:body>
 </html>         

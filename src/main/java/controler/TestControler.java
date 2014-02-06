@@ -27,8 +27,6 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import tools.Utils;
 
-
-// tets git 
 /**
  *
  * @author Loïc
@@ -60,9 +58,8 @@ public class TestControler implements Serializable {
         questionDao = (IQuestionDao) ctx.getBean("questionDao");
     }
 
-
     public String DebuterTest() {
-        Utils.printLine("       DébuterTest        ");
+        Utils.printLine("       Controller - DébuterTest        ");
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
 
@@ -70,23 +67,21 @@ public class TestControler implements Serializable {
         System.out.println("2:" + (List<Test>) sessionMap.get("theTests"));
         System.out.println("3:" + (Candidat) sessionMap.get("theCandidat"));
         System.out.println("4:" + ((String) sessionMap.get("testid")));
-        
+
         int passage_id = ((Integer) sessionMap.get("passage_id"));
         setTheTests((List<Test>) sessionMap.get("theTests"));
         setTheCandidat((Candidat) sessionMap.get("theCandidat"));
         setTestid((String) sessionMap.get("testid")); // l'id du test en cours
-        
-        
 
         Test t = testDao.find(Long.valueOf(getTestid()));
         // nature du test QCM / CODE ?
         String testNature = t.getTestnature();
+        String testFormat = t.getTestformat();
 
         // toutes les rubriques pr un test
         List<Rubrique> list = rubriqueDao.find(t);
         System.out.println("list.size() = " + list.size());
 
-        
         // toutes les questions pr une rubrique
         tab_rub = new Hashtable<Integer, List<Question>>();
 
@@ -100,13 +95,14 @@ public class TestControler implements Serializable {
         sessionMap.put("tab_test", tab_test);
 
         System.out.println("***************************************");
-        System.out.println("    test nature = " + testNature);
         System.out.println("    test id = " + t.getTestid());
+        System.out.println("    test nature = " + testNature);
+        System.out.println("    test format = " + testFormat);
         System.out.println("***************************************");
 
-        if (testNature.equals("QCM")) {
+        if (testFormat.equals("QCM")) {
             return "QCM";
-        } else if (testNature.equals("THEM") | testNature.equals("GEN")) {
+        } else if (testFormat.equals("CODE") ) {
             // uniquement pour un type CODE
             // créer un dossier de réception pour les réponse
             String rep = passage_id + "-" + getTheCandidat().getCandidatNom() + "-" + getTheCandidat().getCandidatPrenom();
@@ -126,9 +122,6 @@ public class TestControler implements Serializable {
         }
     }
 
-    
-    
-    
     // les tests en attente
     public String Link() {
         System.out.println("Link()");
@@ -139,8 +132,6 @@ public class TestControler implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
         this.setTestid(fc.getExternalContext().getRequestParameterMap().get("testid"));
 
-        
-        
         sessionMap.put("testid", getTestid());
 
         // le test qui correspond au lien que l'on vient de cliquer

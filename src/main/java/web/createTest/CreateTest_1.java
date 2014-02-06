@@ -72,6 +72,7 @@ public class CreateTest_1 implements Serializable {
         } else if (cat.getCategorieid() == 3) {
             matiere = "Développement SQL";
         }
+        
         if (getType().equals("2")) {
             setTheType("QCM");
         } else if (getType().equals("1")) {
@@ -81,7 +82,9 @@ public class CreateTest_1 implements Serializable {
         test.setTestDescription(getDescription());
         test.setTestduree(Short.valueOf(getDuree()));
         test.setTestmatiere(matiere);
-        test.setTestformat(getType());
+        test.setTestStart("Instructions de début");
+        test.setTestnature("THEM");
+        test.setTestformat(getTheType());
         test.setTheme(getTheme());
         Test theTest = getTestDao().create(test);
         setTheTest(theTest);

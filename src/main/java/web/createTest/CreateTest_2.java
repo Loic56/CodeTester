@@ -6,8 +6,6 @@
 package web.createTest;
 
 import dao.IRubriqueDao;
-import dao.ITestDao;
-import dao.TestDao;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -16,7 +14,6 @@ import java.util.Map;
 import java.util.Set;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import jpa.Question;

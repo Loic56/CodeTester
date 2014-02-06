@@ -38,7 +38,18 @@ and open the template in the editor.
                             <h:outputText id="txt_count" value="Temps restant: #{qcm.time} min " style="float:right;margin-right:50px;color:#ed9f53;"/>  
                             <p:poll interval="1"   
                                     listener="#{qcm.Decrement}" update="txt_count" />  
-                            <h:outputText value="#{qcm.enonce}" />   
+                            <br/><br/>
+                            <h:outputText value="#{qcm.enonce}" />  
+                            <br/>
+                            <h:outputText value="path : #{qcm.imagePath}" />   
+                            <br/>
+                            <c:if test="#{qcm.imagePath eq null }">
+                            </c:if>
+                            <c:otherwise>
+                                <h:graphicImage library="images" name="#{qcm.imagePath}" style="border:1px solid black;width:200px;height:200px;"/>
+                            </c:otherwise>
+
+
                             <br/>
                             <hr/>
                             <br/>
@@ -46,7 +57,7 @@ and open the template in the editor.
                             <h:outputText value="Propositions:" />  
                             <br/>
                             <p:selectManyCheckbox  id="listPropositions" value="#{qcm.maValeur}" layout="grid" columns="1" style="margin-left:70px;margin-right:5px;">  
-                                    <f:selectItems id="theProposition" value="#{qcm.mesElements}" var="theElement"  itemValue="#{theElement.propositionid}" itemLabel=" #{theElement.propositionlibelle} "/>  
+                                <f:selectItems id="theProposition" value="#{qcm.mesElements}" var="theElement"  itemValue="#{theElement.propositionid}" itemLabel=" #{theElement.propositionlibelle} "/>  
                             </p:selectManyCheckbox >  
 
                             <br/>

@@ -77,8 +77,6 @@ public class CreateTest_3 implements Serializable {
 
     private static int count = 1;
 
-    
-    
     public CreateTest_3() {
         System.out.println("CreateTest_3");
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
@@ -104,8 +102,13 @@ public class CreateTest_3 implements Serializable {
         }
     }
 
-    
-    
+    public String test() {
+        System.out.println("test()");
+        String url = "http://localhost:8080/CodeTester/faces/index.xhtml";
+        Utils.redirect(url);
+        return "";
+    }
+
     public String creerQuestion() {
         System.out.println("creerQuestion");
         Collection<ReponseHisto> list = new ArrayList<ReponseHisto>();
@@ -190,14 +193,10 @@ public class CreateTest_3 implements Serializable {
         setIsQuestionOk(null);
     }
 
-    
-    
     public String voirQuestion() {
         System.out.println("voirQuestion()");
         return "createTest_4?faces-redirect=true";
     }
-    
-    
 
     public String validerQuestion() {
         System.out.println("validerQuestion()");
@@ -236,7 +235,7 @@ public class CreateTest_3 implements Serializable {
         Question q = getTheQuestion();
         q.setQuestionimage(getPathEnonce());
         setTheQuestion(questionDao.edit(q));
-        
+
         System.out.println("path enonce = " + getPathEnonce());
 
         InputStream input = null;
@@ -258,7 +257,6 @@ public class CreateTest_3 implements Serializable {
             IOUtils.closeQuietly(output);
         }
     }
-
 
     /**
      * @return the theTest
