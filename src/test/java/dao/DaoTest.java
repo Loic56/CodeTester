@@ -58,10 +58,10 @@ public class DaoTest {
         propositionDao = (IPropositionDao) ctx.getBean("propositionDao");
         reponseDao = (IReponseDao) ctx.getBean("reponseDao");
 
-        this.sam = new Candidat("Mr", "Faber", "Samuel", "grosLard@hotmail.fr", Utils.stringToMySQLDate("01-01-1985"));
-        this.rom = new Candidat("Mr", "Crusson", "Romain", "nazbrock.grave@hotmail.fr", Utils.stringToMySQLDate("10-03-1983"));
+        this.sam = new Candidat("Mr", "Faber", "Samuel", "sam.fab@hotmail.fr", Utils.stringToMySQLDate("01-01-1985"));
+        this.rom = new Candidat("Mr", "Crusson", "Romain", "romain@hotmail.fr", Utils.stringToMySQLDate("10-03-1983"));
         this.loic = new Candidat("Mr", "Crusson", "loïc", "lcrusson.pro@gmail.com", Utils.stringToMySQLDate("21-10-1980"));
-        this.rv = new Candidat("Mr", "Halgand", "Hervé", "duped.freeMan@hotmail.fr", Utils.stringToMySQLDate("07-06-1983"));
+        this.rv = new Candidat("Mr", "Halgand", "Hervé", "rv@hotmail.fr", Utils.stringToMySQLDate("07-06-1983"));
 
         delete();
         test01();
