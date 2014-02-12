@@ -121,16 +121,24 @@ public class TheEnd implements Serializable {
         }
 
         System.out.println("theTestsAfter.size() : " + theTestsAfter.size());
+        // tous les tests du candidat on étés effectués
 
-        System.out.println("-------------------------------");
-          System.out.println(" on remet la liste en session ");
+        if (theTestsAfter.size() == 0) {
+            // on vide la session 
+            FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
+// retour vers l'accueil
+            String url = "http://localhost:8080/CodeTester/faces/index.xhtml";
+            Utils.redirect(url);
+        }
+
+        System.out.println(" on remet la liste en session ");
         getSessionMap().put("theTests", theTestsAfter);
 
-        for(Test t : (List<Test>)getSessionMap().get("theTests")){
-             System.out.println(" >> "+t.toString() );
+        for (Test t : (List<Test>) getSessionMap().get("theTests")) {
+            System.out.println(" >> " + t.toString());
         }
-    
-                
+
         String url = "http://localhost:8080/CodeTester/faces/helloCandidat.xhtml";
         Utils.redirect(url);
 
@@ -289,5 +297,4 @@ public class TheEnd implements Serializable {
     public void setTheTests(List<Test> theTests) {
         this.theTests = theTests;
     }
-
 }

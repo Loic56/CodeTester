@@ -123,7 +123,7 @@ public class CreateTest_3 implements Serializable {
         quest.setReponseCollection(reponseCollection);
         quest.setReponseHistoCollection(reponseHistoCollection);
         quest.setRubriqueid(null);
-        // quest.setQuestionimage("");
+        quest.setQuestionimage(null);
         quest.setQuestiontext(getEnonce());
         Question theQuestion = getQuestionDao().create(quest);
         System.out.println("theQuestion =  " + theQuestion);

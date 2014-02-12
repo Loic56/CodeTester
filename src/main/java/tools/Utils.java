@@ -512,12 +512,22 @@ public class Utils {
         return retour;
     }
 
+    
+    
     public static void enreg_ReponseQCM(String questionid, int i, String etat) {
+        System.out.println("enreg_ReponseQCM() => Qid:"+questionid+", i:"+i+", état:"+etat);
+        
+        
         Reponse r = reponseDao.find(questionDao.find(Long.valueOf(questionid)));
         r.setReponsemessage(String.valueOf(i));
         r.setReponsetexte(etat);
         reponseDao.edit(r);
     }
+    
+    
+    
+    
+    
 
     public static void printLine(String s) {
         System.out.println("////////////////////////////////////////////////////////////");

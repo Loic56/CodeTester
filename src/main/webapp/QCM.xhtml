@@ -43,11 +43,9 @@ and open the template in the editor.
                             <br/>
                             <h:outputText value="path : #{qcm.imagePath}" />   
                             <br/>
-                            <c:if test="#{qcm.imagePath eq null }">
-                            </c:if>
-                            <c:otherwise>
+                            <c:if test="#{not empty qcm.imagePath}">
                                 <h:graphicImage library="images" name="#{qcm.imagePath}" style="border:1px solid black;width:200px;height:200px;"/>
-                            </c:otherwise>
+                            </c:if>
 
 
                             <br/>
