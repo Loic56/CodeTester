@@ -484,7 +484,7 @@ public class DaoTest {
         Rubrique theRubrique = rubriqueDao.create(rubrique);
         if (theRubrique != null) {
             System.out.println("test 20 >> : " + theRubrique.toString());
-
+            rubriqueDao.create(theRubrique);
         }
     }
 

@@ -8,21 +8,13 @@ package web.bean;
 import dao.IPassageDao;
 import dao.IReponseDao;
 import dao.ITestDao;
-import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import jpa.Passage;
 import jpa.Reponse;
 import jpa.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import tools.Utils;
 
 /**
  *
@@ -30,7 +22,7 @@ import tools.Utils;
  */
 @ManagedBean(name = "recap")
 @SessionScoped
-public class Recapitulatif implements Serializable {
+public class Recapitulatif extends BeanAdapter{
 
     /// on doit récupérer toutes les réponses pour un passage pour un test
     private ITestDao testDao = null;
@@ -44,28 +36,22 @@ public class Recapitulatif implements Serializable {
     
     
     public Recapitulatif() {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        testDao = (ITestDao) ctx.getBean("testDao");
-        passageDao = (IPassageDao) ctx.getBean("passageDao");
-        reponseDao = (IReponseDao) ctx.getBean("reponseDao");
+   
 
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> sessionMap = externalContext.getSessionMap();
-
-        int passage_id = ((Integer) sessionMap.get("passage_id"));
-        String test_id = ((String) sessionMap.get("testid"));
+        int passage_id = ((Integer) sharedData().get("passage_id"));
+        String test_id = ((String) sharedData().get("testid"));
         System.out.println("passage_id=" + passage_id + " \ntest_id=" + test_id);
 
-        setTheTest(testDao.find(Long.valueOf(test_id)));
-        setThepassage(passageDao.find(Long.valueOf(passage_id)));
-        if(testDao.find(Long.valueOf(test_id)).getTestformat().equals("QCM"))
+        setTheTest(TESTDAO.find(Long.valueOf(test_id)));
+        setThepassage(PASSAGEDAO.find(Long.valueOf(passage_id)));
+        if(TESTDAO.find(Long.valueOf(test_id)).getTestformat().equals("QCM"))
         setTest_format("1");
 
         try {
-            Passage p = passageDao.find(Long.valueOf(getThepassage().getPassageid().toString()));
-            Test t = testDao.find(Long.valueOf(getTheTest().getTestid().toString()));
+            Passage p = PASSAGEDAO.find(Long.valueOf(getThepassage().getPassageid().toString()));
+            Test t = TESTDAO.find(Long.valueOf(getTheTest().getTestid().toString()));
 
-            List<Reponse> list = reponseDao.find(p, t);
+            List<Reponse> list = REPONSEDAO.find(p, t);
             listReponse = new ArrayList<Reponse>();
             if (list != null) {
                 for (Reponse rep : list) {

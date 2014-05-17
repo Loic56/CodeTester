@@ -5,28 +5,17 @@
  */
 package web.bean;
 
-import dao.ICandidatDao;
-import dao.IPassageDao;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import jpa.Candidat;
 import jpa.Jointure;
 import jpa.Passage;
-import jpa.Question;
 import jpa.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
+import tools.*;
 
 /**
  *
@@ -34,7 +23,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 @ManagedBean(name = "logCandidat")
 @SessionScoped
-public class Log_Candidat implements Serializable {
+public class Log_Candidat extends BeanAdapter {
 
     // private Passage thePassage;
     private Candidat theCandidat;
@@ -46,42 +35,38 @@ public class Log_Candidat implements Serializable {
 
     private String error;
     private String msg_error;
-    private IPassageDao passageDao = null;
-    private ICandidatDao candidatDao = null;
 
+    private Passage pass;
 
     public Log_Candidat() {
+        super();
         error = "0";
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        passageDao = (IPassageDao) ctx.getBean("passageDao");
-        candidatDao = (ICandidatDao) ctx.getBean("candidatDao");
     }
 
     public String deconnexion() {
-        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-        return "index?faces-redirect=true";
+        deconnectFromSession();
+        return CONSTANT_RETURN.INDEX.getReturn();
+        
     }
 
     public String Connexion() {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> sessionMap = externalContext.getSessionMap();
         setError("0");
+
         // on cherche un candidat ds la base avec nom / prénom /date
         System.out.println("date:" + getDate());
-        Candidat cand = getCandidatDao().find(getNom(), getPrenom(), getDate());
+        Candidat cand = CANDIDATDAO.find(getNom(), getPrenom(), getDate());
 
-        Passage pass = null;
         if (cand == null) {
             setError("1");
             System.out.println("candidat non trouvé");
             setMsg_error("Le candidat n'est pas référencé dans la base / vérifier la saisie ");
         } else {
             System.out.println("candidat:" + cand.toString());
-            // le candidat en session
-            sessionMap.put("theCandidat", cand);
+            // on met le candidat ds la session
+            sharedData().put("theCandidat", cand);
 
             // on doit aller chercher le passage en BDD + le passer en session
-            pass = getPassageDao().find(cand);
+            pass = PASSAGEDAO.find(cand);
             // on vérifie que le passage est fait ds les temps prévu 
             if (pass == null) {
                 System.out.println("passage non trouvé");
@@ -90,7 +75,8 @@ public class Log_Candidat implements Serializable {
             } else {
                 System.out.println("pass:" + pass.toString());
                 // passage_id en session
-                sessionMap.put("passage_id", pass.getPassageid());
+                sharedData().put("passage_id", pass.getPassageid()); // ?
+
                 theTests = new ArrayList<Test>();
                 List<Object> list = Arrays.asList(pass.getJointureCollection().toArray());
                 for (Object o : list) {
@@ -99,20 +85,16 @@ public class Log_Candidat implements Serializable {
                     theTests.add(t);
                 }
                 // les tests en session
-                sessionMap.put("theTests", theTests);
+                sharedData().put("theTests", theTests);
             }
         }
 
-        
-        
         if (getError().equals("1")) {
-            return "log_candidat?faces-redirect=true";
+            return CONSTANT_RETURN.LOG_CANDIDAT.getReturn();
         } else {
-            // on remet les champs à 0
-            setNom("");
-            setPrenom("");
-            setDate(null);
-            return "helloCandidat";
+            // on remet les champs du formulaire à 0
+            RAZFormulaire();
+            return CONSTANT_RETURN.HELLO_CANDIDAT.getReturn();
         }
     }
 
@@ -201,34 +183,6 @@ public class Log_Candidat implements Serializable {
     }
 
     /**
-     * @return the passageDao
-     */
-    public IPassageDao getPassageDao() {
-        return passageDao;
-    }
-
-    /**
-     * @param passageDao the passageDao to set
-     */
-    public void setPassageDao(IPassageDao passageDao) {
-        this.passageDao = passageDao;
-    }
-
-    /**
-     * @return the candidatDao
-     */
-    public ICandidatDao getCandidatDao() {
-        return candidatDao;
-    }
-
-    /**
-     * @param candidatDao the candidatDao to set
-     */
-    public void setCandidatDao(ICandidatDao candidatDao) {
-        this.candidatDao = candidatDao;
-    }
-
-    /**
      * @return the theTests
      */
     public List<Test> getTheTests() {
@@ -240,6 +194,12 @@ public class Log_Candidat implements Serializable {
      */
     public void setTheTests(List<Test> theTests) {
         this.theTests = theTests;
+    }
+
+    private void RAZFormulaire() {
+        setNom("");
+        setPrenom("");
+        setDate(null);
     }
 
 }

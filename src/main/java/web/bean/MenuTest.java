@@ -5,8 +5,6 @@
  */
 package web.bean;
 
-import dao.ITestDao;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +17,7 @@ import org.primefaces.model.menu.DefaultMenuItem;
 import org.primefaces.model.menu.DefaultMenuModel;
 import org.primefaces.model.menu.DefaultSubMenu;
 import org.primefaces.model.menu.MenuModel;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import tools.CONSTANT_RETURN;
 import tools.Utils;
 
 /**
@@ -29,10 +26,9 @@ import tools.Utils;
  */
 @ManagedBean(name = "menuTest")
 @SessionScoped
-public class MenuTest implements Serializable {
+public class MenuTest extends BeanAdapter {
 
     private MenuModel model;
-    private ITestDao testDao = null;
 
     private int id;
     private String description;
@@ -49,9 +45,7 @@ public class MenuTest implements Serializable {
 
     public MenuTest() {
         testIsSelected = "0";
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        testDao = (ITestDao) ctx.getBean("testDao");
-
+ 
         this.model = new DefaultMenuModel();
         //PHP
         DefaultSubMenu firstSubmenu = new DefaultSubMenu("PHP");
@@ -61,7 +55,7 @@ public class MenuTest implements Serializable {
         firstSubmenu.addElement(subSubmenu2);
         DefaultMenuItem item = null;
 
-        list = testDao.findAll();
+        list = TESTDAO.findAll();
 
         for (Test test : list) {
             if (test.getCategorieid().getCategorielibelle().equals("PHP") && test.getTestformat().equals("CODE")) {
@@ -104,7 +98,7 @@ public class MenuTest implements Serializable {
 
     public String AfficheInfo(String id) {
         System.out.println("id = " + id);
-        setTheTest(testDao.find(Long.valueOf(id)));
+        setTheTest(TESTDAO.find(Long.valueOf(id)));
         setTheme(getTheTest().getTheme());
         setDescription(getTheTest().getTestDescription());
         setDuree(String.valueOf(getTheTest().getTestduree()));
@@ -118,25 +112,21 @@ public class MenuTest implements Serializable {
     }
 
     public String Suivant() {
-        // on mets la liste de tests en session
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> sessionMap = externalContext.getSessionMap();
-        sessionMap.put("theTests", getListTest());
-
+        sharedData().put("theTests", getListTest());
         Utils.printLine(" Liste des tests en session ");
         for (Test t : getListTest()) {
             System.out.println("test_id : " + t.getTestid());
         }
-
         System.out.println("nb de test : " + getListTest().size());
+        return CONSTANT_RETURN.INFO_RESA.getReturn();
 
-        return "info_reservation?faces-redirect=true";
     }
 
     public String Choisir() {
         setTestIsSelected("2");
         getListTest().add(getTheTest());
-        return "test?faces-redirect=true";
+        return CONSTANT_RETURN.TEST_REDIRECT.getReturn();
+
     }
 
     /**

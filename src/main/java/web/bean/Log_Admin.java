@@ -5,20 +5,12 @@
  */
 package web.bean;
 
-import dao.IAdminDao;
-import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import jpa.Admin;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import tools.CONSTANT_RETURN;
+import tools.Utils;
 
 /**
  *
@@ -26,7 +18,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 @ManagedBean(name = "admin")
 @SessionScoped
-public class Log_Admin implements Serializable {
+public class Log_Admin extends BeanAdapter {
 
     private String login;
     private String mp;
@@ -34,86 +26,44 @@ public class Log_Admin implements Serializable {
     private String remember1 = "hi";
     private String error;
 
-    private IAdminDao adminDao = null;
-
     public Log_Admin() {
-        error = "0";
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        this.adminDao = (IAdminDao) ctx.getBean("adminDao");
-        checkCookie();
-
-        FacesContext fc = FacesContext.getCurrentInstance();
-
-        String s = fc.getExternalContext().getRequestParameterMap().get("info");
-        System.out.println("info = " + s);
-    }
-
-    public void checkCookie() {
-        FacesContext facesContext = FacesContext.getCurrentInstance();
-        String cookieName = null;
-        Cookie cookie[] = ((HttpServletRequest) facesContext.getExternalContext().
-                getRequest())
-                .getCookies();
-
-        if (cookie != null && cookie.length > 0) {
-            System.out.println("des cookies existent");
-            for (int i = 0; i < cookie.length; i++) {
-                cookieName = cookie[i].getName();
-                if (cookieName.equals("user")) {
-                    System.out.println("user name");
-                    login = cookie[i].getValue();
-                } else if (cookieName.equals("pwd")) {
-                    System.out.println("password");
-                    mp = cookie[i].getValue();
-                } else if (cookieName.equals("btremember")) {
-                    System.out.println("remendert");
-                    remember1 = cookie[i].getValue();
-                    if (remember1.equals("false")) {
-                        rememberMe = false;
-                    } else if (remember1.equals("true")) {
-                        rememberMe = true;
-                    }
-                }
-            }
-        } else {
-            System.out.println("Cannot find any cookie");
-        }
+        setError("0");
+        Utils.checkCookies(login, mp, remember1, rememberMe);
+        System.out.println("info = " + getFromSession("info"));
     }
 
     public String Link() {
         System.out.println("Link() ");
-
-        List<Admin> list = adminDao.findAll();
+        List<Admin> list = ADMINDAO.findAll();
         for (Admin ad : list) {
             System.out.println("admin : " + ad.toString());
-            if (ad.getAdminlogin().equals(getLogin()) && ad.getAdminpassword().equals(getMp())) {
-                System.out.println(" ok ");
 
-                FacesContext facesContext = FacesContext.getCurrentInstance();
-                Cookie btuser = new Cookie("user", getLogin());
-                Cookie btpasswd = new Cookie("pwd", getMp());
+            // si des valeurs ont été entrées
+            if (getLogin() != null && !getLogin().equals("") && getMp() != null && !getMp().equals("")) {
 
-                if (rememberMe == false) {
-                    remember1 = "false";
-                } else {
-                    remember1 = "true";
+                // si les valeurs match
+                if (ad.getAdminlogin().equals(getLogin()) && ad.getAdminpassword().equals(getMp())) {
+                    System.out.println(" ok ");
+
+                    if (!rememberMe) {
+                        remember1 = "false";
+                    } else {
+                        remember1 = "true";
+                    }
+
+                    Utils.setCookies(getLogin(), getMp(), remember1);
+
                 }
 
-                Cookie btremember = new Cookie("btremember", remember1);
-                btuser.setMaxAge(3600);
-                btpasswd.setMaxAge(3600);
-                ((HttpServletResponse) facesContext.getExternalContext().getResponse()).
-                        addCookie(btuser);
-                ((HttpServletResponse) facesContext.getExternalContext().getResponse()).
-                        addCookie(btpasswd);
-                ((HttpServletResponse) facesContext.getExternalContext().getResponse()).
-                        addCookie(btremember);
-
-                return "candidat?faces-redirect=true";
+            } else {
+                RETOUR = CONSTANT_RETURN.CANDIDAT_REDIRECT.getReturn();
+                setError("1");
             }
         }
-        setError("1");
-        return "log?faces-redirect=true";
+
+        RETOUR = CONSTANT_RETURN.LOG_ADMIN.getReturn();
+
+        return RETOUR;
     }
 
     /**
@@ -158,18 +108,20 @@ public class Log_Admin implements Serializable {
         this.rememberMe = rememberMe;
     }
 
+        
+    
     /**
      * @return the error
      */
     public String getError() {
-        return error;
+        return getError();
     }
 
     /**
      * @param error the error to set
      */
     public void setError(String error) {
-        this.error = error;
+        this.setError(error);
     }
 
 }

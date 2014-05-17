@@ -5,15 +5,10 @@
  */
 package web.bean;
 
-import dao.IAdminDao;
-import dao.ICandidatDao;
-import java.io.Serializable;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import jpa.Candidat;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import tools.CONSTANT_RETURN;
 import tools.Utils;
 
 /**
@@ -22,12 +17,9 @@ import tools.Utils;
  */
 @ManagedBean(name = "edit_candidat")
 @SessionScoped
-public class EditCandidat implements Serializable{
-
-    private ICandidatDao candidatDao = null;
-    private IAdminDao adminDao = null;
-
-// création nouveau candidat
+public class EditCandidat extends BeanAdapter {
+    
+    
     private String civilite;
     private String nom;
     private String prenom;
@@ -36,31 +28,17 @@ public class EditCandidat implements Serializable{
     private String date_naissance;
 
     public EditCandidat() {
+         super();
     }
 
-    @PostConstruct
-    public void init() {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        candidatDao = (ICandidatDao) ctx.getBean("candidatDao");
-    }
-
-    
     public String Ajouter() {
         System.out.println("Ajouter()");
         System.out.println(getCivilite() + "\n" + getNom() + "\n" + getPrenom() + "\n" + getEmail() + "\n" + Utils.stringToMySQLDate(getDate_naissance()));
-        Candidat c = new Candidat(getCivilite(), getNom(), getPrenom(), getEmail(), Utils.stringToMySQLDate(getDate_naissance()));
-        Candidat cand = candidatDao.create(c);
-        // champs à zéro
-        setCivilite("");
-        setNom("");
-        setPrenom("");
-        setEmail("");
-        setEmail_confirme("");
-        setDate_naissance("");
-        return "candidat?faces-redirect=true";
+        CANDIDATDAO.create(new Candidat(getCivilite(), getNom(), getPrenom(), getEmail(), Utils.stringToMySQLDate(getDate_naissance())));
+        // remise à zéro des champs du formulaire
+        RAZFormulaire();
+        return CONSTANT_RETURN.CANDIDAT_REDIRECT.getReturn();
     }
-
-    
 
     /**
      * @return the civilite
@@ -144,5 +122,14 @@ public class EditCandidat implements Serializable{
      */
     public void setDate_naissance(String date_naissance) {
         this.date_naissance = date_naissance;
+    }
+
+    private void RAZFormulaire() {
+        setCivilite("");
+        setNom("");
+        setPrenom("");
+        setEmail("");
+        setEmail_confirme("");
+        setDate_naissance("");
     }
 }

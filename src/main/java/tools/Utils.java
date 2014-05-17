@@ -5,6 +5,7 @@
  */
 package tools;
 
+import static com.sun.faces.facelets.util.Path.context;
 import dao.ICandidatDao;
 import dao.IJointureDao;
 import dao.IPassageDao;
@@ -26,15 +27,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.faces.context.FacesContext;
-import javax.mail.Authenticator;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -63,6 +64,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 import moteurs.TheCodeTester;
+import tools.SessionManager;
 
 /**
  *
@@ -82,6 +84,56 @@ public class Utils {
         return theJavaDate;
     }
 
+    public void checkCookies(String login,  String mp , String remember1, boolean rememberMe) {
+        String cookieName = null;
+        Cookie cookie[] = ((HttpServletRequest) SessionManager.getContext().getExternalContext().
+                getRequest())
+                .getCookies();
+
+        if (cookie != null && cookie.length > 0) {
+            System.out.println("des cookies existent");
+            for (int i = 0; i < cookie.length; i++) {
+                cookieName = cookie[i].getName();
+                if (cookieName.equals("user")) {
+                    System.out.println("user name");
+                    login = cookie[i].getValue();
+                } else if (cookieName.equals("pwd")) {
+                    System.out.println("password");
+                    mp = cookie[i].getValue();
+                } else if (cookieName.equals("btremember")) {
+                    System.out.println("remendert");
+                    remember1 = cookie[i].getValue();
+                    if (remember1.equals("false")) {
+                        rememberMe = false;
+                    } else if (remember1.equals("true")) {
+                        rememberMe = true;
+                    }
+                }
+            }
+        } else {
+            System.out.println("Cannot find any cookie");
+        }
+    }
+
+    
+      public static void setCookies(String login, String mp, String remember1) {
+        Cookie cookie_user = new Cookie("user", login);
+        Cookie cookie_passwd = new Cookie("pwd", mp);
+        Cookie cookie_remember = new Cookie("btremember", remember1);
+        
+        cookie_user.setMaxAge(3600);
+        cookie_passwd.setMaxAge(3600);
+        
+        ((HttpServletResponse) SessionManager.getExternalContext().getResponse()).
+                addCookie(cookie_user);
+        ((HttpServletResponse) SessionManager.getExternalContext().getResponse()).
+                addCookie(cookie_passwd);
+        ((HttpServletResponse) SessionManager.getExternalContext().getResponse()).
+                addCookie(cookie_remember);
+
+    }
+      
+      
     public static String dateToMySQLString(Date theJavaDate) {
         String mysqlDateString = "";
         try {
@@ -492,8 +544,8 @@ public class Utils {
         Question quest = questionDao.find(Long.valueOf(questionid));
         List<Proposition> props = propositionDao.find_(quest);
         System.out.println("Nb de bonnes réponses : " + props.size());
-        
-        int retour = 1 ;
+
+        int retour = 1;
         for (Proposition p : props) {
             //System.out.println("prop_id : " +p.getPropositionid().toString());
             for (String s : id_propositionChecked) {
@@ -507,27 +559,18 @@ public class Utils {
                 }
             }
         }
-        
-        
+
         return retour;
     }
 
-    
-    
     public static void enreg_ReponseQCM(String questionid, int i, String etat) {
-        System.out.println("enreg_ReponseQCM() => Qid:"+questionid+", i:"+i+", état:"+etat);
-        
-        
+        System.out.println("enreg_ReponseQCM() => Qid:" + questionid + ", i:" + i + ", état:" + etat);
+
         Reponse r = reponseDao.find(questionDao.find(Long.valueOf(questionid)));
         r.setReponsemessage(String.valueOf(i));
         r.setReponsetexte(etat);
         reponseDao.edit(r);
     }
-    
-    
-    
-    
-    
 
     public static void printLine(String s) {
         System.out.println("////////////////////////////////////////////////////////////");

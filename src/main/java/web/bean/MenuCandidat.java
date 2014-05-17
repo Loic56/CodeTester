@@ -5,20 +5,12 @@
  */
 package web.bean;
 
-import dao.IAdminDao;
-import dao.ICandidatDao;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.ExternalContext;
-import javax.faces.context.FacesContext;
 import jpa.Candidat;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
+import tools.CONSTANT_RETURN;
 import tools.Utils;
 
 /**
@@ -27,18 +19,12 @@ import tools.Utils;
  */
 @ManagedBean(name = "menuCandidat")
 @SessionScoped
-public class MenuCandidat implements Serializable {
-
-    private ICandidatDao candidatDao = null;
-    private IAdminDao adminDao = null;
+public class MenuCandidat extends BeanAdapter {
 
 // affichage listBox
     private List<Candidat> mesElements;
     private String maValeur; // id de l'objet présent ds la listBox
 
-    
-    
-    
 // le candidat choisi
     private Candidat candidatSelected;
     private String theNom;
@@ -51,12 +37,6 @@ public class MenuCandidat implements Serializable {
     private String isSelected;
     private String check;
 
-    @PostConstruct
-    public void init() {
-        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-        candidatDao = (ICandidatDao) ctx.getBean("candidatDao");
-    }
-
     public MenuCandidat() {
         isSelected = "0";
     }
@@ -64,34 +44,20 @@ public class MenuCandidat implements Serializable {
     public String Annuler() {
         System.out.println("\n\n annuler \n\n ");
         setIsSelected("0");
-        return "candidat?faces-redirect=true";
+        return CONSTANT_RETURN.CANDIDAT_REDIRECT.getReturn();
     }
 
     public String Suivant() {
-        
         // candidat en session
-        System.out.println("\n\n Le candidat en session : )"+getCandidatSelected() + " \n\n ");
-        
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        Map<String, Object> sessionMap = externalContext.getSessionMap();
-        sessionMap.put("theCandidat", getCandidatSelected());
-
-        return "test";
+        System.out.println("\n\n Le candidat en session : )" + getCandidatSelected() + " \n\n ");
+        sharedData().put("theCandidat", getCandidatSelected());
+        return CONSTANT_RETURN.TEST.getReturn();
     }
 
     public String Choisir() {
-        setList(new ArrayList<Candidat>());
-        Candidat theCandidat = candidatDao.find(Long.parseLong(getMaValeur()));
-        this.setCandidatSelected(theCandidat);
-
-        // on gére l'affichage de la datatable
-        getList().add(theCandidat);
-        setTheDate(Utils.dateToMySQLString(theCandidat.getCandidatDateNaissance()));
-        setTheMail(theCandidat.getCandidatMail());
-        setTheNom(theCandidat.getCandidatNom());
-        setThePrenom(theCandidat.getCandidatPrenom());
-        setIsSelected("1");
-        return "candidat?faces-redirect=true";
+        // on affiche les infos du candidat ds la datatable
+        afficheCandidat();
+        return CONSTANT_RETURN.CANDIDAT_REDIRECT.getReturn();
     }
 
     /**
@@ -108,9 +74,7 @@ public class MenuCandidat implements Serializable {
     }
 
     private List<Candidat> getMaListe() {
-//        ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-//        candidatDao = (ICandidatDao) ctx.getBean("candidatDao");
-        return candidatDao.findAll();
+        return CANDIDATDAO.findAll();
     }
 
     /**
@@ -244,6 +208,20 @@ public class MenuCandidat implements Serializable {
      */
     public void setList(ArrayList<Candidat> list) {
         this.list = list;
+    }
+
+    private void afficheCandidat() {
+        Candidat theCandidat = CANDIDATDAO.find(Long.parseLong(getMaValeur()));
+        List list = new ArrayList<Candidat>();
+        list.add(theCandidat);
+        setList((ArrayList<Candidat>) list);
+        this.setCandidatSelected(theCandidat);
+
+        setTheDate(Utils.dateToMySQLString(theCandidat.getCandidatDateNaissance()));
+        setTheMail(theCandidat.getCandidatMail());
+        setTheNom(theCandidat.getCandidatNom());
+        setThePrenom(theCandidat.getCandidatPrenom());
+        setIsSelected("1");
     }
 
 }
