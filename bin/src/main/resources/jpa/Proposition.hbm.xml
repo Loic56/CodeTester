@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+  <class name="jpa.Proposition" table="proposition">
+        
+    <id column="PROPOSITIONID" name="propositionid">
+      <generator class="increment"/>
+    </id>
+    
+    <property name="propositionlibelle" type="text">
+      <column name="PROPOSITIONLIBELLE" not-null="true"/>
+    </property>
+    
+    <property name="propositionvrai" type="short">
+      <column length="255" name="PROPOSITIONVRAI" not-null="false"/>
+    </property>
+    
+    
+
+    
+    
+    <many-to-one class="jpa.Question" name="questionid">
+      <column name="QUESTIONID" not-null="false"/>
+    </many-to-one>
+    
+    
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,1 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><xml><Node/><Node>$var=2</Node><Node>switch($var){case1:echo'Lavariablevaut1'</Node><Node>break</Node><Node>case2:echo'Lavariablevaut2'</Node><Node>break</Node><Node>case15:echo'Lavariablevaut15'</Node><Node>break</Node><Node>default:echo'Lavariableauneautrevaleur'</Node><Node>}</Node></xml>

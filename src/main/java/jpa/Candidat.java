@@ -172,9 +172,10 @@ public class Candidat implements Serializable {
         return true;
     }
 
-    @Override
-    public String toString() {
-        return "jpa.Candidat[ candidatid=" + candidatid + " ]";
-    }
+	@Override
+	public String toString() {
+		return "jpa.Candidat[ candidatid=" + candidatid + " nom=" + candidatNom
+				+ " prenom=" + candidatPrenom + "]";
+	}
 
 }

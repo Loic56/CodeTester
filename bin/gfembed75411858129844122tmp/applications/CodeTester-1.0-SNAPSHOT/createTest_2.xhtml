@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+    <h:head>
+        <title>Création de test</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+        <script src="#{facesContext.externalContext.requestContextPath}/src-noconflict/ace.js" type="text/javascript"></script>
+
+        <script>
+            function submitData() {
+                document.getElementById('form:hidden').value = editor.getSession().getValue();
+            }
+        </script>
+
+
+        <div id="container">
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+            <div id="content">
+                <p:panel header="Création de test - page n°2 : Ajouter les rubriques "  style="height:auto;"> 
+
+
+                    <p:panelGrid columns="2" style="margin-bottom:10px;width:auto;margin:20px;">  
+                        <h:graphicImage library="images" name="logo/caution_2.png"  style="height:35px;" />
+                        <p style="color:#ed5757;">Chaque test doit comporter au moins une rubrique</p>
+                    </p:panelGrid>
+
+
+                    <p style="margin:20px;">Ex: Pour le test "Java - J2EE : Développeur expérimenté", on possède les rubriques suivantes : </p>
+                    <ul style="margin:20px;">
+                        <li>Les bases du langage Java</li>
+                        <li>Programmation cliente et bases de données et nouveautés de la version 1.5</li>
+                        <li>Programmation Web - Servlets / JSP</li>
+                        <li>Programmation serveur - EJB et Java Persistance API / Java Server Faces</li>
+                    </ul>
+                    <hr/>
+
+                    <h:form id="form" style="border:1px solid transparent;padding:0px;"> 
+                        <p:panelGrid columns="2" style="margin-bottom:10px;width:880px;margin:20px;">  
+
+                            <p:panelGrid columns="1" style="width:250px;border:1px solid silver;" >  
+                                <f:facet name="header">  
+                                    Ajouter une rubrique
+                                </f:facet>   
+                                <br/>
+                                <h:outputText value="Libellé : " />  
+                                <h:inputText value="#{create2.nomRubrique}" style="width:100%;" />  
+                                <p:commandButton  value="Créer" style="margin-top:2px;float:right;" action="#{create2.creerRubrique}" />  
+                            </p:panelGrid>   
+
+
+
+
+                            <p:fieldset legend="Informations du test" style="text-align:center;border:1px solid silver;margin-top:20px;"> 
+                                <h:outputText value="#{create2.theTest.testmatiere} - #{create2.theTest.theme}" />
+                                <p>La durée de ce test est <h:outputText value="#{create2.theTest.testduree}"/> min </p>
+                                <p><h:outputText value="Nb questions : #{create2.theTest.testNbquestionRub}"/> questions </p>
+
+
+                                <h:dataTable value="#{create2.listRubrique}" var="list" styleClass="order-table"
+                                             headerClass="order-table-header"
+                                             rowClasses="order-table-odd-row,order-table-even-row" 
+                                             style="width:550px;margin-left:auto;margin-top:2px;margin-right:auto;"  >
+                                    <h:column >
+                                        <f:facet name="header">Rubrique(s)</f:facet>
+                                        <h:outputText value="#{list.rubriquenom}"/> 
+                                    </h:column>
+
+                                    <h:column>
+                                        <f:facet name="header">Delete</f:facet>
+                                        <p:commandButton value="OK" style="height:25px;font-size:12px;" action="#{create2.deleteRubrique}">
+                                            <f:param name="rubToSup" value="#{list.rubriqueid}" />
+                                        </p:commandButton>
+                                    </h:column>
+                                </h:dataTable>
+
+
+                                <br/>
+                                <hr/>
+                                <br/>
+                                <p:commandButton value="Suivant" style="width:150px;margin-top:10px;" action="#{create2.suivant}" />  
+
+
+                            </p:fieldset> 
+
+                        </p:panelGrid>   
+                    </h:form>
+
+
+                </p:panel>  
+            </div>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+
+
+        </div> <!-- container -->
+    </h:body>
+</html>     

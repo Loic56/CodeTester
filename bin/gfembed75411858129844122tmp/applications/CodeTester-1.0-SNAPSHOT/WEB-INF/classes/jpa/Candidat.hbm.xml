@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+    <class name="jpa.Candidat" table="candidat" >
+        
+        <id column="CANDIDATID" name="candidatid">
+            <generator class="increment"/>
+        </id>
+    
+        <property name="candidatCivilite" type="string">
+            <column length="255" name="CANDIDAT_CIVILITE" not-null="false"/>
+        </property>
+    
+        <property name="candidatNom" type="string">
+            <column length="255" name="CANDIDAT_NOM" not-null="false"/>
+        </property>
+    
+        <property name="candidatPrenom" type="string">
+            <column length="255" name="CANDIDAT_PRENOM" not-null="false"/>
+        </property>
+    
+        <property name="candidatMail" type="string">
+            <column length="255" name="CANDIDAT_MAIL" not-null="false"/>
+        </property>
+    
+        <property name="candidatDateNaissance" type="date">
+            <column name="CANDIDAT_DATE_NAISSANCE" not-null="false"/>
+        </property>
+    
+ 
+        <set  name="passageCollection" table="passage" fetch="select" cascade="delete" inverse="true" lazy="true">
+            <key>
+                <column name="CANDIDATID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Passage"/>
+        </set>
+    
+    
+    </class>
+</hibernate-mapping>

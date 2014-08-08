@@ -28,8 +28,8 @@
        
         <property name="mappingResources">
             <list>
+           		 <value>jpa/Admin.hbm.xml</value>
                 <value>jpa/Proposition.hbm.xml</value>
-                <value>jpa/Admin.hbm.xml</value>
                 <value>jpa/Candidat.hbm.xml</value>
                 <value>jpa/Test.hbm.xml</value>
                 <value>jpa/Categorie.hbm.xml</value>
@@ -53,23 +53,23 @@
 
     </bean>
     
-    <bean id="adminDao" class="dao.AdminDao">
+    <bean id="adminDao" class="dao.AdminDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
         
-    <bean id="candidatDao" class="dao.CandidatDao">
+    <bean id="candidatDao" class="dao.CandidatDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
         
-    <bean id="testDao" class="dao.TestDao">
+    <bean id="testDao" class="dao.TestDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="jointureDao" class="dao.JointureDao">
+    <bean id="jointureDao" class="dao.JointureDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="passageDao" class="dao.PassageDao">
+    <bean id="passageDao" class="dao.PassageDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
 </beans>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+  <class name="jpa.Categorie" table="categorie">
+    <id column="CATEGORIEID" name="categorieid">
+      <generator class="native"/>
+    </id>
+    <property name="categorielibelle" type="text">
+      <column name="CATEGORIELIBELLE" not-null="true"/>
+    </property>
+    <!--        @OneToMany     -->
+    <set fetch="select" inverse="true" lazy="true" name="testCollection" table="test">
+      <key>
+        <column name="CATEGORIEID" not-null="true"/>
+      </key>
+      <one-to-many class="jpa.Test"/>
+    </set>
+  </class>
+</hibernate-mapping>

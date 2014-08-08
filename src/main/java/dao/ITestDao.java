@@ -7,13 +7,14 @@
 package dao;
 
 import java.util.List;
+
 import jpa.Test;
 
 /**
  *
  * @author Loïc
  */
-public interface ITestDao {
+public interface ITestDao extends IDAO {
     
     public Test create(Test test);
 

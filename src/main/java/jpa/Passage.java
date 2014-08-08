@@ -172,7 +172,9 @@ public class Passage implements Serializable {
 
     @Override
     public String toString() {
-        return "jpa.Passage[ passageid=" + passageid + " ]";
+        return "jpa.Passage[ passageid=" + passageid + " "
+        		+ " Candidat="+candidatid.getCandidatNom()+ " "+candidatid.getCandidatPrenom()+ "\n"
+        				+ "Nb tests=? ]";
     }
     
 }

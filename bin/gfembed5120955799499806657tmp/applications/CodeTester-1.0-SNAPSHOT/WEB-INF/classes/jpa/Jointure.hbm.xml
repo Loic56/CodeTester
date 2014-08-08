@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+    
+    <class name="jpa.Jointure" table="jointure">
+        
+        
+        <id column="JOINTUREID" name="jointureid">
+            <generator class="increment"/>
+        </id>
+    
+        <property name="champvide" type="string">
+            <column length="255" name="CHAMPVIDE" not-null="false"/>
+        </property>
+    
+    
+
+        <many-to-one class="jpa.Test" 
+                     name="testid">
+            <column name="TESTID" not-null="true"/>
+        </many-to-one>
+        
+        
+    
+        <many-to-one class="jpa.Passage" 
+                     name="passageid">
+            <column name="PASSAGEID" not-null="false"/>
+        </many-to-one>
+        
+        
+        
+    </class>
+</hibernate-mapping>

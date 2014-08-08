@@ -7,9 +7,12 @@ package web.bean;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
 import jpa.Candidat;
 import tools.CONSTANT_RETURN;
 import tools.Utils;
+import adapter.BeanAdapter;
 
 /**
  *
@@ -26,6 +29,7 @@ public class EditCandidat extends BeanAdapter {
     private String email;
     private String email_confirme;
     private String date_naissance;
+    
 
     public EditCandidat() {
          super();
@@ -34,7 +38,7 @@ public class EditCandidat extends BeanAdapter {
     public String Ajouter() {
         System.out.println("Ajouter()");
         System.out.println(getCivilite() + "\n" + getNom() + "\n" + getPrenom() + "\n" + getEmail() + "\n" + Utils.stringToMySQLDate(getDate_naissance()));
-        CANDIDATDAO.create(new Candidat(getCivilite(), getNom(), getPrenom(), getEmail(), Utils.stringToMySQLDate(getDate_naissance())));
+        PROVIDER.CANDIDATDAO.create(new Candidat(getCivilite(), getNom(), getPrenom(), getEmail(), Utils.stringToMySQLDate(getDate_naissance())));
         // remise à zéro des champs du formulaire
         RAZFormulaire();
         return CONSTANT_RETURN.CANDIDAT_REDIRECT.getReturn();

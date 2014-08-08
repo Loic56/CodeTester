@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+    <class name="jpa.Passage" table="passage">
+        
+        <id column="PASSAGEID" name="passageid">
+            <generator class="increment"/>
+        </id>
+        
+        <property name="passageEtat" type="int">
+            <column name="PASSAGE_ETAT" not-null="false"/>
+        </property>
+        
+        <property name="passageDate" type="date">
+            <column name="PASSAGE_DATE" not-null="false"/>
+        </property>
+        
+        <property name="passagedebutVal" type="timestamp">
+            <column name="PASSAGEDEBUT_VAL" not-null="false"/>
+        </property>
+        
+        <property name="passagefinVal" type="timestamp">
+            <column name="PASSAGEFIN_VAL" not-null="false"/>
+        </property>
+        
+
+        <!--cascade="delete" >>>> fait planter ? -->
+        <set fetch="select" inverse="true" lazy="true"  name="reponseHistoCollection" table="reponse_histo">
+            <key>
+                <column name="PASSAGEID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.ReponseHisto"/>
+        </set>
+        
+        
+        
+        
+        <set fetch="select" inverse="true" lazy="true" cascade="delete" name="reponseCollection" table="Reponse">
+            <key>
+                <column name="PASSAGEID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Reponse"/>
+        </set>
+        
+        
+        <many-to-one 
+            class="jpa.Candidat" 
+            column="CANDIDATID" 
+            name="candidatid" 
+            not-null="true"/>
+                
+        
+
+        <!--        @OneToMany     -->
+        <set fetch="select" inverse="true" lazy="true" cascade="delete" name="jointureCollection" table="jointure">
+            <key>
+                <column name="PASSAGEID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Jointure"/>
+        </set>    
+        
+        
+        
+        <!--        <set cascade="all" fetch="select" inverse="false" lazy="true" name="testCollection" table="test">
+            <key>
+                <column name="PASSAGEID" not-null="true"/>
+            </key>
+            <many-to-many class="jpa.Test">
+                <column name="TESTID" not-null="true"/>
+            </many-to-many>
+        </set>-->
+        
+        
+        
+        
+
+        
+        
+        
+        
+
+    
+
+        
+        
+    </class>
+</hibernate-mapping>

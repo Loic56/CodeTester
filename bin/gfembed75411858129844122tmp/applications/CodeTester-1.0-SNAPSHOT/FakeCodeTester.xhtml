@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+
+    <h:head>
+        <title>TheCodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+
+    <h:body>
+
+        <script src="#{facesContext.externalContext.requestContextPath}/src-noconflict/ace.js" type="text/javascript"></script>
+
+        <script>
+            function submitData() {
+                document.getElementById('form:hidden').value = editor.getSession().getValue();
+            }
+        </script>
+
+        <div id="container">
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+            <div id="content" style="padding-bottom:0px;">
+
+                <h:form id="form" style="border:1px solid transparent;">
+                    <p:panel header="Enoncé" style="height:auto;" toggleable="true" toggleOrientation="horizontal"> 
+                        <p:growl id="messages" showDetail="true" />  
+                        <h:panelGrid columns="3" style="width:930px;">  
+                            <h:panelGrid columns="1">  
+
+                                <h:outputText value="* cliquez sur l'image pour l'agrandir" style="margin-left:20px;"/>
+
+                            </h:panelGrid>
+
+
+                            <h:panelGrid columns="1" >  
+
+                                <h:outputText value="Question n°2" style="margin-left:20px;"/>
+                                <p:separator />
+
+                                <h:outputText value="Rubrique n°2 >>> id_quest = 7" style="margin-left:20px;"/>
+                                <p:separator />
+                                <h:outputText value="Codez l'algorithme " style="margin-left:20px;"/>
+
+
+                            </h:panelGrid>  
+
+
+
+                        </h:panelGrid>  
+                        page6: <h:link value="Récapitulatif" outcome="recap" /> <br />
+                    </p:panel>  
+
+
+                    <!--header="Saisissez votre code"--> 
+                    <p:panel style="margin-top:3px;height:auto;border-style: none !important;background-color:transparent;padding-bottom:0px;"> 
+                        <div style="height:50px;width:auto;border:1px solid grey;border-top-left-radius:15px;border-top-right-radius:15px;background-color:black;margin-left:30px;margin-right:30px;margin-bottom:-40px;z-index:-1;    box-shadow: 0px 0px 15px black;"> </div>
+                        <div id="container_editor" >
+                            <div id="editor" name="editor" value="ici de trouve le code ">
+                                <?php 
+                                $array = array( 1, 1, 2, 3, 5, 8, 13 ); 
+                                /*   Saisissez votre code ici   */
+                                for($i=1;$i<10;$i++){
+                                echo $i;
+                                echo '<br/>';
+                                if($i == 7){
+                                echo 'si i = 7 alors : i * 7 = '.$i*7;
+                                echo '<br/>';
+                                }
+                                }
+
+                                /*   Saisissez votre code ici   */
+                                ?>
+                            </div>
+
+
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+                                <p:commandButton value="Oui" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+                                <p:commandButton value="Non" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+                            </p:confirmDialog>  
+
+                        </div>
+                        <br />
+
+                        <div style="height:70px;border:1px solid grey;width:auto;background-color:black;margin-left:10px;margin-right:10px;margin-bottom:-40px;margin-top:-40px;z-index:-1; box-shadow: 0px 0px 15px black;"> </div>
+
+
+                        <h:outputText id="txt_count" value="Temps restant : 20 min " style="float:right;margin-right:50px;color:#ed9f53;"/>  
+
+
+
+
+                        <h:inputHidden id="hidden" value="" />
+
+                        <div id="frame">
+                            <span style="font-size:20px;margin-left:30px;color:black;">Aperçu</span>
+                            <hr />
+                            <iframe id="iframe" name="iframe" frameborder="0" scrolling="auto" src="" style="background-color:#ffe0b3;color:#3d362c;font-size:15px; " width="675">
+                                <p>Your browser does not support iframes.</p>
+                            </iframe>
+                        </div>
+                        <div style="box-shadow: 0px 0px 15px #6EA2DE;height:50px;width:auto;background-color:black;margin-left:20px;margin-right:20px;margin-top:-10px;margin-bottom:-20px;z-index:-7; box-shadow: 0px 0px 15px black;"> </div>
+                    </p:panel>  
+                </h:form>  
+                <div style="box-shadow: 0px 0px 15px #6EA2DE;height:10px;width:auto;background-color:black;z-index:-1; border-top: 1px solid grey; box-shadow: 0px 0px 15px black;"> </div>
+            </div>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+        </div> <!-- container -->
+
+        <!--    solarized_dark // cobalt -->
+        <script type="text/javascript">
+            // <![CDATA[
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/cobalt");
+            editor.getSession().setMode("ace/mode/php");
+            document.getElementById('editor').style.fontSize = '15px';
+
+            // ]]>
+        </script>
+
+    </h:body>
+</ui:composition> 

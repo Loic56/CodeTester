@@ -7,6 +7,7 @@ package dao;
 
 
 import java.util.List;
+
 import jpa.Passage;
 import jpa.Proposition;
 import jpa.Question;
@@ -18,7 +19,7 @@ import jpa.Test;
  *
  * @author Loïc
  */
-public interface IReponseDao {
+public interface IReponseDao extends IDAO{
 
     public Reponse create(Reponse reponse);
 

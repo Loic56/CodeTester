@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+    <class name="jpa.Test" table="test">
+      
+      
+        <id column="TESTID" name="testid">
+            <generator class="increment"/>
+        </id>
+    
+    
+        <property name="testmatiere" type="string">
+            <column length="255" name="TESTMATIERE" not-null="true"/>
+        </property>
+    
+    
+        <property name="testduree" type="short">
+            <column length="255" name="TESTDUREE" not-null="true"/>
+        </property>
+    
+    
+        <property name="testNbquestionRub" type="int">
+            <column name="TEST_NBQUESTION_RUB" not-null="true"/>
+        </property>
+    
+    
+        <property name="testnature" type="string">
+            <column length="50" name="TESTNATURE" not-null="true"/>
+        </property>
+    
+    
+        <property name="testformat" type="string">
+            <column length="255" name="TESTFORMAT" not-null="true"/>
+        </property>
+    
+    
+        <property name="testStart" type="text">
+            <column length="255" name="TEST_START" not-null="true"/>
+        </property>
+    
+    
+        <property name="testDescription" type="text">
+            <column name="TEST_DESCRIPTION" not-null="true"/>
+        </property>
+    
+    
+        <property name="theme" type="string">
+            <column length="255" name="THEME" not-null="true"/>
+        </property>
+    
+    
+        <property name="niveau" type="int">
+            <column name="NIVEAU" not-null="true"/>
+        </property>
+    
+    
+        <!--        @OneToMany     -->
+        <set fetch="select" inverse="true" lazy="true" name="rubriqueCollection" table="rubrique">
+            <key>
+                <column name="TESTID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Rubrique"/>
+        </set>
+        
+        
+    
+        <many-to-one class="jpa.Categorie"
+                     column="CATEGORIEID" 
+                     name="categorieid"/>
+        
+        
+        
+        <!--        @OneToMany     -->
+        <set fetch="select" inverse="true" lazy="true" name="jointureCollection" table="jointure">
+            <key>
+                <column name="TESTID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Jointure"/>
+        </set>
+ 
+ 
+ 
+        <!--              @ManyToMany     
+        <set cascade="all" fetch="select" inverse="false" lazy="true" name="passageCollection" table="passage">
+          <key>
+            <column name="TESTID" not-null="true"/>
+          </key>
+          <many-to-many entity-name="jpa.Passage">
+            <column name="PASSAGEID" not-null="true"/>
+            <column name="TESTID" not-null="true"/>
+          </many-to-many>
+        </set>-->
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    </class>
+</hibernate-mapping>

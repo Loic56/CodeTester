@@ -6,13 +6,14 @@
 package dao;
 
 import java.util.List;
+
 import jpa.Categorie;
 
 /**
  *
  * @author Loïc
  */
-public interface ICategorieDao {
+public interface ICategorieDao extends IDAO {
 
     public Categorie create(Categorie categorie);
 

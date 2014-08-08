@@ -6,13 +6,14 @@
 package dao;
 
 import java.util.List;
+
 import jpa.Jointure;
 
 /**
  *
  * @author Loïc
  */
-public interface IJointureDao {
+public interface IJointureDao extends IDAO {
 
     public Jointure create(Jointure lointure);
 

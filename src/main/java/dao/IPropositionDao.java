@@ -6,16 +6,16 @@
 package dao;
 
 import java.util.List;
+
 import jpa.Proposition;
 import jpa.Question;
-
 import jpa.Test;
 
 /**
  *
  * @author Loïc
  */
-public interface IPropositionDao {
+public interface IPropositionDao extends IDAO {
 
     public Proposition create(Proposition proposition);
 

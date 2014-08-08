@@ -1,19 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:context="http://www.springframewok.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:context="http://www.springframewok.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://www.springframework.org/schema/aop 
         http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
-        http://www.springframework.org/schema/context
         http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+ 		http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context-2.5.xsd"
-       default-autowire="byName">
-    
-    
+	default-autowire="byName">
+
+
+	<bean id="poolDataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost/testeur_de_code" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="idleMaxAge" value="240" />
+		<property name="maxConnectionsPerPartition" value="5" />
+		<property name="minConnectionsPerPartition" value="1" />
+		<property name="partitionCount" value="1" />
+		<property name="acquireIncrement" value="5" />
+		<property name="statementsCacheSize" value="100" />
+		<property name="releaseHelperThreads" value="3" />
+	</bean>
+	
+
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver" />
@@ -29,8 +47,8 @@
        
         <property name="mappingResources">
             <list>
-                <value>jpa/Proposition.hbm.xml</value>
                 <value>jpa/Admin.hbm.xml</value>
+                <value>jpa/Proposition.hbm.xml</value>
                 <value>jpa/Candidat.hbm.xml</value>
                 <value>jpa/Test.hbm.xml</value>
                 <value>jpa/Categorie.hbm.xml</value>
@@ -54,43 +72,43 @@
 
     </bean>
     
-    <bean id="adminDao" class="dao.AdminDao">
+    <bean id="adminDao" class="dao.AdminDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
         
-    <bean id="candidatDao" class="dao.CandidatDao">
+    <bean id="candidatDao" class="dao.CandidatDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
         
-    <bean id="testDao" class="dao.TestDao">
+    <bean id="testDao" class="dao.TestDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="jointureDao" class="dao.JointureDao">
+    <bean id="jointureDao" class="dao.JointureDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="passageDao" class="dao.PassageDao">
+    <bean id="passageDao" class="dao.PassageDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="rubriqueDao" class="dao.RubriqueDao">
+    <bean id="rubriqueDao" class="dao.RubriqueDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="questionDao" class="dao.QuestionDao">
+    <bean id="questionDao" class="dao.QuestionDao_Impl">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="propositionDao" class="dao.PropositionDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="propositionDao" class="dao.PropositionDao">
+    <bean id="categorieDao" class="dao.CategorieDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    <bean id="categorieDao" class="dao.CategorieDao">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
-    
-    <bean id="reponseDao" class="dao.ReponseDao">
+    <bean id="reponseDao" class="dao.ReponseDao_Impl">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     

@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.List;
+
 import jpa.Candidat;
 import jpa.Passage;
 
@@ -13,7 +14,7 @@ import jpa.Passage;
  *
  * @author Loïc
  */
-public interface IPassageDao {
+public interface IPassageDao extends IDAO {
 
     public Passage create(Passage passage);
 

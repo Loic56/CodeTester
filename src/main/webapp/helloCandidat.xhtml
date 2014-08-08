@@ -50,11 +50,7 @@ and open the template in the editor.
                                 <h:column>
                                     <f:facet name="header">Tests en attente</f:facet>
 
-                                    <h:commandLink action="#{testInfo.Link}" value="#{list.testmatiere} - #{list.theme}">
-                                        <f:param name="testid" value="#{list.testid}" />
-                                        <f:param name="testmatiere" value="#{list.testmatiere}" />
-                                        <f:param name="theme" value="#{list.theme}" />
-                                        <f:param name="langage" value="#{list.testformat}" />
+                                    <h:commandLink action="#{testControler.Link(list)}" value="#{list.testmatiere} - #{list.theme}">
                                     </h:commandLink>
                                 </h:column>
 

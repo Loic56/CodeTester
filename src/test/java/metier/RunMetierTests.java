@@ -17,7 +17,7 @@ public class RunMetierTests {
  
 
     public static void main(String[] args) {
-         new MetierTest();
+        // new MetierTest();
    
     }
 

@@ -1,0 +1,139 @@
+ body {
+		background-color:black; /* #383f46 */
+		height:100%;
+    }
+	
+	#div_btn{
+		height:60px;
+		width:auto;
+		margin:0px;
+		background-color:silver;
+		border-top:2px solid black;
+		border-bottom:2px solid black;
+	}
+	
+	#btn{
+		float: left;
+		margin-top : 10px;
+	}
+	
+	#btn_suivant{
+		width:150px;
+		height:40px;
+		background-color:grey;
+		margin-left:700px;
+		border-radius:10px;
+		color:white;
+		font-size:15px;
+	}
+	
+	#btn_interpreter{
+		width:150px;
+		height:40px;
+		background-color:grey;
+		margin-left:20px;
+		border-radius:10px;
+		color:white;
+		font-size:15px;
+	}
+
+
+	#container{
+		margin-top : 0px;
+		margin:0px;
+		width:100%;
+		height:650px;
+		padding:5px;
+		/* IE10 Consumer Preview */ 
+		background-image: -ms-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #000000 100%);
+		/* Mozilla Firefox */ 
+		background-image: -moz-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #000000 100%);
+		/* Opera */ 
+		background-image: -o-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #000000 100%);
+		/* Webkit (Safari/Chrome 10) */ 
+		background-image: -webkit-gradient(radial, center center, 0, center center, 506, color-stop(0, #FFFFFF), color-stop(1, #000000));
+		/* Webkit (Chrome 11+) */ 
+		background-image: -webkit-radial-gradient(center, ellipse farthest-corner, #FFFFFF 0%, #000000 100%);
+		/* W3C Markup, IE10 Release Preview */ 
+		background-image: radial-gradient(ellipse farthest-corner at center, #FFFFFF 0%, #000000 100%);
+		}
+
+	#container_question{
+		float:left;
+		width:350px;
+		padding:10px;
+		height:480px;
+		margin-left:20px; 
+		margin-top:22px;
+		background-color:grey;
+		box-shadow: 0px 0px 10px black;
+	}
+	
+	#question{
+		float:left;
+		width : 320px;
+		height :450px;
+		padding:10px;
+        position: absolute;
+		background-image: -ms-linear-gradient(top, #FFFFFF 0%, #e6e0e0 100%);
+		/* Mozilla Firefox */ 
+		background-image: -moz-linear-gradient(top, #FFFFFF 0%, #e6e0e0 100%);
+		/* Opera */ 
+		background-image: -o-linear-gradient(top, #FFFFFF 0%, #e6e0e0 100%);
+		/* Webkit (Safari/Chrome 10) */ 
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FFFFFF), color-stop(1, #e6e0e0));
+		/* Webkit (Chrome 11+) */ 
+		background-image: -webkit-linear-gradient(top, #FFFFFF 0%, #e6e0e0 100%);
+		/* W3C Markup, IE10 Release Preview */ 
+		background-image: linear-gradient(to bottom, #FFFFFF 0%, #e6e0e0 100%);
+		border:5px solid white;
+	}
+	
+	#container_editor{
+		margin-top:0px;
+		width:800px;
+		height:480px;
+		padding:15px;
+		margin-left:auto;
+		margin-right:auto;
+		background-color:black;
+		border-radius: 20px;
+		box-shadow: 0px 0px 15px #6EA2DE;
+	}
+	
+    #editor { 
+		width :780px;
+		height : 470px;
+        margin : auto;
+        position: absolute;
+		border:5px solid grey;
+		border-style: inset;
+    }
+	
+	#container_bas{
+		 margin-top:35px; 
+		padding:20px;
+		background-image:url('images/6.jpg');
+		height:auto;
+		width:98.1%;
+	}
+	
+	#frame{
+		margin-bottom:30px;
+		width:45%;
+		height:300px;
+		background-color:black;
+		border-radius: 20px;
+		box-shadow: 0px 0px 15px black;
+		padding : 15px;
+	}
+	
+	
+	#iframe{
+		background-color:white;
+		width:99%;
+		height:99%;
+	}
+	
+	.hover {
+	}	

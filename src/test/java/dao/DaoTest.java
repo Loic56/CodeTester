@@ -91,6 +91,7 @@ public class DaoTest {
     public void test01() {
         printLine("TEST01");
         List<Admin> list = adminDao.findAll();
+        
         if (list == null) {
             System.out.println("test 01 >>  NULL");
         } else {
@@ -98,6 +99,7 @@ public class DaoTest {
                 System.out.println("test 01 >> " + ad.toString());
             }
         }
+        System.out.println(adminDao.getConnexionCount());
     }
 
     // dao candidat create
@@ -111,6 +113,7 @@ public class DaoTest {
         Candidat candidatInsere4 = candidatDao.create(rv);
 
         System.out.println("Candidats insérés : \n" + candidatInsere1.toString() + "\n" + candidatInsere2.toString() + "\n" + candidatInsere3.toString() + "\n" + candidatInsere4.toString());
+        System.out.println(candidatDao.getConnexionCount());
     }
 
     // dao candidat
@@ -126,6 +129,7 @@ public class DaoTest {
             }
         }
         System.out.println("test 03 >>  END");
+        System.out.println(candidatDao.getConnexionCount());
     }
 
 //    private void test04() {
@@ -149,6 +153,7 @@ public class DaoTest {
                 System.out.println(test.toString() + " => " + test.getTheme());
             }
         }
+        System.out.println(testDao.getConnexionCount());
     }
 
     private void test06() {
@@ -212,7 +217,7 @@ public class DaoTest {
 
         System.out.println("destroy Passage : " + thePassage.getPassageid());
         passageDao.destroy(thePassage);
-
+        System.out.println(passageDao.getConnexionCount());
 //        List<Passage> list2 = passageDao.findAll();
 //        for (Passage p : list2) {
 //            passageDao.destroy(p);

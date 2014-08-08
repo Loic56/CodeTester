@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- -->
+<hibernate-mapping>
+    <class name="jpa.Question" table="question">
+      
+        
+        <id column="QUESTIONID" name="questionid">
+            <generator class="increment"/>
+        </id>
+    
+    
+        <property name="questionimage" type="string">
+            <column length="255" name="QUESTIONIMAGE" />
+        </property>
+    
+    
+        <property name="questiontext" type="string">
+            <column length="255" name="QUESTIONTEXT" not-null="true"/>
+        </property>
+        
+        
+        <many-to-one class="jpa.Rubrique" name="rubriqueid">
+            <column name="RUBRIQUEID" not-null="true"/>
+        </many-to-one>
+    
+    
+        <!--        @OneToMany     -->
+        <set fetch="select" inverse="true" lazy="true" name="propositionCollection" table="proposition">
+            <key>
+                <column name="QUESTIONID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Proposition"/>
+        </set>
+    
+        
+        <set fetch="select" inverse="true" lazy="true" name="reponseHistoCollection" table="reponse_histo">
+            <key>
+                <column name="QUESTIONID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.ReponseHisto"/>
+        </set>
+    
+    
+           
+        <set fetch="select" inverse="true" lazy="true" name="reponseCollection" table="reponse_histo">
+            <key>
+                <column name="QUESTIONID" not-null="true"/>
+            </key>
+            <one-to-many class="jpa.Reponse"/>
+        </set>
+
+    
+    
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://java.sun.com/jsp/jstl/core" >
+
+    <h:head>
+        <title>CodeTester</title>
+        <h:outputStylesheet name="style.css" library="css" /> 
+    </h:head>
+
+    <h:body>
+
+        <div id="container">
+
+
+            <ui:insert name="header" >
+                <ui:include src="/templates/header.xhtml" />
+            </ui:insert>
+
+
+            <div id="content">
+                <p:panel header="Bienvenue"  style="height:auto;"> 
+                    <h:form>
+
+                        <br />
+                        <p:commandButton value="Deconnexion" action="#{logCandidat.Deconnexion}" id="withIcon" style="margin-left:700px;" />
+                        <br />
+                        <br />
+                        <fieldset style="width:auto;border:1px solid silver;margin-right:50px;margin-left:50px;">
+
+                            <p>Bonjour #{infoResa.theCandidat.candidatCivilite} #{infoResa.theCandidat.candidatNom} #{infoResa.theCandidat.candidatPrenom}, vous êtes inscrit au(x) test(s):</p>
+                            <br />
+                            <p style="color:#7fcf93;">Vos passage en agence </p>
+
+                            <p style="font-style:italic;">Pour démarrer, cliquez sur le lien</p>
+
+                            <!--test controler-->
+                            <h:dataTable value="#{infoResa.theTests}" var="list" styleClass="order-table"
+                                         headerClass="order-table-header"
+                                         rowClasses="order-table-odd-row,order-table-even-row" style="width:800px;">
+                                <h:column>
+                                    <f:facet name="header">Tests en attente</f:facet>
+
+                                    <h:commandLink action="#{testControler.Link(list)}" value="#{list.testmatiere} - #{list.theme}">
+<!--                                         <f:param name="testid" value="#{list.testid}" /> -->
+<!--                                         <f:param name="testmatiere" value="#{list.testmatiere}" /> -->
+<!--                                         <f:param name="theme" value="#{list.theme}" /> -->
+<!--                                         <f:param name="langage" value="#{list.testformat}" /> -->
+                                    </h:commandLink>
+                                </h:column>
+
+                            </h:dataTable>
+
+                        </fieldset>  
+
+                        <br />
+                        <br />
+
+
+
+
+                    </h:form>
+                </p:panel>  
+            </div>
+
+
+            <ui:insert name="footer" >
+                <ui:include src="/templates/footer.xhtml" />
+            </ui:insert>
+
+
+        </div> <!-- container -->
+    </h:body>
+</html>             

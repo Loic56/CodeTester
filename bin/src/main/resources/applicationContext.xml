@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:context="http://www.springframewok.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+ 		http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+	default-autowire="byName">
+
+
+	<bean id="poolDataSource" class="com.jolbox.bonecp.BoneCPDataSource"
+		destroy-method="close">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost/testeur_de_code" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+		<property name="idleConnectionTestPeriod" value="60" />
+		<property name="idleMaxAge" value="240" />
+		<property name="maxConnectionsPerPartition" value="10" />
+		<property name="minConnectionsPerPartition" value="2" />
+		<property name="partitionCount" value="1" />
+		<property name="acquireIncrement" value="5" />
+		<property name="statementsCacheSize" value="100" />
+		<property name="releaseHelperThreads" value="3" />
+	</bean>
+	
+
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost/testeur_de_code" />
+        <property name="username" value="root" />
+        <property name="password" value="" />
+    </bean>
+
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+        <property name="dataSource" ref="poolDataSource" />
+       
+        <property name="mappingResources">
+            <list>
+                <value>jpa/Proposition.hbm.xml</value>
+                <value>jpa/Admin.hbm.xml</value>
+                <value>jpa/Candidat.hbm.xml</value>
+                <value>jpa/Test.hbm.xml</value>
+                <value>jpa/Categorie.hbm.xml</value>
+                <value>jpa/Passage.hbm.xml</value>
+                <value>jpa/Rubrique.hbm.xml</value>
+                <value>jpa/ReponseHisto.hbm.xml</value>
+                <value>jpa/Reponse.hbm.xml</value>
+                <value>jpa/Question.hbm.xml</value>
+                <value>jpa/Jointure.hbm.xml</value>
+            </list>
+        </property>
+        
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <!--                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="use_sql_comments">true</prop>-->
+            </props>
+        </property>
+
+    </bean>
+    
+    <bean id="adminDao" class="dao.AdminDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+        
+    <bean id="candidatDao" class="dao.CandidatDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+        
+    <bean id="testDao" class="dao.TestDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="jointureDao" class="dao.JointureDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="passageDao" class="dao.PassageDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="rubriqueDao" class="dao.RubriqueDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="questionDao" class="dao.QuestionDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="propositionDao" class="dao.PropositionDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="categorieDao" class="dao.CategorieDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+    <bean id="reponseDao" class="dao.ReponseDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+    
+ 
+</beans>

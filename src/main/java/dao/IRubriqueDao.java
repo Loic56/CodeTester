@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.List;
+
 import jpa.Rubrique;
 import jpa.Test;
 
@@ -13,7 +14,7 @@ import jpa.Test;
  *
  * @author Loïc
  */
-public interface IRubriqueDao {
+public interface IRubriqueDao extends IDAO {
 
     public Rubrique create(Rubrique rubrique);
 

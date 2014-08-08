@@ -5,150 +5,174 @@
  */
 package web.bean;
 
-import jpa.Test;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
+import javax.faces.context.FacesContext;
+
+import org.eclipse.persistence.sessions.server.ExternalConnectionPool;
+
 import jpa.Candidat;
 import jpa.Jointure;
 import jpa.Passage;
+import jpa.Test;
 import tools.CONSTANT_RETURN;
+import tools.FacesUtil;
 import tools.Utils;
+import adapter.BeanAdapter;
 
 /**
- *
+ * 
  * @author Loïc
  */
 @ManagedBean(name = "infoResa")
 @SessionScoped
-public class InfoReservation extends BeanAdapter  {
+public class InfoReservation extends BeanAdapter {
 
-    // private List<Test> listTest;
-    private Candidat theCandidat;
-    private List<Test> theTests;
-    private List<Jointure> listJointure;
+	private Candidat theCandidat;
+	private List<Test> theTests;
+	
+	private List<Jointure> listJointure;
 
-    private List<Candidat> listCandidat;
-    private String dureeTotale;
+	private List<Candidat> listCandidat;
+	private String dureeTotale;
 
-    private Integer duree = 0;
+	private Integer duree = 0;
 
+	public InfoReservation() {
+		super();
 
-    public InfoReservation() {
-        super();
-        Utils.printLine("InfoReservation");
-        listCandidat = new ArrayList<Candidat>();
-        setTheCandidat((Candidat) sharedData().get("theCandidat"));
+		Utils.printLine("InfoReservation");
+		listCandidat = new ArrayList<Candidat>();
+		theCandidat = (Candidat) FacesUtil.getApplicationMapValue("theCandidat");
+		listCandidat.add(theCandidat);
+		
+		setTheCandidat(theCandidat); // ?
+		Utils.Log("Candidat en session : "+theCandidat.toString());
+		
+		theTests = (List<Test>) FacesUtil.getApplicationMapValue("theTests");
+		setTheTests(theTests); // ?
+		Utils.Log("Tests en session : "+theTests.toString());
+		
+		for (Test test : theTests) {
+			duree = duree + test.getTestduree();
+		}
+		
+		dureeTotale = String.valueOf(duree);
+		Utils.Log("durée totale : " + dureeTotale); 
+	}
 
-        listCandidat.add(theCandidat);
-        for (Test test : theTests) {
-            // System.out.println("test : " + test.toString());
-            duree = duree + test.getTestduree();
-        }
-        dureeTotale = String.valueOf(duree);
-    }
+	public String Retour() {
+		return CONSTANT_RETURN.TEST_REDIRECT.getReturn();
+	}
 
-    public String Retour() {
-        return CONSTANT_RETURN.TEST_REDIRECT.getReturn();
-    }
+	public String Annuler() {
+		return CONSTANT_RETURN.CANDIDAT_REDIRECT.getReturn();
+	}
 
-    public String Annuler() {
-        return CONSTANT_RETURN.CANDIDAT_REDIRECT.getReturn();
-    }
+	public String Suivant() {
+		Utils.Log("Nouveau passage pour le candidat : "+getTheCandidat()+ " \n avec le(s) test(s) : " + getTheTests());
 
-    public String Suivant() {
-        // passage validé par l'admin - on enregistre le passage ds la BDD
-        Passage p = Utils.createPassage(getTheCandidat(), getTheTests());
-        // le passage est référencé ds la BDD on supprime les variables de session
-        deconnectFromSession();
-        return CONSTANT_RETURN.LOG_CANDIDAT.getReturn();
-    }
+		Passage thePassage = Utils.createPassage(getTheCandidat(), getTheTests());
 
-    /**
-     * @return the theCandidat
-     */
-    public Candidat getTheCandidat() {
+		// le passage est référencé ds la BDD on supprime les variables de session 
+		FacesUtil.invalidateSession();
+		
+		return CONSTANT_RETURN.LOG_CANDIDAT.getReturn();
+	}
 
-        return theCandidat;
-    }
+	/**
+	 * @return the theCandidat
+	 */
+	public Candidat getTheCandidat() {
 
-    /**
-     * @param theCandidat the theCandidat to set
-     */
-    public void setTheCandidat(Candidat theCandidat) {
-        this.theCandidat = theCandidat;
-    }
+		return theCandidat;
+	}
 
-    /**
-     * @return the listCandidat
-     */
-    public List<Candidat> getListCandidat() {
-        return listCandidat;
-    }
+	/**
+	 * @param theCandidat
+	 *            the theCandidat to set
+	 */
+	public void setTheCandidat(Candidat theCandidat) {
+		this.theCandidat = theCandidat;
+	}
 
-    /**
-     * @param listCandidat the listCandidat to set
-     */
-    public void setListCandidat(List<Candidat> listCandidat) {
-        this.listCandidat = listCandidat;
-    }
+	/**
+	 * @return the listCandidat
+	 */
+	public List<Candidat> getListCandidat() {
+		return listCandidat;
+	}
 
-    /**
-     * @return the dureeTotale
-     */
-    public String getDureeTotale() {
-        return dureeTotale;
-    }
+	/**
+	 * @param listCandidat
+	 *            the listCandidat to set
+	 */
+	public void setListCandidat(List<Candidat> listCandidat) {
+		this.listCandidat = listCandidat;
+	}
 
-    /**
-     * @param dureeTotale the dureeTotale to set
-     */
-    public void setDureeTotale(String dureeTotale) {
-        this.dureeTotale = dureeTotale;
-    }
+	/**
+	 * @return the dureeTotale
+	 */
+	public String getDureeTotale() {
+		return dureeTotale;
+	}
 
-    /**
-     * @return the theTests
-     */
-    public List<Test> getTheTests() {
-        List<Test> list = (List<Test>) sharedData().get("theTests");
-        return list;
-    }
+	/**
+	 * @param dureeTotale
+	 *            the dureeTotale to set
+	 */
+	public void setDureeTotale(String dureeTotale) {
+		this.dureeTotale = dureeTotale;
+	}
 
-    /**
-     * @param theTests the theTests to set
-     */
-    public void setTheTests(List<Test> theTests) {
-        this.theTests = theTests;
-    }
+	/**
+	 * @return the theTests
+	 */
+	public List<Test> getTheTests() {
+		return (List<Test>) FacesUtil.getApplicationMapValue("theTests");
+	}
 
-    /**
-     * @return the listJointure
-     */
-    public List<Jointure> getListJointure() {
-        return listJointure;
-    }
+	/**
+	 * @param theTests
+	 *            the theTests to set
+	 */
+	public void setTheTests(List<Test> theTests) {
+		this.theTests = theTests;
+	}
 
-    /**
-     * @param listJointure the listJointure to set
-     */
-    public void setListJointure(List<Jointure> listJointure) {
-        this.listJointure = listJointure;
-    }
+	/**
+	 * @return the listJointure
+	 */
+	public List<Jointure> getListJointure() {
+		return listJointure;
+	}
 
-    /**
-     * @return the duree
-     */
-    public Integer getDuree() {
-        return duree;
-    }
+	/**
+	 * @param listJointure
+	 *            the listJointure to set
+	 */
+	public void setListJointure(List<Jointure> listJointure) {
+		this.listJointure = listJointure;
+	}
 
-    /**
-     * @param duree the duree to set
-     */
-    public void setDuree(Integer duree) {
-        this.duree = duree;
-    }
+	/**
+	 * @return the duree
+	 */
+	public Integer getDuree() {
+		return duree;
+	}
+
+	/**
+	 * @param duree
+	 *            the duree to set
+	 */
+	public void setDuree(Integer duree) {
+		this.duree = duree;
+	}
 
 }

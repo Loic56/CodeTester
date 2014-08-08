@@ -7,13 +7,14 @@
 package dao;
 
 import java.util.List;
+
 import jpa.Admin;
 
 /**
  *
  * @author Loïc
  */
-public interface IAdminDao {
+public interface IAdminDao extends IDAO {
 
   public Admin create(Admin admin); 
   public Admin edit(Admin admin); 
@@ -23,5 +24,6 @@ public interface IAdminDao {
   public Admin find(String login, String password); 
   
   
-  public List<Admin> findAll(); 
+  public List<Admin> findAll();
+
 }

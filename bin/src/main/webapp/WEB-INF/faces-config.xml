@@ -1,0 +1,106 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<!-- =========== FULL CONFIGURATION FILE ================================== -->
+
+<faces-config version="2.0"
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+
+    <application>
+        <resource-bundle>
+            <base-name>
+                messages
+            </base-name>
+            <var>msg</var>
+        </resource-bundle>
+    </application>
+
+	<managed-bean>
+		<managed-bean-name>admin</managed-bean-name>
+		<managed-bean-class>web.bean.Log_Admin</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuCandidat</managed-bean-name>
+		<managed-bean-class>web.bean.MenuCandidat</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>edit_candidat</managed-bean-name>
+		<managed-bean-class>web.bean.EditCandidat</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+
+	<managed-bean>
+		<managed-bean-name>menuTest</managed-bean-name>
+		<managed-bean-class>web.bean.MenuTest</managed-bean-class>
+		<managed-bean-scope>session</managed-bean-scope>
+	</managed-bean>
+    
+    <managed-bean>
+            <managed-bean-name>infoResa</managed-bean-name>    
+        <managed-bean-class>web.bean.InfoReservation</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+      <managed-bean-name>logCandidat</managed-bean-name>    
+        <managed-bean-class>web.bean.Log_Candidat</managed-bean-class>    
+          <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+            <managed-bean-name>testControler</managed-bean-name>    
+        <managed-bean-class>controler.TestControler</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+            <managed-bean-name>theCodeTester</managed-bean-name>    
+        <managed-bean-class>moteur.TheCodeTester</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+            <managed-bean-name>recap</managed-bean-name>    
+        <managed-bean-class>web.bean.Recapitulatif</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    
+    <managed-bean>
+            <managed-bean-name>theEnd</managed-bean-name>    
+        <managed-bean-class>web.bean.TheEnd</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+            <managed-bean-name>create1</managed-bean-name>   
+        <managed-bean-class>web.createTest.CreateTest_1</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+            <managed-bean-name>create2</managed-bean-name> 
+        <managed-bean-class>web.createTest.CreateTest_2</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+            <managed-bean-name>create3</managed-bean-name>   
+        <managed-bean-class>web.createTest.CreateTest_3</managed-bean-class>    
+        <managed-bean-scope>view</managed-bean-scope>
+    </managed-bean>
+    
+    <managed-bean>
+            <managed-bean-name>create4</managed-bean-name>   
+        <managed-bean-class>web.createTest.CreateTest_4</managed-bean-class>    
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    
+</faces-config>
+
+

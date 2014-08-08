@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="hibernatePU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>jpa.Admin</class>
+    <class>jpa.Test</class>
+    <class>jpa.Question</class>
+    <class>jpa.Proposition</class>
+    <class>jpa.Categorie</class>
+    <class>jpa.ReponseHisto</class>
+    <class>jpa.Passage</class>
+    <class>jpa.Reponse</class>
+    <class>jpa.Candidat</class>
+    <class>jpa.Rubrique</class>
+<!--     <class>dao.Categorie</class> -->
+<!--     <class>dao.Test</class> -->
+<!--     <class>dao.Passage</class> -->
+<!--     <class>dao.Jointure</class> -->
+<!--     <class>dao.Rubrique</class> -->
+<!--     <class>dao.Candidat</class> -->
+<!--     <class>dao.Proposition</class> -->
+<!--     <class>dao.Reponse</class> -->
+<!--     <class>dao.Question</class> -->
+<!--     <class>dao.Admin</class> -->
+<!--     <class>dao.ReponseHisto</class> -->
+    <class>jpa.Jointure</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/testeur_de_code?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <!--      <property name="hibernate.hbm2ddl.auto" value="create"/> -->
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="use_sql_comments" value="true"/>
+    </properties>
+  </persistence-unit>
+</persistence>

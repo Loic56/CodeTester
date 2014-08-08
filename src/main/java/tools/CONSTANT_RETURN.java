@@ -16,11 +16,11 @@ public enum CONSTANT_RETURN {
         TEST_REDIRECT("test?faces-redirect=true"),
         HELLO_CANDIDAT("helloCandidat"),
         LOG_ADMIN("log?faces-redirect=true"), 
-        INDEX("index?faces-redirect=true"),
-        INFO_RESA("info_reservation?faces-redirect=true"),
-        LOG_CANDIDAT("log_candidat?faces-redirect=true");
-
- 
+        INDEX("index?faces-redirect=true"), 
+        INFO_RESA("info_reservation?faces-redirect=true"), 
+		LOG_CANDIDAT("log_candidat?faces-redirect=true"), 
+		CODE_TESTER("theCodeTester?faces-redirect=true"),
+		TEST_INFOS("testInfo?faces-redirect=true");
         
 	private String retour;
  

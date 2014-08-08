@@ -13,7 +13,7 @@ import jpa.Candidat;
  *
  * @author Loïc
  */
-public interface ICandidatDao {
+public interface ICandidatDao extends IDAO {
 
     public Candidat create(Candidat candidat);
 

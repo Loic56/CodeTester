@@ -66,12 +66,12 @@ and open the template in the editor.
                                          rowClasses="order-table-odd-row,order-table-even-row" style="width:300px;">
                                 <h:column>
                                     <f:facet name="header">Nom</f:facet>
-                                    <h:outputText value="#{sessionScope.theCandidat.candidatNom}" />
+                                    <h:outputText value="#{theCandidat.candidatNom}" />
                                 </h:column>
 
                                 <h:column>
                                     <f:facet name="header">Prénom</f:facet>
-                                    <h:outputText value="#{sessionScope.theCandidat.candidatPrenom}" />
+                                    <h:outputText value="#{theCandidat.candidatPrenom}" />
                                 </h:column>
                             </h:dataTable>
                         </p:fieldset> 

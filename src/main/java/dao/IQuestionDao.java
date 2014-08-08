@@ -6,6 +6,7 @@
 package dao;
 
 import java.util.List;
+
 import jpa.Question;
 import jpa.Rubrique;
 import jpa.Test;
@@ -14,7 +15,7 @@ import jpa.Test;
  *
  * @author Loïc
  */
-public interface IQuestionDao {
+public interface IQuestionDao extends IDAO {
 
     public Question create(Question question);
 
